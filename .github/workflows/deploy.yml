@@ -1,0 +1,128 @@
+name: Deploy
+
+# main への push で次の順に実行する（前のジョブが失敗したら後続は実行しない）。
+#   build-and-push（Dockerfile からビルドし :<sha> と :latest を GHCR に push）→ deploy（Coolify の webhook → 公開ページの確認）
+# Coolify は Docker Image リソースとして ghcr.io/kamodigi/website-2025:latest を pull するだけで、ConoHa 上ではビルドしない。
+# ロールバックは Coolify のイメージタグを前の :<sha> に変えて再デプロイする。
+# public リポジトリのため、runner は GitHub が用意する ubuntu-latest を使う（self-hosted runner は使わない）。
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# デプロイの途中でキャンセルすると :latest と本番が食い違うため、後続は待たせる
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  IMAGE_NAME: ghcr.io/kamodigi/website-2025
+  PRODUCTION_URL: https://kamodigi.work
+
+jobs:
+  build-and-push:
+    name: Build & Push image
+    # workflow_dispatch は任意のブランチを選べるため、main 以外からは本番に出さない（後続ジョブも needs でスキップされる）
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Log in to GHCR
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      # org.opencontainers.image.source を付けて、GHCR のパッケージをこのリポジトリにつなげる
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
+        with:
+          images: ${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha,prefix=,format=long
+            type=raw,value=latest
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+
+      - name: Build and push
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          file: Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    name: Trigger Coolify deploy & verify
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    # webhook のリトライ + 公開ページの確認（最大約 5 分）の分
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      # Coolify を Docker Image のリソースに切り替える前にマージしても失敗しないよう、
+      # secret が未設定ならデプロイを飛ばす（このときは Coolify の GitHub App 連携が従来どおりデプロイする）
+      - name: Check Coolify secrets
+        id: secrets
+        env:
+          COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+          COOLIFY_WEBHOOK_URL: ${{ secrets.COOLIFY_WEBHOOK_URL }}
+        run: |
+          if [ -z "$COOLIFY_TOKEN" ] || [ -z "$COOLIFY_WEBHOOK_URL" ]; then
+            echo "::notice::secret COOLIFY_TOKEN / COOLIFY_WEBHOOK_URL が未設定のため、Coolify のデプロイを飛ばします"
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # -S: 失敗したときに理由（HTTP のステータスなど）を出す
+      - name: Trigger Coolify webhook
+        if: steps.secrets.outputs.configured == 'true'
+        env:
+          COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+          COOLIFY_WEBHOOK_URL: ${{ secrets.COOLIFY_WEBHOOK_URL }}
+        run: |
+          curl -fsS --retry 3 --retry-all-errors -X POST \
+            -H "Authorization: Bearer $COOLIFY_TOKEN" \
+            "$COOLIFY_WEBHOOK_URL"
+
+      # Coolify は webhook を受け付けた時点で応答する。サイトにはバージョンを返す口がないため、
+      # 新コンテナへの切り替わりまでは確かめられない。少し待ってから公開ページが 200 を返すことだけを確かめる
+      - name: Smoke test
+        if: steps.secrets.outputs.configured == 'true'
+        run: |
+          sleep 60
+          for path in / /ads.txt; do
+            status=""
+            for _ in $(seq 1 12); do
+              status="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "$PRODUCTION_URL$path" || true)"
+              [ "$status" = "200" ] && break
+              sleep 10
+            done
+            if [ "$status" != "200" ]; then
+              echo "::error::$PRODUCTION_URL$path が 200 を返しません（$status）。Coolify のデプロイログを確認してください"
+              exit 1
+            fi
+            echo "OK  $path"
+          done
