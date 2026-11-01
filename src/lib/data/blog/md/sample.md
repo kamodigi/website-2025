@@ -7,7 +7,7 @@ tags:
   - 'TypeScript'
   - 'Markdown'
 publishedAt: '2025-01-12'
-draft: false
+draft: true
 order: 1
 ---
 

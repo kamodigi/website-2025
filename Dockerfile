@@ -3,9 +3,10 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 ENV CI=true
 RUN corepack enable
-RUN corepack prepare pnpm@10.17.1 --activate
 COPY . /app
 WORKDIR /app
+# package.json の packageManager フィールドで指定された pnpm を入れる
+RUN corepack install
 
 FROM base AS prod-deps
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile --ignore-scripts
