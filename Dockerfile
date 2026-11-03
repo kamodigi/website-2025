@@ -14,6 +14,9 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-l
 FROM base AS build
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
+# デプロイ後の確認用に build/version.json を出す（キャッシュを効かせるため build の後に置く）。GIT_SHA が無いときは unknown
+ARG GIT_SHA=unknown
+RUN printf '{"sha":"%s","builtAt":"%s"}\n' "${GIT_SHA:-unknown}" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > build/version.json
 
 FROM base
 
