@@ -34,10 +34,19 @@
 		uPixelSize: { value: 4 },
 	};
 
+	// prefers-reduced-motion: reduce のときは時間を止め、クリックの波紋も出さない
+	// （時間が止まると波紋が途中の形で残ってしまうため）
+	let reduceMotion = false;
+	let reduceMotionQuery: MediaQueryList | undefined;
+	const syncReduceMotion = () => {
+		reduceMotion = reduceMotionQuery?.matches ?? false;
+	};
+
 	// Click ripple effect
 	const { canvas } = useThrelte();
 	let clickIndex = 0;
 	export function onPointerDown(event: PointerEvent) {
+		if (reduceMotion) return;
 		const rect = canvas?.getBoundingClientRect();
 		if (!rect) return;
 		const fx = (event.clientX - rect.left) * (canvas.width / rect.width);
@@ -60,6 +69,7 @@
 	// Main loop
 	const clock = new Clock();
 	useTask(() => {
+		if (reduceMotion) return;
 		uniforms.uTime.value = clock.getElapsedTime();
 	});
 
@@ -71,6 +81,10 @@
 	onMount(() => {
 		// Canvasにクリックイベントを登録
 		canvas.addEventListener("pointerdown", onPointerDown);
+
+		reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+		syncReduceMotion();
+		reduceMotionQuery.addEventListener("change", syncReduceMotion);
 
 		syncDotColor();
 		themeObserver = new MutationObserver(syncDotColor);
@@ -87,6 +101,7 @@
 		canvas.removeEventListener("pointerdown", onPointerDown);
 		themeObserver?.disconnect();
 		colorSchemeQuery?.removeEventListener("change", syncDotColor);
+		reduceMotionQuery?.removeEventListener("change", syncReduceMotion);
 	});
 </script>
 
