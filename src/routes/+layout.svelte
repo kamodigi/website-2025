@@ -1,5 +1,6 @@
 <script lang="ts">
   import { type Snippet } from "svelte";
+  import SiteToolbar from "$lib/components/layout/SiteToolbar.svelte";
   import "../lib/styles/global.css";
 
   const { children }: { children: Snippet } = $props();
@@ -12,6 +13,8 @@
     crossorigin="anonymous"
   ></script>
 </svelte:head>
+
+<SiteToolbar />
 
 <div class="layout">
   <main id="main-content" class="main-content">

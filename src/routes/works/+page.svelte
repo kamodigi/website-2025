@@ -74,7 +74,7 @@
 		text-align: center;
 	}
 	.back-link a {
-		color: var(--color-primary-dark);
+		color: var(--color-link-hover);
 		text-decoration: none;
 		font-size: var(--text-lg);
 	}

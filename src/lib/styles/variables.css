@@ -1,7 +1,8 @@
 :root {
-
-
-  /* Light theme */
+  /*
+   * Palette (raw colors). Components must NOT use these directly —
+   * use the semantic tokens below so light/dark themes work.
+   */
   --color-primary-soft: oklch(85.7% 0.13 211.7);
   --color-primary: oklch(69.2% 0.15 151.2);
   --color-primary-dark: oklch(54.7% 0.13 143.2);
@@ -18,16 +19,57 @@
   --color-neutral-verypale: oklch(97.2% 0.01 260.0);
   --color-neutral-white: oklch(100% 0 0);
 
+  /*
+   * Semantic tokens — light theme (default).
+   * Contrast on --color-background (WCAG 2.x):
+   *   text 12.4, text-secondary 6.1, text-muted 5.2, link 5.7 (all ≥ 4.5 on --color-surface too)
+   */
+  --color-background: var(--color-neutral-white);
+  --color-surface: var(--color-neutral-verypale);
+  --color-surface-elevated: var(--color-neutral-white);
+  --color-text: var(--color-neutral);
+  --color-text-secondary: var(--color-neutral-soft);
+  --color-text-muted: oklch(53% 0.01 260.0);
+  --color-border: var(--color-neutral-pale);
+  --color-link: oklch(50% 0.13 148.0);
+  --color-link-hover: oklch(42% 0.11 145.0);
+  /* Solid brand fill (active chips etc.) and the text placed on it */
+  --color-primary-fill: var(--color-link);
+  --color-on-primary-fill: var(--color-neutral-white);
+  /* Decorative brand color (borders, focus rings, graphics) */
+  --color-brand: var(--color-primary);
+  --color-focus-ring: var(--color-link);
+  --color-overlay: oklch(0% 0 0 / 0.5);
+  --color-shadow: oklch(0% 0 0 / 0.1);
+  --color-hover-overlay: oklch(0% 0 0 / 0.05);
+  /* Hero shader dots (read by Scene.svelte) */
+  --color-hero-dots: #39bc47;
+
+  /* Show/hide per theme: `display: var(--display-light-only)` etc. */
+  --display-light-only: block;
+  --display-dark-only: none;
+
+  --shadow-sm: 0 2px 4px -1px var(--color-shadow);
+  --shadow-md: 0 4px 12px var(--color-shadow);
+  --shadow-lg: 0 10px 15px -3px var(--color-shadow), 0 4px 6px -2px var(--color-shadow);
+
+  /*
+   * Text/chips drawn on generated gradient thumbnails (GradientThumbnail).
+   * They depend on the gradient's lightness, not on the theme.
+   */
+  --color-on-gradient-light: oklch(100% 0 0 / 0.92);
+  --color-on-gradient-light-shadow: oklch(0% 0 0 / 0.2);
+  --color-on-gradient-light-chip: oklch(100% 0 0 / 0.25);
+  --color-on-gradient-light-border: oklch(100% 0 0 / 0.3);
+  --color-on-gradient-dark: oklch(0% 0 0 / 0.75);
+  --color-on-gradient-dark-shadow: oklch(100% 0 0 / 0.2);
+  --color-on-gradient-dark-chip: oklch(0% 0 0 / 0.15);
+  --color-on-gradient-dark-border: oklch(0% 0 0 / 0.2);
+
   --color-success: var(--color-primary);
   --color-warning: var(--color-accent);
   --color-error-light: #dc2626;
   --color-info-light: var(--color-primary-soft);
-
-  --color-background: var(--color-neutral-white);
-  --color-text: var(--color-neutral);
-  --color-text-secondary: var(--color-neutral-soft);
-  --color-text-muted: var(--color-neutral-light);
-  --color-border: var(--color-neutral-pale);
 
   /* Typography System */
 
@@ -133,8 +175,64 @@
   }
 }
 
-/* Light mode is default */
-html {
+/*
+ * Theme switching
+ * - <html data-theme="light|dark"> is set before first paint by the inline
+ *   script in src/app.html (localStorage "theme" > OS setting).
+ * - Without data-theme (e.g. JS disabled) the OS setting decides.
+ * The dark block is duplicated because plain CSS cannot share a rule body
+ * between a media query and an attribute selector. Keep both in sync.
+ */
+:root {
   color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-background: oklch(18% 0.01 260.0);
+  --color-surface: oklch(22% 0.01 260.0);
+  --color-surface-elevated: oklch(24% 0.01 260.0);
+  --color-text: oklch(92% 0.01 260.0);
+  --color-text-secondary: oklch(78% 0.01 260.0);
+  --color-text-muted: oklch(68% 0.01 260.0);
+  --color-border: oklch(34% 0.01 260.0);
+  --color-link: oklch(75% 0.15 151.2);
+  --color-link-hover: oklch(84% 0.13 151.2);
+  --color-primary-fill: oklch(75% 0.15 151.2);
+  --color-on-primary-fill: oklch(18% 0.01 260.0);
+  --color-brand: oklch(72% 0.15 151.2);
+  --color-focus-ring: oklch(75% 0.15 151.2);
+  --color-overlay: oklch(0% 0 0 / 0.65);
+  --color-shadow: oklch(0% 0 0 / 0.4);
+  --color-hover-overlay: oklch(100% 0 0 / 0.06);
+  --color-hero-dots: #3fae4b;
+  --display-light-only: none;
+  --display-dark-only: block;
+}
+
+/* Same values as :root[data-theme='dark'] above — edit both together */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --color-background: oklch(18% 0.01 260.0);
+    --color-surface: oklch(22% 0.01 260.0);
+    --color-surface-elevated: oklch(24% 0.01 260.0);
+    --color-text: oklch(92% 0.01 260.0);
+    --color-text-secondary: oklch(78% 0.01 260.0);
+    --color-text-muted: oklch(68% 0.01 260.0);
+    --color-border: oklch(34% 0.01 260.0);
+    --color-link: oklch(75% 0.15 151.2);
+    --color-link-hover: oklch(84% 0.13 151.2);
+    --color-primary-fill: oklch(75% 0.15 151.2);
+    --color-on-primary-fill: oklch(18% 0.01 260.0);
+    --color-brand: oklch(72% 0.15 151.2);
+    --color-focus-ring: oklch(75% 0.15 151.2);
+    --color-overlay: oklch(0% 0 0 / 0.65);
+    --color-shadow: oklch(0% 0 0 / 0.4);
+    --color-hover-overlay: oklch(100% 0 0 / 0.06);
+    --color-hero-dots: #3fae4b;
+    --display-light-only: none;
+    --display-dark-only: block;
+  }
 }
 

@@ -22,7 +22,7 @@
 	}
 
 	.skill-item:hover {
-		background-color: var(--neutral-pale);
+		background-color: var(--color-surface);
 	}
 
 	.icon-wrapper {

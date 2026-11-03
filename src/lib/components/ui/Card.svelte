@@ -32,16 +32,16 @@
 
   /* Style variants */
   .card-default {
-    background-color: var(--color-neutral-white);
+    background-color: var(--color-surface-elevated);
   }
 
   .card-elevated {
-    background-color: var(--color-neutral-white);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    background-color: var(--color-surface-elevated);
+    box-shadow: var(--shadow-sm);
   }
 
   .card-bordered {
-    background-color: var(--color-neutral-white);
+    background-color: var(--color-surface-elevated);
     border: 1px solid var(--color-border);
   }
 
@@ -52,7 +52,7 @@
   /* Hover effect */
   .card-hover:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-lg);
   }
 
   /* Clickable style */

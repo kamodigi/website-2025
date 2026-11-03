@@ -1,4 +1,5 @@
 import Github from '$lib/assets/socials/github-mark.svg';
+import GithubDark from '$lib/assets/socials/github-mark-dark.svg';
 import Mail from '$lib/assets/socials/gmail.svg';
 import Zenn from '$lib/assets/socials/zenn.svg';
 
@@ -6,13 +7,16 @@ export interface Social {
 	label: string;
 	href: string;
 	icon: string;
+	/** ダークテーマ用のアイコン（元のアイコンが暗い背景で見えない場合） */
+	iconDark?: string;
 }
 
 export const Socials: Social[] = [
 	{
 		label: 'GitHub',
 		href: 'https://github.com/dev-komenzar',
-		icon: Github
+		icon: Github,
+		iconDark: GithubDark
 	},
 	{
 		label: 'Zenn',

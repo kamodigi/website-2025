@@ -29,5 +29,7 @@
 	"language_current": "English",
 	"theme_toggle_light": "Switch to light mode",
 	"theme_toggle_dark": "Switch to dark mode",
-	"view_all_works": "View all works"
+	"view_all_works": "View all works",
+	"language_switcher_label": "Change language",
+	"toolbar_label": "Display settings"
 }

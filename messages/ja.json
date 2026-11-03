@@ -32,5 +32,7 @@
 	"sections_about_me": "ABOUT ME",
 	"about_me_self_intro": "米谷拓哉です。フリーランスエンジニア、個人開発を主な活動としています。フロントエンドを得意としています。UI/UXにとくに関心があります。2020年から開発を経験。自転車が趣味。海外に住みたいと思っています。",
 	"view_all_works": "すべてのWORKSを見る",
-	"works_description": "仕事、作品の一覧。"
+	"works_description": "仕事、作品の一覧。",
+	"language_switcher_label": "言語を切り替える",
+	"toolbar_label": "表示の設定"
 }

@@ -58,7 +58,7 @@ const lang = getLocale()
     transition: color var(--transition-fast);
   }
   .view-all-link:hover {
-    color: var(--color-primary);
+    color: var(--color-link);
   }
 
   .works-grid {
