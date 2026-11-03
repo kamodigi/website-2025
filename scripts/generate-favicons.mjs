@@ -62,7 +62,15 @@ writeFileSync(
 
 // PNG / ICO は最近傍補間で拡大
 const scaled = (px) => [...square, '-filter', 'point', '-resize', `${px}x${px}`];
-run('magick', [...scaled(180), 'static/apple-touch-icon.png']);
+// apple-touch-icon だけは不透明にする（iOS は透過部分を黒で塗るため）。
+// 背景はサイトの背景色（白）。角が自動で丸められるので鴨のまわりに余白をとる。
+const TOUCH = 180;
+const touchInner = Math.round(TOUCH * 0.7);
+run('magick', [
+	...square, '-filter', 'point', '-resize', `${touchInner}x${touchInner}`,
+	'-background', 'white', '-gravity', 'center', '-extent', `${TOUCH}x${TOUCH}`,
+	'-alpha', 'off', 'static/apple-touch-icon.png'
+]);
 run('magick', [...scaled(512), 'static/icon-512.png']);
 run('magick', [...scaled(32), '-define', 'icon:auto-resize=32', 'static/favicon.ico']);
 console.log(`generated from ${MASTER} (${side}x${side} dots)`);
