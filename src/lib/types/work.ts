@@ -1,3 +1,5 @@
+import type { Localized } from '$lib/i18n';
+
 /**
  * Workのメタデータを表すインターフェース
  * マークダウンファイルのfrontmatterから読み込まれる
@@ -7,13 +9,13 @@ export interface WorkMetadata {
   id: string;
   
   /** Workのタイトル（多言語対応） */
-  title: Record<'ja' | 'en', string>;
+  title: Localized;
   
   /** Workの詳細説明（多言語対応） */
-  description: Record<'ja' | 'en', string>;
+  description: Localized;
   
   /** Workの短い説明（カード表示用、多言語対応） */
-  shortDescription: Record<'ja' | 'en', string>;
+  shortDescription: Localized;
   
   /** Workで使用された技術のリスト */
   technologies: string[];
@@ -66,8 +68,11 @@ export interface WorkData {
   /** Workのメタデータ */
   metadata: WorkMetadata;
   
-  /** Workの詳細コンテンツ（HTMLとして解析されたマークダウン） */
-  content: string;
+  /**
+   * Workの詳細コンテンツ（HTMLとして解析されたマークダウン、言語ごと）。
+   * ja は md/{id}.md の本文、ほかの言語は md/{id}.{言語}.md の本文
+   */
+  content: Localized;
 }
 
 /**

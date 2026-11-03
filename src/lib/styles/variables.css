@@ -242,3 +242,20 @@
   }
 }
 
+/* 中国語のページでは中国語のフォントを先にする。フォントの読み込みは +layout.svelte が中国語のページでだけ行う */
+:root:lang(zh-Hans) {
+  --font-primary: 'Noto Sans SC', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Noto Sans SC', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+:root:lang(zh-Hant) {
+  --font-primary: 'Noto Sans TC', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Noto Sans TC', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* 日本語以外のページの中の日本語（ブログの記事、翻訳のない WORKS など、lang="ja" の部分）は日本語のフォントで出す */
+:root:not(:lang(ja)) [lang='ja'] {
+  --font-primary: 'Noto Sans JP', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Noto Sans JP', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-primary);
+}

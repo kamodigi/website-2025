@@ -1,13 +1,11 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { m } from '$lib/paraglide/messages';
-  import { deLocalizeHref, getLocale, localizeHref, type Locale } from '$lib/paraglide/runtime';
+  import { LOCALE_LABELS } from '$lib/i18n';
+  import { deLocalizeHref, getLocale, localizeHref, locales } from '$lib/paraglide/runtime';
 
-  // 表示名は各言語での自称（エンドニム）。言語を増やすときはここに足す
-  const LANGUAGES: { locale: Locale; label: string }[] = [
-    { locale: 'ja', label: '日本語' },
-    { locale: 'en', label: 'English' }
-  ];
+  // 表示名は各言語での自称（エンドニム）。src/lib/i18n の LOCALE_LABELS にある
+  const LANGUAGES = locales.map((locale) => ({ locale, label: LOCALE_LABELS[locale] }));
 
   const currentLocale = getLocale();
   // プリレンダーするのでパスだけを使う（url.search はプリレンダー中に読めない）

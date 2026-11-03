@@ -3,6 +3,7 @@
   import { getWorkBySlugRemote } from "$lib/data/works/data.remote.js";
   import { m } from "$lib/paraglide/messages";
   import { getLocale } from "$lib/paraglide/runtime.js";
+  import { pickLocalized } from "$lib/i18n";
   import { TinySlider } from "svelte-tiny-slider";
 
   // Get the slug from the URL using $props()
@@ -37,12 +38,14 @@
         ...work.metadata.images.gallery,
       ]}
       {@const { thumbnail, gallery } = work.metadata.images}
+      {@const title = pickLocalized(work.metadata.title, lang)}
+      {@const content = pickLocalized(work.content, lang)}
       <div class="content">
         <div class="gallery">
           <TinySlider>
             <img src={asset(thumbnail)} alt="サムネイル" />
             {#each gallery as image (image.toString())}
-              <img src={asset(image)} alt={work.metadata.title[lang]} />
+              <img src={asset(image)} alt={title.value} />
             {/each}
 
             {#snippet controls({ setIndex, currentIndex })}
@@ -65,9 +68,9 @@
             {/snippet}
           </TinySlider>
         </div>
-        <h2>{work.metadata.title[lang]}</h2>
-        <div>
-          {@html work.content}
+        <h2 lang={title.locale}>{title.value}</h2>
+        <div lang={content.locale}>
+          {@html content.value}
         </div>
       </div>
     {:else}

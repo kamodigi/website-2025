@@ -24,7 +24,7 @@
 		"lint:fix": "eslint . --fix -c ./eslint.config.js",
 		"type-check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:all": "pnpm run lint && pnpm run type-check",
-		"compile:translations": "pnpm paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide",
+		"compile:translations": "node scripts/resolve-messages.mjs && pnpm paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide",
 		"start": "serve build"
 	},
 	"devDependencies": {

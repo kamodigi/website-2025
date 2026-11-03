@@ -1,4 +1,6 @@
 import type { WorkData, WorkFilterOptions, WorkMetadata, WorkSortOption } from '$lib/types/work';
+import type { Localized } from '$lib/i18n';
+import { locales, type Locale } from '$lib/paraglide/runtime';
 import type { BlogData, BlogFilterOptions, BlogMetadata, BlogSortOption } from '$lib/types/blog';
 import * as yaml from 'js-yaml';
 import type { Root, RootContent } from 'mdast';
@@ -31,12 +33,9 @@ function remarkExtractFrontmatter() {
 }
 
 /**
- * マークダウンファイルからプロジェクトデータを解析する関数
- * 
- * @param markdown マークダウンファイルの内容
- * @returns 解析されたプロジェクトデータ
+ * マークダウンを frontmatter と本文の HTML に分ける
  */
-export async function parseWorkMarkdown(markdown: string): Promise<WorkData> {
+async function processMarkdown(markdown: string): Promise<{ frontmatter: Record<string, any>; html: string }> {
   const file = await unified()
     .use(remarkParse)
     .use(remarkFrontmatter, ['yaml'])
@@ -45,15 +44,50 @@ export async function parseWorkMarkdown(markdown: string): Promise<WorkData> {
     .use(rehypeStringify)
     .process(markdown);
 
-  const metadata = (file.data.frontmatter || {}) as Record<string, any>;
-  const content = String(file);
+  return { frontmatter: (file.data.frontmatter || {}) as Record<string, any>, html: String(file) };
+}
+
+/**
+ * frontmatter の多言語の値を Localized にそろえる。
+ * 文字列だけが書かれていたら日本語として扱う。値のない言語は入れない（表示時にフォールバックする）
+ */
+function toLocalized(value: unknown): Localized {
+  if (typeof value === 'string') return { ja: value };
+  if (!value || typeof value !== 'object') return { ja: '' };
+  const record = value as Record<string, unknown>;
+  const result: Localized = { ja: typeof record.ja === 'string' ? record.ja : '' };
+  for (const locale of locales) {
+    if (locale === 'ja') continue;
+    const text = record[locale];
+    if (typeof text === 'string' && text !== '') result[locale] = text;
+  }
+  return result;
+}
+
+/**
+ * マークダウンファイルからプロジェクトデータを解析する関数
+ *
+ * @param markdown 日本語のマークダウンファイル（md/{id}.md）の内容。frontmatter はここに書く
+ * @param translations ほかの言語の本文（md/{id}.{言語}.md の内容）。frontmatter があっても使わない
+ * @returns 解析されたプロジェクトデータ
+ */
+export async function parseWorkMarkdown(
+  markdown: string,
+  translations: Partial<Record<Exclude<Locale, 'ja'>, string>> = {}
+): Promise<WorkData> {
+  const { frontmatter: metadata, html } = await processMarkdown(markdown);
+
+  const content: Localized = { ja: html };
+  for (const [locale, translated] of Object.entries(translations) as [Exclude<Locale, 'ja'>, string][]) {
+    content[locale] = (await processMarkdown(translated)).html;
+  }
 
   // workMetadataの型に合わせる
   const workMetadata: WorkMetadata = {
     id: metadata.id || '',
-    title: metadata.title || { ja: '', en: '' },
-    description: metadata.description || { ja: '', en: '' },
-    shortDescription: metadata.shortDescription || { ja: '', en: '' },
+    title: toLocalized(metadata.title),
+    description: toLocalized(metadata.description),
+    shortDescription: toLocalized(metadata.shortDescription),
     technologies: metadata.technologies || [],
     category: metadata.category || 'web',
     status: metadata.status || 'completed',
@@ -71,7 +105,7 @@ export async function parseWorkMarkdown(markdown: string): Promise<WorkData> {
     featured: metadata.featured || false,
     order: metadata.order || 0
   };
-  
+
   return { metadata: workMetadata, content };
 }
 
@@ -147,16 +181,7 @@ export function filterWorks(
  * @returns 解析されたブログ記事データ
  */
 export async function parseBlogMarkdown(markdown: string): Promise<BlogData> {
-  const file = await unified()
-    .use(remarkParse)
-    .use(remarkFrontmatter, ['yaml'])
-    .use(remarkExtractFrontmatter)
-    .use(remarkRehype)
-    .use(rehypeStringify)
-    .process(markdown);
-
-  const metadata = (file.data.frontmatter || {}) as Record<string, any>;
-  const content = String(file);
+  const { frontmatter: metadata, html: content } = await processMarkdown(markdown);
 
   // blogMetadataの型に合わせる
   const blogMetadata: BlogMetadata = {

@@ -4,6 +4,7 @@ import ThumbnailCard from '$lib/components/ui/ThumbnailCard.svelte';
 import { getWorksRemote } from '$lib/data/works/data.remote';
 import { m } from '$lib/paraglide/messages';
 import { getLocale } from '$lib/paraglide/runtime.js';
+import { pickLocalized } from '$lib/i18n';
 
 const query = getWorksRemote()
 const lang = getLocale()
@@ -26,17 +27,19 @@ const lang = getLocale()
       {:else}
         <div class="works-grid">
           {#each query.current as work (work.metadata.id)}
-          {@const { title, shortDescription, images, id } = work.metadata}
+          {@const { images, id } = work.metadata}
+          {@const title = pickLocalized(work.metadata.title, lang)}
+          {@const shortDescription = pickLocalized(work.metadata.shortDescription, lang)}
           {@const thumbnailUrl = images.thumbnail ? asset('works/' + images.thumbnail) : undefined}
             <ThumbnailCard
               variant="bordered"
               hover
               thumbnailUrl={thumbnailUrl}
-              thumbnailAlt={title[lang]}
+              thumbnailAlt={title.value}
               href={resolve(`/works/${id}`)}
             >
-              <h3 class="work-title">{title[lang]}</h3>
-              <p class="work-description">{shortDescription[lang]}</p>
+              <h3 class="work-title" lang={title.locale}>{title.value}</h3>
+              <p class="work-description" lang={shortDescription.locale}>{shortDescription.value}</p>
             </ThumbnailCard>
           {/each}
         </div>
