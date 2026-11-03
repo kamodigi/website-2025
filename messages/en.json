@@ -8,6 +8,7 @@
 	"hero_title": "Portfolio",
 	"hero_subtitle": "Frontend Developer",
 	"hero_description": "Creating beautiful and functional web applications using SvelteKit, React, and TypeScript.",
+	"site_description": "kamodigi is a one-person studio that turns the \"wouldn't it be nice if…\" of local communities into web apps and sites.",
 	"hero_cta": "View Works",
 	"sections_works": "Works",
 	"sections_skills": "Skills",
