@@ -40,13 +40,18 @@ const frames = [
 // （全フレーム同じ位置で切るので、コマ間で鴨がずれない）
 const boxes = run('magick', [...frames, '-format', '%@\n', 'info:'])
 	.trim().split('\n').map((s) => s.split(/[x+]/).map(Number));
+if (boxes.some(([w, h]) => w * h <= 1)) {
+	throw new Error('鴨が写っていない（全面透過の）フレームがある。透過処理か元素材を確認すること');
+}
 const left = Math.min(...boxes.map(([, , x]) => x));
 const top = Math.min(...boxes.map(([, , , y]) => y));
 const right = Math.max(...boxes.map(([w, , x]) => x + w));
 const bottom = Math.max(...boxes.map(([, h, , y]) => y + h));
 const side = Math.max(right - left, bottom - top) + 2;
-const ox = Math.round((left + right) / 2 - side / 2);
-const oy = Math.round((top + bottom) / 2 - side / 2);
+// 切り出し枠がキャンバスからはみ出すと -crop が欠けるので、内側に収める
+const clamp = (v) => Math.min(Math.max(v, 0), size - side);
+const ox = clamp(Math.round((left + right) / 2 - side / 2));
+const oy = clamp(Math.round((top + bottom) / 2 - side / 2));
 
 run('magick', [
 	...frames,
