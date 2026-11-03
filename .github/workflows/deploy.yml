@@ -78,7 +78,7 @@ jobs:
     name: Trigger Coolify deploy & verify
     needs: build-and-push
     runs-on: ubuntu-24.04
-    # webhook のリトライ + 公開ページの確認（最大約 5 分）の分
+    # webhook のリトライ + 公開ページの確認（最大約 9 分）の分
     timeout-minutes: 10
     permissions:
       contents: read
@@ -109,16 +109,30 @@ jobs:
             -H "Authorization: Bearer $COOLIFY_TOKEN" \
             "$COOLIFY_WEBHOOK_URL"
 
-      # Coolify は webhook を受け付けた時点で応答する。/ と /ads.txt が 200 を返すことに加え、
-      # /version.json の sha がこのコミットと一致するまで待ち、新コンテナへの切り替わりまで確かめる（最大約 5 分）
+      # Coolify は webhook を受け付けた時点で応答する。まず /version.json の sha がこのコミットと一致するまで
+      # 最大 300 秒待ち、新コンテナへの切り替わりを確かめる（古いコンテナでも / は 200 を返すため、先にこれを見る）。
+      # そのあと / と /ads.txt が 200 を返すことを確かめる（各 最大 90 秒）。
+      # 最悪でも 約 310 + 2×100 秒で、ジョブの timeout-minutes（10 分）に収まる
       - name: Smoke test
         if: steps.secrets.outputs.configured == 'true'
         run: |
-          sleep 60
+          deployed=""
+          SECONDS=0
+          while [ "$SECONDS" -lt 300 ]; do
+            deployed="$(curl -sS --max-time 10 -H 'Cache-Control: no-cache' "$PRODUCTION_URL/version.json?t=$(date +%s)" | jq -r '.sha // empty' 2>/dev/null || true)"
+            [ "$deployed" = "$GITHUB_SHA" ] && break
+            sleep 10
+          done
+          if [ "$deployed" != "$GITHUB_SHA" ]; then
+            echo "::error::$PRODUCTION_URL/version.json の sha が一致しません（期待: $GITHUB_SHA、実際: ${deployed:-取得できず}）。古いコンテナのままの可能性があります"
+            exit 1
+          fi
+          echo "OK  /version.json ($deployed)"
           for path in / /ads.txt; do
             status=""
-            for _ in $(seq 1 12); do
-              status="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 "$PRODUCTION_URL$path" || true)"
+            SECONDS=0
+            while [ "$SECONDS" -lt 90 ]; do
+              status="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 "$PRODUCTION_URL$path" || true)"
               [ "$status" = "200" ] && break
               sleep 10
             done
@@ -128,14 +142,3 @@ jobs:
             fi
             echo "OK  $path"
           done
-          deployed=""
-          for _ in $(seq 1 12); do
-            deployed="$(curl -sS --max-time 20 -H 'Cache-Control: no-cache' "$PRODUCTION_URL/version.json?t=$(date +%s)" | jq -r '.sha // empty' 2>/dev/null || true)"
-            [ "$deployed" = "$GITHUB_SHA" ] && break
-            sleep 10
-          done
-          if [ "$deployed" != "$GITHUB_SHA" ]; then
-            echo "::error::$PRODUCTION_URL/version.json の sha が一致しません（期待: $GITHUB_SHA、実際: ${deployed:-取得できず}）。古いコンテナのままの可能性があります"
-            exit 1
-          fi
-          echo "OK  /version.json ($deployed)"
