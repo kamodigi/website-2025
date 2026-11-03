@@ -142,7 +142,7 @@
 
   .modal {
     background-color: var(--color-surface-elevated);
-    border-radius: 0.5rem;
+    border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
     max-height: calc(100vh - 2rem);
     display: flex;
@@ -202,7 +202,7 @@
     justify-content: center;
     padding: 0.5rem;
     color: var(--color-text-secondary);
-    border-radius: 0.375rem;
+    border-radius: var(--radius-md);
     transition: var(--transition-fast);
   }
 
