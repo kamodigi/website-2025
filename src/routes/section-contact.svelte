@@ -1,4 +1,5 @@
 <script>
+	import { track } from "$lib/analytics";
 	import SocialLink from "$lib/components/ui/SoccialLink.svelte";
 	import { Socials } from "$lib/data/social";
 	import { m } from "$lib/paraglide/messages";
@@ -11,7 +12,10 @@
 
 		<div class="social-links">
 			{#each Socials as social (social.label)}
-				<SocialLink {...social} />
+				<SocialLink
+					{...social}
+					onclick={() => track("contact_click", { link_label: social.label })}
+				/>
 			{/each}
 		</div>
 	</div>
