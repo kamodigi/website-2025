@@ -126,3 +126,20 @@ bd prime                # Refresh Beads context
 
 **Architecture in one line:** issues live in a local Dolt DB; sync uses `refs/dolt/data` on your git remote; `.beads/issues.jsonl` is a passive export. See https://github.com/gastownhall/beads/blob/main/docs/core-concepts/sync-concepts.md for details and anti-patterns.
 <!-- END BEADS CODEX SETUP -->
+
+## UI を変更するときの進め方
+
+UI を変更する issue では、次のサイクルを必ず回す（2026-11-03 に決定）。
+
+1. **実装**（ワーカー）
+2. **一般的なレビュー**（実装者とは別のエージェント）: 正しさ、アクセシビリティ、ja/en の多言語対応、ビルドと lint
+3. **デザインの整合性のレビュー**（さらに別のエージェント）: [docs/design-review.md](docs/design-review.md) の確認項目に沿って、サイト全体の見た目との整合性を見る
+4. **人間のレビュー**: **文章の修正はここで行う**。ワーカーの文章は下書き扱い。
+
+ルール:
+
+- 2 と 3 のレビュアーは、結果を **PR のコメント**に残す。
+- 実装者は自分の変更を承認しない。承認は別のエージェントか人間が行う。
+- 人間が文章を直した後は、2〜3 をやり直さない。ビルドと lint、スクリーンショット（{言語} × {light, dark} × {375px, 1280px}）を見るだけにする。
+- 例外: LP のキャッチコピーのように、レイアウトを左右する文言は、issue を起票する前に人間と決めて issue に書く。
+- 翻訳を足すときは、翻訳 → 別のエージェントが日本語に訳し戻して意味のずれを確認 → その言語でデザインの整合性レビュー → 英語のみ人間が確認、の順に進める。デザインの確認項目の言語の組み合わせは、その時点でサイトにある言語すべてにする。
