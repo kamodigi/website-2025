@@ -1,6 +1,7 @@
 <script lang="ts">
   import { page } from "$app/state";
   import { resolve } from "$app/paths";
+  import Card from "$lib/components/ui/Card.svelte";
   import { CONTACT_EMAIL } from "$lib/data/social";
   import { m } from "$lib/paraglide/messages";
   import { absoluteUrl } from "$lib/utils/seo";
@@ -53,19 +54,23 @@
         optoutLink: Snippet,
       )}
         <div class="service">
-          <h3>{name}</h3>
-          <dl>
-            <dt>{m.privacy_external_label_recipient()}</dt>
-            <dd>{recipient}</dd>
-            <dt>{m.privacy_external_label_data()}</dt>
-            <dd>{data}</dd>
-            <dt>{m.privacy_external_label_purpose()}</dt>
-            <dd>{purpose}</dd>
-            <dt>{m.privacy_external_label_policy()}</dt>
-            <dd>{@render policyLink()}</dd>
-            <dt>{m.privacy_external_label_optout()}</dt>
-            <dd>{optout}<br />{@render optoutLink()}</dd>
-          </dl>
+          <Card variant="bordered">
+            <div class="service-body">
+              <h3>{name}</h3>
+              <dl>
+                <dt>{m.privacy_external_label_recipient()}</dt>
+                <dd>{recipient}</dd>
+                <dt>{m.privacy_external_label_data()}</dt>
+                <dd>{data}</dd>
+                <dt>{m.privacy_external_label_purpose()}</dt>
+                <dd>{purpose}</dd>
+                <dt>{m.privacy_external_label_policy()}</dt>
+                <dd>{@render policyLink()}</dd>
+                <dt>{m.privacy_external_label_optout()}</dt>
+                <dd>{optout}<br />{@render optoutLink()}</dd>
+              </dl>
+            </div>
+          </Card>
         </div>
       {/snippet}
 
@@ -142,8 +147,15 @@
 
   .page-title {
     font-size: var(--text-4xl);
-    font-weight: 700;
+    font-weight: var(--font-bold);
     margin-bottom: var(--space-8);
+  }
+
+  /* 375px 幅で「プライバシーポリシー」が 1 行に収まるようにする */
+  @media (max-width: 767px) {
+    .page-title {
+      font-size: var(--text-3xl);
+    }
   }
 
   section {
@@ -152,13 +164,13 @@
 
   h2 {
     font-size: var(--text-2xl);
-    font-weight: 700;
+    font-weight: var(--font-bold);
     margin-bottom: var(--space-4);
   }
 
   h3 {
     font-size: var(--text-xl);
-    font-weight: 700;
+    font-weight: var(--font-bold);
     margin-bottom: var(--space-3);
   }
 
@@ -166,11 +178,13 @@
     margin-top: var(--space-3);
   }
 
+  /* Card は外側・内側の余白を持たないので、間隔は .service、内側の余白は .service-body で付ける */
   .service {
     margin-top: var(--space-6);
+  }
+
+  .service-body {
     padding: var(--space-5);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
   }
 
   dl {
@@ -179,7 +193,7 @@
   }
 
   dt {
-    font-weight: 700;
+    font-weight: var(--font-bold);
     margin-top: var(--space-2);
   }
 
@@ -192,9 +206,21 @@
     margin-top: var(--space-6);
   }
 
+  /*
+   * 本文中のリンク。サイト共通の --color-primary（白地とのコントラスト約 2.6:1）では
+   * 長文の中で読みにくいため、AA（4.5:1）を満たす --color-primary-dark（約 4.7:1）にし、
+   * 色だけに頼らないよう下線を付ける。ホバーは下線を太くして示す。
+   */
   a {
     color: var(--color-primary-dark);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
     overflow-wrap: anywhere;
+  }
+
+  a:hover {
+    color: var(--color-primary-dark);
+    text-decoration-thickness: 2px;
   }
 
   .established {
