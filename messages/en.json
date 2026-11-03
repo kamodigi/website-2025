@@ -20,7 +20,7 @@
 	"work_viewDemo": "View Demo",
 	"work_viewCode": "View Code",
 	"work_viewSite": "Visit Site",
-	"footer_copyright": "© {year} Portfolio",
+	"footer_copyright": "© {year} kamodigi",
 	"footer_rights": "All rights reserved.",
 	"footer_links_github": "GitHub",
 	"footer_links_twitter": "Twitter",
@@ -29,6 +29,7 @@
 	"theme_toggle_light": "Switch to light mode",
 	"theme_toggle_dark": "Switch to dark mode",
 	"view_all_works": "View all works",
+	"footer_privacy": "Privacy Policy",
 	"language_switcher_label": "Change language",
 	"toolbar_label": "Display settings"
 }

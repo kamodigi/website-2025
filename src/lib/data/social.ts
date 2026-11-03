@@ -3,6 +3,9 @@ import GithubDark from '$lib/assets/socials/github-mark-dark.svg';
 import Mail from '$lib/assets/socials/gmail.svg';
 import Zenn from '$lib/assets/socials/zenn.svg';
 
+/** 問い合わせ先のメールアドレス。Contact セクションとプライバシーポリシーで共有する。 */
+export const CONTACT_EMAIL = 'takuya.kometan@gmail.com';
+
 export interface Social {
 	label: string;
 	href: string;
@@ -25,7 +28,7 @@ export const Socials: Social[] = [
 	},
 	{
 		label: 'Email',
-		href: 'mailto:takuya.kometan@gmail.com',
+		href: `mailto:${CONTACT_EMAIL}`,
 		icon: Mail
 	}
 ]

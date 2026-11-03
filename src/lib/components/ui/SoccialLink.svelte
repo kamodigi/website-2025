@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Social } from "$lib/data/social";
 
-	const { href, icon, iconDark, label }: Social = $props();
+	const { href, icon, iconDark, label, onclick }: Social & { onclick?: () => void } = $props();
 </script>
 
 <a
@@ -10,6 +10,7 @@
 	rel="noopener noreferrer"
 	aria-label={label}
 	class="link"
+	{onclick}
 >
 	<div class="item">
 		<div class="icon-wrapper">

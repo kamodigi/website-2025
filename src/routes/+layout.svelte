@@ -1,9 +1,30 @@
 <script lang="ts">
-  import { type Snippet } from "svelte";
+  import { afterNavigate } from "$app/navigation";
+  import { resolve } from "$app/paths";
+  import { initAnalytics, trackPageView } from "$lib/analytics";
   import SiteToolbar from "$lib/components/layout/SiteToolbar.svelte";
+  import { m } from "$lib/paraglide/messages";
+  import { onMount, type Snippet } from "svelte";
   import "../lib/styles/global.css";
 
   const { children }: { children: Snippet } = $props();
+
+  const year = new Date().getFullYear();
+
+  // 初回表示とクライアント側の遷移ごとに 1 回ずつページビューを送る。
+  // 初回は onMount で送る（このプロジェクトでは afterNavigate の type: "enter" が呼ばれないため。
+  // 将来呼ばれるようになっても二重にならないよう、afterNavigate 側では enter を無視する）。
+  onMount(() => {
+    initAnalytics();
+    trackPageView(new URL(window.location.href));
+  });
+
+  // 同じページ内のアンカー移動（#contact など）は数えない。
+  afterNavigate(({ type, from, to }) => {
+    if (type === "enter" || !from || !to) return;
+    if (from.url.pathname === to.url.pathname && from.url.search === to.url.search) return;
+    trackPageView(to.url);
+  });
 </script>
 
 <svelte:head>
@@ -20,6 +41,13 @@
   <main id="main-content" class="main-content">
     {@render children()}
   </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href={resolve("/privacy")} class="footer-link">{m.footer_privacy()}</a>
+      <small class="footer-copyright">{m.footer_copyright({ year })}</small>
+    </div>
+  </footer>
 </div>
 
 <style>
@@ -33,5 +61,30 @@
     flex: 1;
     margin-top: 0px;
     width: 100%;
+  }
+
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-8) 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .footer-link {
+    color: var(--color-text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .footer-link:hover {
+    color: var(--color-link-hover);
   }
 </style>
