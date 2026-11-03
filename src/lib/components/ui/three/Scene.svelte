@@ -8,6 +8,15 @@
 
 	interactivity();
 
+	// ドットの色はテーマの CSS 変数 --color-hero-dots から読む（variables.css）
+	const DEFAULT_DOT_COLOR = "#39bc47";
+	function readDotColor(): string {
+		const value = getComputedStyle(document.documentElement)
+			.getPropertyValue("--color-hero-dots")
+			.trim();
+		return value || DEFAULT_DOT_COLOR;
+	}
+
 	// Uniforms
 	const MAX_CLICKS = 10;
 	const { size } = useThrelte();
@@ -16,7 +25,7 @@
 			value: new Vector2(size.current.width, size.current.height),
 		},
 		uTime: { value: 0 },
-		uColor: { value: new Color("#39bc47") },
+		uColor: { value: new Color(DEFAULT_DOT_COLOR) },
 		uClickPos: {
 			value: Array.from({ length: MAX_CLICKS }, () => new Vector2(-1, -1)),
 		},
@@ -54,14 +63,30 @@
 		uniforms.uTime.value = clock.getElapsedTime();
 	});
 
+	// テーマ（<html data-theme> または OS の設定）が変わったら色を合わせる
+	const syncDotColor = () => uniforms.uColor.value.set(readDotColor());
+	let themeObserver: MutationObserver | undefined;
+	let colorSchemeQuery: MediaQueryList | undefined;
+
 	onMount(() => {
 		// Canvasにクリックイベントを登録
 		canvas.addEventListener("pointerdown", onPointerDown);
+
+		syncDotColor();
+		themeObserver = new MutationObserver(syncDotColor);
+		themeObserver.observe(document.documentElement, {
+			attributes: true,
+			attributeFilter: ["data-theme"],
+		});
+		colorSchemeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+		colorSchemeQuery.addEventListener("change", syncDotColor);
 	});
 
 	onDestroy(() => {
 		// Canvasからクリックイベントを解除
 		canvas.removeEventListener("pointerdown", onPointerDown);
+		themeObserver?.disconnect();
+		colorSchemeQuery?.removeEventListener("change", syncDotColor);
 	});
 </script>
 

@@ -81,7 +81,7 @@ function formatDate(dateString: string): string {
 	}
 
 	.view-all-link:hover {
-		color: var(--color-primary);
+		color: var(--color-link);
 	}
 
 	.blogs-grid {
@@ -126,7 +126,7 @@ function formatDate(dateString: string): string {
 
 	.tag {
 		padding: var(--space-1) var(--space-2);
-		background: var(--color-bg-secondary);
+		background: var(--color-surface);
 		border-radius: var(--radius-sm);
 		font-size: var(--text-xs);
 		color: var(--color-text-secondary);

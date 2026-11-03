@@ -41,15 +41,15 @@
 	.initial {
 		font-size: 5rem;
 		font-weight: 700;
-		color: rgba(255, 255, 255, 0.9);
-		text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+		color: var(--color-on-gradient-light);
+		text-shadow: 0 2px 10px var(--color-on-gradient-light-shadow);
 		margin-bottom: var(--space-4);
 		user-select: none;
 	}
 
 	.initial.dark {
-		color: rgba(0, 0, 0, 0.7);
-		text-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
+		color: var(--color-on-gradient-dark);
+		text-shadow: 0 2px 10px var(--color-on-gradient-dark-shadow);
 	}
 
 	.tags {
@@ -61,18 +61,18 @@
 
 	.tag {
 		padding: var(--space-1) var(--space-3);
-		background: rgba(255, 255, 255, 0.25);
+		background: var(--color-on-gradient-light-chip);
 		backdrop-filter: blur(10px);
 		border-radius: var(--radius-sm);
 		font-size: var(--text-xs);
-		color: rgba(255, 255, 255, 0.95);
+		color: var(--color-on-gradient-light);
 		font-weight: 500;
-		border: 1px solid rgba(255, 255, 255, 0.3);
+		border: 1px solid var(--color-on-gradient-light-border);
 	}
 
 	.tags.dark .tag {
-		background: rgba(0, 0, 0, 0.15);
-		color: rgba(0, 0, 0, 0.8);
-		border: 1px solid rgba(0, 0, 0, 0.2);
+		background: var(--color-on-gradient-dark-chip);
+		color: var(--color-on-gradient-dark);
+		border: 1px solid var(--color-on-gradient-dark-border);
 	}
 </style>

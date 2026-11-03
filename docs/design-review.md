@@ -10,16 +10,16 @@ UI を変更する PR で、デザインの整合性をレビューするとき�
 
 | 対象 | 使う変数 | 例 |
 | --- | --- | --- |
-| 色 | `--color-*` | `--color-background`, `--color-text`, `--color-text-secondary`, `--color-border`, `--color-primary` |
+| 色 | `--color-*`（意味ベース） | `--color-background`, `--color-surface`, `--color-surface-elevated`, `--color-text`, `--color-text-secondary`, `--color-text-muted`, `--color-border`, `--color-link`, `--color-link-hover`, `--color-primary-fill` / `--color-on-primary-fill`, `--color-brand`, `--color-focus-ring`, `--color-overlay`, `--color-hover-overlay` |
+| 影 | `--shadow-*` | `--shadow-sm`, `--shadow-md`, `--shadow-lg` |
+| テーマで出し分け | `--display-light-only`, `--display-dark-only` | ライト用とダーク用の画像やアイコンを `display` で切り替える |
 | 余白 | `--space-*` | `--space-4`（1rem）, `--space-8`（2rem）, `--space-16`（4rem） |
 | 文字サイズ | `--text-*` | `--text-xl`, `--text-3xl`, `--text-4xl` |
 | 太さ・行間 | `--font-*`, `--leading-*` | `--font-bold`, `--leading-relaxed` |
 | アニメーション | `--transition-*`, `--ease-*` | `--transition-fast` |
 | 横幅・余白の基準 | `--max-width`, `--container-padding` | `.container` が使っている |
 
-色は、`--color-neutral-white` のような**素の色**ではなく、役割を表す**意味ベースの色変数**（`--color-background`, `--color-text`, `--color-border` など）を使う。素の色を直接使うと、ダークモードで色が切り替わらない。ダークモードの色変数は website-2025-pbp で整理している。そこで変数が増えたら（`--color-surface` など）、この表も更新する。
-
-> 既知の例外: `src/lib/components/ui/Card.svelte` は背景に `--color-neutral-white` を直接使っている。website-2025-pbp で直す対象であり、真似しない。
+色は、`--color-neutral-white` や `--color-primary` のような**素の色**ではなく、役割を表す**意味ベースの色変数**（上の表）を使う。素の色を直接使うと、ダークモードで色が切り替わらない。ダークの値は `variables.css` の `:root[data-theme='dark']` と `@media (prefers-color-scheme: dark)` の2か所にあり、変数を足すときは両方に書く。文字に使う色は、ライトとダークの両方で背景とのコントラストが WCAG AA（4.5:1）以上になるようにする。
 
 ## 2. ライトとダークの両方で確認する
 
@@ -48,7 +48,7 @@ UI を変更する PR で、デザインの整合性をレビューするとき�
 - **見出し**: `<h2 class="section-title">`。サイズや余白を個別に書き換えない。`.section-subtitle` は補足用。
 - **カード**: `src/lib/components/ui/Card.svelte`（`variant`: `default` / `elevated` / `bordered` / `gradient`）や `ThumbnailCard.svelte` を使い、同じものを作り直さない。
 - **ボタン**: `src/lib/components/ui/Button.svelte`（`variant`: `primary` / `secondary` / `outline` / `ghost` / `link`、`size`: `sm` / `md` / `lg`）を使う。フォーカス表示は `box-shadow` のリングで、Button に合わせる。
-- **リンク**: 色は `--color-primary`、ホバーは `--color-primary-dark`（`global.css`）。
+- **リンク**: 色は `--color-link`、ホバーは `--color-link-hover`（`global.css`）。`--color-primary` の明るい緑は白背景で 4.5:1 に届かないので、文字には使わない。
 - **本文の補助テキスト**: `--color-text-secondary`、`--leading-relaxed`。
 
 既存の部品で足りないときは、新しい部品を作る前に、なぜ足りないかを PR に書く。

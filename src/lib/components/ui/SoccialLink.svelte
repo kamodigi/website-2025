@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Social } from "$lib/data/social";
 
-	const { href, icon, label, onclick }: Social & { onclick?: () => void } = $props();
+	const { href, icon, iconDark, label, onclick }: Social & { onclick?: () => void } = $props();
 </script>
 
 <a
@@ -14,7 +14,12 @@
 >
 	<div class="item">
 		<div class="icon-wrapper">
-			<img src={icon} alt={label} class="icon" />
+			{#if iconDark}
+				<img src={icon} alt={label} class="icon icon-light" />
+				<img src={iconDark} alt={label} class="icon icon-dark" />
+			{:else}
+				<img src={icon} alt={label} class="icon" />
+			{/if}
 		</div>
 	</div>
 </a>
@@ -22,14 +27,14 @@
 <style>
 	.link {
 		display: inline-block;
-		color: var(--neutral-light); /* アイコンの色を親要素から継承 */
+		color: var(--color-text-secondary);
 		transition:
 			color 0.2s ease-in-out,
 			transform 0.2s ease-in-out;
 	}
 
 	.link:hover {
-		color: var(--primary-color); /* ホバー時の色 */
+		color: var(--color-link);
 		transform: translateY(-2px);
 	}
 
@@ -44,7 +49,7 @@
 	}
 
 	.item:hover {
-		background-color: var(--neutral-pale);
+		background-color: var(--color-surface);
 	}
 
 	.icon-wrapper {
@@ -59,5 +64,13 @@
 		width: 100%;
 		height: 100%;
 		object-fit: contain;
+	}
+
+	.icon-light {
+		display: var(--display-light-only);
+	}
+
+	.icon-dark {
+		display: var(--display-dark-only);
 	}
 </style>

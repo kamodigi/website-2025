@@ -25,7 +25,6 @@
 	"footer_links_twitter": "Twitter",
 	"footer_links_linkedin": "LinkedIn",
 	"language_switchTo": "Switch to English",
-	"language_current": "日本語",
 	"theme_toggle_light": "ライトモードに切り替え",
 	"theme_toggle_dark": "ダークモードに切り替え",
 	"sections_works": "WORKS",
@@ -67,5 +66,7 @@
 	"privacy_contact_body": "このポリシーと情報の扱いについてのお問い合わせは、次のメールアドレスへお送りください。",
 	"privacy_changes_heading": "改定",
 	"privacy_changes_body": "このポリシーは、法令の変更や当サイトの運営の変更に合わせて改めることがあります。改めた内容は、このページに載せた時点から効力を持ちます。",
-	"privacy_established": "制定日: 2026年11月3日"
+	"privacy_established": "制定日: 2026年11月3日",
+	"language_switcher_label": "言語を切り替える",
+	"toolbar_label": "表示の設定"
 }

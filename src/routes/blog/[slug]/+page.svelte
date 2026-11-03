@@ -125,7 +125,7 @@
 	}
 
 	.back-link:hover {
-		color: var(--color-primary);
+		color: var(--color-link);
 	}
 
 	.article-header {
@@ -171,7 +171,7 @@
 
 	.tag {
 		padding: var(--space-1) var(--space-3);
-		background: var(--color-bg-secondary);
+		background: var(--color-surface);
 		border-radius: var(--radius-sm);
 		font-size: var(--text-sm);
 		color: var(--color-text-secondary);
@@ -194,7 +194,7 @@
 		margin: 0 auto var(--space-16);
 		font-size: var(--text-base);
 		line-height: 1.8;
-		color: var(--color-text-primary);
+		color: var(--color-text);
 	}
 
 	.article-content :global(h2) {
@@ -235,7 +235,7 @@
 	}
 
 	.article-content :global(pre) {
-		background: var(--color-bg-secondary);
+		background: var(--color-surface);
 		border-radius: var(--radius-md);
 		padding: var(--space-4);
 		margin-bottom: var(--space-4);
@@ -243,7 +243,7 @@
 	}
 
 	.article-content :global(code) {
-		background: var(--color-bg-secondary);
+		background: var(--color-surface);
 		padding: var(--space-1) var(--space-2);
 		border-radius: var(--radius-sm);
 		font-size: 0.9em;
@@ -256,7 +256,7 @@
 	}
 
 	.article-content :global(blockquote) {
-		border-left: 4px solid var(--color-primary);
+		border-left: 4px solid var(--color-brand);
 		padding-left: var(--space-4);
 		margin: var(--space-6) 0;
 		color: var(--color-text-secondary);
@@ -264,12 +264,12 @@
 	}
 
 	.article-content :global(a) {
-		color: var(--color-primary);
+		color: var(--color-link);
 		text-decoration: underline;
 	}
 
 	.article-content :global(a:hover) {
-		color: var(--color-primary-dark);
+		color: var(--color-link-hover);
 	}
 
 	.article-content :global(img) {
@@ -321,7 +321,7 @@
 	}
 
 	.back-link-bottom a {
-		color: var(--color-primary-dark);
+		color: var(--color-link-hover);
 		text-decoration: none;
 		font-size: var(--text-lg);
 	}

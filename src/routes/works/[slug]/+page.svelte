@@ -122,17 +122,13 @@
   }
 
   .back-link:hover {
-    color: var(--color-primary);
+    color: var(--color-link);
   }
 
   .title {
     font-size: var(--text-4xl);
     font-weight: 700;
     margin-bottom: var(--space-6);
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
   }
 
   .content {

@@ -125,7 +125,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--color-overlay);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -143,7 +143,7 @@
   .modal {
     background-color: var(--color-surface-elevated);
     border-radius: 0.5rem;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow: var(--shadow-lg);
     max-height: calc(100vh - 2rem);
     display: flex;
     flex-direction: column;
@@ -207,7 +207,7 @@
   }
 
   .modal-close:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: var(--color-hover-overlay);
     color: var(--color-text);
   }
 

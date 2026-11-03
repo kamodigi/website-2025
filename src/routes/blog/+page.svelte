@@ -134,20 +134,20 @@
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius-md);
 		background: transparent;
-		color: var(--color-text-primary);
+		color: var(--color-text);
 		cursor: pointer;
 		font-size: var(--text-sm);
 		transition: all 0.2s;
 	}
 
 	.tag-button:hover {
-		background: var(--color-bg-secondary);
+		background: var(--color-surface);
 	}
 
 	.tag-button.active {
-		background: var(--color-primary);
-		color: white;
-		border-color: var(--color-primary);
+		background: var(--color-primary-fill);
+		color: var(--color-on-primary-fill);
+		border-color: var(--color-primary-fill);
 	}
 
 	.blogs-grid {
@@ -192,7 +192,7 @@
 
 	.tag {
 		padding: var(--space-1) var(--space-3);
-		background: var(--color-bg-secondary);
+		background: var(--color-surface);
 		border-radius: var(--radius-sm);
 		font-size: var(--text-xs);
 		color: var(--color-text-secondary);
@@ -210,7 +210,7 @@
 	}
 
 	.back-link a {
-		color: var(--color-primary-dark);
+		color: var(--color-link-hover);
 		text-decoration: none;
 		font-size: var(--text-lg);
 	}

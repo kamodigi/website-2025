@@ -26,9 +26,10 @@
 	"footer_links_twitter": "Twitter",
 	"footer_links_linkedin": "LinkedIn",
 	"language_switchTo": "日本語に切り替える",
-	"language_current": "English",
 	"theme_toggle_light": "Switch to light mode",
 	"theme_toggle_dark": "Switch to dark mode",
 	"view_all_works": "View all works",
-	"footer_privacy": "Privacy Policy"
+	"footer_privacy": "Privacy Policy",
+	"language_switcher_label": "Change language",
+	"toolbar_label": "Display settings"
 }

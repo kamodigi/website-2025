@@ -207,19 +207,18 @@
   }
 
   /*
-   * 本文中のリンク。サイト共通の --color-primary（白地とのコントラスト約 2.6:1）では
-   * 長文の中で読みにくいため、AA（4.5:1）を満たす --color-primary-dark（約 4.7:1）にし、
-   * 色だけに頼らないよう下線を付ける。ホバーは下線を太くして示す。
+   * 本文中のリンク。--color-link はライト/ダークとも AA（4.5:1）を満たす。
+   * 色だけに頼らないよう下線を付け、ホバーは下線を太くして示す（色は変えない）。
    */
   a {
-    color: var(--color-primary-dark);
+    color: var(--color-link);
     text-decoration: underline;
     text-underline-offset: 0.2em;
     overflow-wrap: anywhere;
   }
 
   a:hover {
-    color: var(--color-primary-dark);
+    color: var(--color-link);
     text-decoration-thickness: 2px;
   }
 

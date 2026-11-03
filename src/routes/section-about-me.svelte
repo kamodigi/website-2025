@@ -48,8 +48,8 @@
 	.category-title {
 		font-size: 1.25rem;
 		font-weight: 600;
-		color: var(--neutral-light);
-		border-bottom: 1px solid var(--neutral-soft);
+		color: var(--color-text-secondary);
+		border-bottom: 1px solid var(--color-border);
 		padding-bottom: 0.5rem;
 	}
 	.skills-grid {

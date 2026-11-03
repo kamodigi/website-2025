@@ -2,6 +2,7 @@
   import { afterNavigate } from "$app/navigation";
   import { resolve } from "$app/paths";
   import { initAnalytics, trackPageView } from "$lib/analytics";
+  import SiteToolbar from "$lib/components/layout/SiteToolbar.svelte";
   import { m } from "$lib/paraglide/messages";
   import { onMount, type Snippet } from "svelte";
   import "../lib/styles/global.css";
@@ -33,6 +34,8 @@
     crossorigin="anonymous"
   ></script>
 </svelte:head>
+
+<SiteToolbar />
 
 <div class="layout">
   <main id="main-content" class="main-content">
@@ -82,6 +85,6 @@
   }
 
   .footer-link:hover {
-    color: var(--color-primary-dark);
+    color: var(--color-link-hover);
   }
 </style>

@@ -26,7 +26,10 @@
 		align-items: center;
 		justify-content: center;
 		text-align: center;
-		z-index: 1;
+		/* 見出しをドットのキャンバス（z-index: 10）より手前に出す。クリックはキャンバスへ通す */
+		position: relative;
+		z-index: 11;
+		pointer-events: none;
 	}
 
 	.hero-content {
@@ -42,6 +45,12 @@
 		margin-bottom: var(--space-4);
 		-webkit-background-clip: initial;
 		-webkit-text-fill-color: initial;
+		/* 見出しは選択・コピーできるようにする（周りの余白のクリックはキャンバスへ通す） */
+		pointer-events: auto;
+		/* 背景のドットに重なっても読めるよう、背景色のにじみを敷く */
+		text-shadow:
+			0 0 8px var(--color-background),
+			0 0 16px var(--color-background);
 	}
 
 	/* Responsive styles */
