@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { asset, resolve } from "$app/paths";
+	import { absoluteUrl, ogImageUrl } from "$lib/utils/seo";
 	import ThumbnailCard from "$lib/components/ui/ThumbnailCard.svelte";
 	import type { PageData } from './$types';
 
@@ -22,9 +23,10 @@
 	<meta name="description" content={blog.metadata.description} />
 	<meta property="og:title" content={blog.metadata.title} />
 	<meta property="og:description" content={blog.metadata.description} />
-	{#if blog.metadata.thumbnail}
-		<meta property="og:image" content={asset(blog.metadata.thumbnail)} />
-	{/if}
+	<meta property="og:type" content="article" />
+	<meta property="og:url" content={absoluteUrl(resolve(`/blog/${blog.metadata.id}`))} />
+	<meta property="og:image" content={ogImageUrl(blog.metadata.thumbnail)} />
+	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 
 <article class="blog-detail">
