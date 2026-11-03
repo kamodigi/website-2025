@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+# Run tests only if test files exist
+if find ./src -type f \( -name "*.test.*" -o -name "*_test_*" -o -name "*.spec.*" -o -name "*_spec_*" \) 2>/dev/null | grep -q .; then
+  bun test
+fi
+
+# Run lint-staged to check and fix staged files
+# Defined in `.lintstagedrc.json`
+npx lint-staged
