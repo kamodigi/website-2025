@@ -2,7 +2,7 @@
 	import { T, useTask, useThrelte } from "@threlte/core";
 	import { interactivity } from "@threlte/extras";
 	import { onDestroy, onMount } from "svelte";
-	import { Clock, Color, GLSL3, Vector2 } from "three";
+	import { Color, GLSL3, Vector2 } from "three";
 	import fragmentShader from "./shaders/fragment.glsl?raw";
 	import vertexShader from "./shaders/vertex.glsl?raw";
 
@@ -40,6 +40,10 @@
 	let reduceMotionQuery: MediaQueryList | undefined;
 	const syncReduceMotion = () => {
 		reduceMotion = reduceMotionQuery?.matches ?? false;
+		// 出ている波紋が途中の形で止まらないよう、reduce になったら消す
+		if (reduceMotion) {
+			for (const pos of uniforms.uClickPos.value) pos.set(-1, -1);
+		}
 	};
 
 	// Click ripple effect
@@ -67,10 +71,10 @@
 	const camBottom = -camTop;
 
 	// Main loop
-	const clock = new Clock();
-	useTask(() => {
+	// 差分を足していくので、reduce を戻したときに時間が飛ばない
+	useTask((delta) => {
 		if (reduceMotion) return;
-		uniforms.uTime.value = clock.getElapsedTime();
+		uniforms.uTime.value += delta;
 	});
 
 	// テーマ（<html data-theme> または OS の設定）が変わったら色を合わせる
