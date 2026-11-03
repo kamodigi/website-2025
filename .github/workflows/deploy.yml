@@ -4,7 +4,7 @@ name: Deploy
 #   build-and-push（Dockerfile からビルドし :<sha> と :latest を GHCR に push）→ deploy（Coolify の webhook → 公開ページの確認）
 # Coolify は Docker Image リソースとして ghcr.io/kamodigi/website-2025:latest を pull するだけで、ConoHa 上ではビルドしない。
 # ロールバックは Coolify のイメージタグを前の :<sha> に変えて再デプロイする。
-# public リポジトリのため、runner は GitHub が用意する ubuntu-latest を使う（self-hosted runner は使わない）。
+# public リポジトリのため、runner は GitHub が用意する ubuntu-24.04 を使う（self-hosted runner は使わない）。ubuntu-latest は使わない（Ubuntu 26 への移行で挙動が変わるため固定する）。
 on:
   push:
     branches: [main]
@@ -27,7 +27,7 @@ jobs:
     name: Build & Push image
     # workflow_dispatch は任意のブランチを選べるため、main 以外からは本番に出さない（後続ジョブも needs でスキップされる）
     if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     permissions:
       contents: read
@@ -75,7 +75,7 @@ jobs:
   deploy:
     name: Trigger Coolify deploy & verify
     needs: build-and-push
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # webhook のリトライ + 公開ページの確認（最大約 5 分）の分
     timeout-minutes: 10
     permissions:
