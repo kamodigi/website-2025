@@ -92,9 +92,10 @@
     background-color: var(--color-hover-overlay);
   }
 
+  /* フォーカスのリングは Button.svelte に合わせる */
   .theme-toggle:focus-visible {
-    outline: 2px solid var(--color-focus-ring);
-    outline-offset: 2px;
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-focus-ring);
   }
 
   .label {

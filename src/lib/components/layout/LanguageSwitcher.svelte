@@ -186,9 +186,10 @@
     background-color: var(--color-hover-overlay);
   }
 
+  /* フォーカスのリングは Button.svelte に合わせる */
   .language-switcher-button:focus-visible {
-    outline: 2px solid var(--color-focus-ring);
-    outline-offset: 2px;
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-focus-ring);
   }
 
   .language-menu {
@@ -226,9 +227,8 @@
 
   /* 内側にリングを描く（メニューの角丸で切れないように） */
   .language-option:focus-visible {
-    outline: 2px solid var(--color-focus-ring);
-    outline-offset: -4px;
-    border-radius: 6px;
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--color-focus-ring);
   }
 
   .language-option[aria-checked='true'] {
