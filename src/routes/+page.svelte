@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { page } from "$app/state";
   import { absoluteUrl, ogImageUrl } from "$lib/utils/seo";
   import { m } from "$lib/paraglide/messages";
   import SectionAboutMe from './section-about-me.svelte';
@@ -7,8 +8,7 @@
   import SectionHero from "./section-hero.svelte";
   import SectionWorks from "./section-works.svelte";
 
-  // ja の hero_description は UNUSED のため、トップページ用の説明文を別に持つ
-  const description = "kamodigi（米谷拓哉）のポートフォリオ。フリーランスエンジニアとして、フロントエンドを中心に Web アプリを作っています。";
+  const description = m.site_description();
 </script>
 
 <svelte:head>
@@ -17,7 +17,7 @@
   <meta property="og:title" content={m.hero_title()} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content={absoluteUrl("/")} />
+  <meta property="og:url" content={absoluteUrl(page.url.pathname)} />
   <meta property="og:image" content={ogImageUrl()} />
   <meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
