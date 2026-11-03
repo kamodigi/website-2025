@@ -112,7 +112,6 @@
     type="button"
     class="language-switcher-button"
     aria-label={m.language_switcher_label()}
-    title={m.language_switcher_label()}
     aria-haspopup="menu"
     aria-expanded={isOpen}
     aria-controls="language-menu"
@@ -175,7 +174,7 @@
     height: 44px;
     background: transparent;
     border: none;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     color: var(--color-text);
     cursor: pointer;
     transition: background-color var(--transition-fast);
@@ -196,11 +195,11 @@
     position: absolute;
     top: calc(100% + var(--space-2));
     right: 0;
-    min-width: 160px;
+    min-width: calc(var(--space-32) + var(--space-8));
     padding: var(--space-1) 0;
     background-color: var(--color-surface-elevated);
     border: 1px solid var(--color-border);
-    border-radius: 8px;
+    border-radius: var(--radius-card);
     box-shadow: var(--shadow-md);
   }
 

@@ -44,7 +44,17 @@
       if (!readStoredTheme()) applyTheme(e.matches ? 'dark' : 'light');
     };
     media.addEventListener('change', handleChange);
-    return () => media.removeEventListener('change', handleChange);
+
+    // 別のタブで切り替えたら、このタブもそろえる
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === STORAGE_KEY && (e.newValue === 'light' || e.newValue === 'dark')) applyTheme(e.newValue);
+    };
+    window.addEventListener('storage', handleStorage);
+
+    return () => {
+      media.removeEventListener('change', handleChange);
+      window.removeEventListener('storage', handleStorage);
+    };
   });
 
 </script>
@@ -81,7 +91,7 @@
     cursor: pointer;
     width: 44px;
     height: 44px;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     display: flex;
     align-items: center;
     justify-content: center;

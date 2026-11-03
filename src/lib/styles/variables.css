@@ -155,6 +155,12 @@
   --space-24: 6rem;
   --space-32: 8rem;
 
+  /* Radius
+   * --radius-card は Card.svelte（0.5rem）と同じ。--radius-sm/md/lg は
+   * コード中で参照されているが未定義（website-2025 の別 issue で整理する）。 */
+  --radius-card: 0.5rem;
+  --radius-full: 9999px;
+
   /* Layout */
   --container-padding: 1rem;
   --header-height: 4rem;

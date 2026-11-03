@@ -45,6 +45,8 @@
 		margin-bottom: var(--space-4);
 		-webkit-background-clip: initial;
 		-webkit-text-fill-color: initial;
+		/* 見出しは選択・コピーできるようにする（周りの余白のクリックはキャンバスへ通す） */
+		pointer-events: auto;
 		/* 背景のドットに重なっても読めるよう、背景色のにじみを敷く */
 		text-shadow:
 			0 0 8px var(--color-background),

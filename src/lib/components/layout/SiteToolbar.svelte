@@ -5,10 +5,11 @@
 </script>
 
 <!-- 右上に固定。ヒーローの Three.js キャンバス（z-index: 10）より手前に出す -->
-<div class="site-toolbar" role="group" aria-label={m.toolbar_label()}>
+<!-- ランドマーク（header）に入れて、スクリーンリーダーのランドマーク移動でも届くようにする -->
+<header class="site-toolbar" aria-label={m.toolbar_label()}>
   <ThemeToggle />
   <LanguageSwitcher />
-</div>
+</header>
 
 <style>
   .site-toolbar {
@@ -19,9 +20,9 @@
     display: flex;
     align-items: center;
     gap: var(--space-1);
-    padding: 2px;
+    padding: var(--space-1);
     border: 1px solid var(--color-border);
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     /* スクロール中も文字に重なって読みにくくならないよう、背景を少し透かして敷く */
     background-color: color-mix(in oklch, var(--color-background) 85%, transparent);
     backdrop-filter: blur(8px);

@@ -91,8 +91,8 @@
 
   /* Style variants */
   .button-primary {
-    background: var(--gradient-primary);
-    color: var(--color-text);
+    background: var(--color-primary-fill);
+    color: var(--color-on-primary-fill);
   }
 
   .button-primary:hover:not([disabled]):not([aria-disabled="true"]) {
