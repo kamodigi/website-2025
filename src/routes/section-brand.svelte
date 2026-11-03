@@ -26,7 +26,7 @@
 		</div>
 		<div class="brand-text">
 			<h2 class="brand-name">kamodigi</h2>
-			<p class="brand-intro">{m.brand_intro()}</p>
+			<p class="brand-intro">{m.site_description()}</p>
 		</div>
 	</div>
 </section>
