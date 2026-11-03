@@ -3,6 +3,7 @@
   import { getWorkBySlugRemote } from "$lib/data/works/data.remote.js";
   import { m } from "$lib/paraglide/messages";
   import { getLocale } from "$lib/paraglide/runtime.js";
+  import ThemedImage from "$lib/components/ui/ThemedImage.svelte";
   import { TinySlider } from "svelte-tiny-slider";
 
   // Get the slug from the URL using $props()
@@ -40,9 +41,9 @@
       <div class="content">
         <div class="gallery">
           <TinySlider>
-            <img src={asset(thumbnail)} alt="サムネイル" />
+            <ThemedImage src={asset(thumbnail)} alt={work.metadata.title[lang]} />
             {#each gallery as image (image.toString())}
-              <img src={asset(image)} alt={work.metadata.title[lang]} />
+              <ThemedImage src={asset(image)} alt={work.metadata.title[lang]} />
             {/each}
 
             {#snippet controls({ setIndex, currentIndex })}
@@ -54,7 +55,7 @@
                     onfocus={() => setIndex(i)}
                     aria-label="Go to slide {i + 1}"
                   >
-                    <img
+                    <ThemedImage
                       src={asset(image)}
                       alt={`Pic ${i}`}
                       class="thumbnail"
@@ -66,6 +67,21 @@
           </TinySlider>
         </div>
         <h2>{work.metadata.title[lang]}</h2>
+        {#if work.metadata.links.demo || work.metadata.links.github || work.metadata.links.website}
+          <!-- eslint-disable svelte/no-navigation-without-resolve -->
+          <ul class="links">
+            {#if work.metadata.links.demo}
+              <li><a href={work.metadata.links.demo} target="_blank" rel="noopener noreferrer">{m.work_viewDemo()}</a></li>
+            {/if}
+            {#if work.metadata.links.github}
+              <li><a href={work.metadata.links.github} target="_blank" rel="noopener noreferrer">{m.work_viewCode()}</a></li>
+            {/if}
+            {#if work.metadata.links.website}
+              <li><a href={work.metadata.links.website} target="_blank" rel="noopener noreferrer">{m.work_viewSite()}</a></li>
+            {/if}
+          </ul>
+          <!-- eslint-enable svelte/no-navigation-without-resolve -->
+        {/if}
         <div>
           {@html work.content}
         </div>
@@ -90,8 +106,10 @@
     overflow: hidden;
   }
 
-  img {
-    max-width: 720px;
+  .gallery :global(img) {
+    max-width: min(100%, 720px);
+    max-height: 70vh;
+    object-fit: contain;
     border-radius: 8px;
   }
 
@@ -107,11 +125,20 @@
     border: none;
   }
 
-  .thumbnail {
+  .controls-wrapper :global(.thumbnail) {
     width: 120px;
     height: 60px;
     object-fit: cover;
     border-radius: 4px;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-2) 0 var(--space-4);
   }
 
   .back-link {
