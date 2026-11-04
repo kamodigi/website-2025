@@ -8,6 +8,7 @@
   import ThemedImage from "$lib/components/ui/ThemedImage.svelte";
   import Button from "$lib/components/ui/Button.svelte";
   import { TinySlider } from "svelte-tiny-slider";
+  import { tick, untrack } from "svelte";
 
   // Get the slug from the URL using $props()
   const { params } = $props();
@@ -20,6 +21,16 @@
     promptnotes: localeHref("/promptnotes"),
   };
   const productPage = PRODUCT_PAGES[slug];
+
+  // svelte-tiny-slider は表示中のスライドの位置を px で持ち、幅が変わっても計算し直さない。
+  // 画面の回転やウィンドウのリサイズで位置がずれるので、幅が変わったら今のスライドに合わせ直す
+  let slider = $state<InstanceType<typeof TinySlider>>();
+  let sliderWidth = $state(0);
+  let currentIndex = $state(0);
+  $effect(() => {
+    if (!sliderWidth) return;
+    tick().then(() => untrack(() => slider?.setIndex(currentIndex)));
+  });
 </script>
 
 <svelte:head>
@@ -55,7 +66,7 @@
       <div class="content">
         {#if images.length > 0}
         <div class="gallery">
-          <TinySlider>
+          <TinySlider bind:this={slider} bind:sliderWidth bind:currentIndex>
             {#each images as image (image.toString())}
               <div class="slide">
                 <ThemedImage src={asset(`/works/${image}`)} alt={title.value} />
@@ -133,8 +144,8 @@
     width: 100cqw;
   }
 
+  /* display は書かない（ThemedImage が light-only / dark-only で出し分けている。global.css で img は block） */
   .slide :global(img) {
-    display: block;
     max-width: 100%;
     max-height: 70vh;
     object-fit: contain;
