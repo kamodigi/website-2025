@@ -8,7 +8,7 @@
 <section id="contact" class="section contact-section">
 	<div class="container container-contact">
 		<h2 class="section-title">{m.sections_contact()}</h2>
-		<p>Webサイト制作、フロントエンド開発に関するご相談、共同開発のお誘いなど、お気軽にご連絡ください。技術に関するディスカッションやフィードバックも歓迎です！</p>
+		<p>{m.contact_description()}</p>
 
 		<div class="social-links">
 			{#each Socials as social (social.label)}

@@ -3,12 +3,18 @@ id: 'portfolio'
 title:
   ja: 'ポートフォリオ'
   en: 'Portfolio'
+  zh-Hans: '作品集'
+  zh-Hant: '作品集'
 shortDescription:
   ja: '米谷拓哉のポートフォント。作成したプロジェクトなどを紹介しています。'
   en: 'The portfolio of Takuya Kometani. Show works I joined and other information.'
+  zh-Hans: '米谷拓哉的作品集，介绍我做过的项目等内容。'
+  zh-Hant: '米谷拓哉的作品集，介紹我做過的專案等內容。'
 description:
   ja: 'フロントエンドが得意なwebアプリケーション・エンジニアです。React/Vueの経験があり、いちばん好きなフレームワークはSvelteです。LPから複雑なサイトの立ち上げまでweb制作ができます。個人開発のwebアプリも多数リリースしています。セルフホストに関心がありVercelからCoolifyへ移行した経験があります。'
   en: 'I am a web application engineer specializing in frontend development. I have experience with React and Vue, and my favorite framework is Svelte. I can build websites ranging from landing pages to complex sites. I have released many web applications as personal works. I am interested in self-hosting and have experience migrating from Vercel to Coolify.'
+  zh-Hans: '擅长前端的 Web 应用工程师。有 React/Vue 的开发经验，最喜欢的框架是 Svelte。从落地页（LP）到复杂网站的搭建，都能完成网页制作。也发布了许多个人开发的 Web 应用。关注自托管，有从 Vercel 迁移到 Coolify 的经验。'
+  zh-Hant: '擅長前端的 Web 應用程式工程師。有 React/Vue 的開發經驗，最喜歡的框架是 Svelte。從到達頁面（LP）到複雜網站的建置，都能完成網頁製作。也發布了許多個人開發的 Web 應用程式。關注自架服務（self-hosting），有從 Vercel 遷移到 Coolify 的經驗。'
 technologies:
   - 'SvelteKit'
   - 'TypeScript'

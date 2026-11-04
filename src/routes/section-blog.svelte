@@ -4,6 +4,7 @@ import { localeHref } from '$lib/i18n';
 import JapaneseOnlyBadge from '$lib/components/ui/JapaneseOnlyBadge.svelte';
 import ThumbnailCard from '$lib/components/ui/ThumbnailCard.svelte';
 import { getBlogs } from '$lib/data/blog';
+import { m } from '$lib/paraglide/messages';
 
 // 最新3件の記事を取得
 const blogsPromise = getBlogs({ excludeDrafts: true }, 'newest');
@@ -21,14 +22,14 @@ function formatDate(dateString: string): string {
 <section id="blog" class="section blog-section">
 	<div class="container">
 		<div class="section-header">
-			<h2 class="section-title">技術記事</h2>
-			<a href={localeHref("/blog")} class="view-all-link">すべての記事を見る &rarr;</a>
+			<h2 class="section-title">{m.sections_blog()}</h2>
+			<a href={localeHref("/blog")} class="view-all-link">{m.blog_viewAll()} &rarr;</a>
 		</div>
 		{#await blogsPromise}
-			<p class="loading-message">Loading articles...</p>
+			<p class="loading-message">{m.blog_loading()}</p>
 		{:then blogs}
 			{#if blogs.length === 0}
-				<p class="no-blogs-message">記事がまだありません。</p>
+				<p class="no-blogs-message">{m.blog_empty()}</p>
 			{:else}
 				<div class="blogs-grid">
 					{#each blogs.slice(0, 3) as blog (blog.metadata.id)}
@@ -66,7 +67,7 @@ function formatDate(dateString: string): string {
 				</div>
 			{/if}
 		{:catch error}
-			<p class="error-message">Error loading articles: {error.message}</p>
+			<p class="error-message">{m.blog_error({ message: error.message })}</p>
 		{/await}
 	</div>
 </section>
