@@ -1,6 +1,7 @@
 <script lang="ts">
   // Button component with various styles and variants
 	import type { Snippet } from 'svelte';
+	import { m } from '$lib/paraglide/messages';
   
   // Using Svelte 5 runes for props
   const {
@@ -40,6 +41,7 @@
     {onclick}
   >
     {@render children?.()}
+    {#if external}<span class="visually-hidden">{m.a11y_opens_new_tab()}</span>{/if}
   </a>
 {:else}
   <button 
@@ -64,6 +66,11 @@
     text-decoration: none;
     border: none;
     outline: none;
+    /* 文字が長くて折り返しても枠からはみ出さないように、高さは min-height で決めて上下に余白を持たせる */
+    text-align: center;
+    line-height: var(--leading-tight);
+    text-wrap: balance;
+    word-break: auto-phrase;
   }
 
   .button:focus-visible {
@@ -77,21 +84,29 @@
 
   /* Size variants */
   .button-sm {
-    height: 2rem;
-    padding: 0 0.75rem;
+    min-height: 2rem;
+    padding: var(--space-1) 0.75rem;
     font-size: var(--text-sm);
   }
 
   .button-md {
-    height: 2.5rem;
-    padding: 0 1rem;
+    min-height: 2.5rem;
+    padding: var(--space-1) 1rem;
     font-size: var(--text-base);
   }
 
   .button-lg {
-    height: 3rem;
-    padding: 0 1.5rem;
+    min-height: 3rem;
+    padding: var(--space-2) 1.5rem;
     font-size: var(--text-lg);
+  }
+
+  /* 375px 幅でも「Linux 版をダウンロード（AppImage）」が 1 行に収まる大きさにする */
+  @media (max-width: 767px) {
+    .button-lg {
+      padding: var(--space-2) var(--space-5);
+      font-size: var(--text-base);
+    }
   }
 
   /* Style variants */
@@ -148,7 +163,7 @@
   .button-link {
     background: transparent;
     color: var(--color-link);
-    height: auto;
+    min-height: 0;
     padding: 0;
     text-decoration: underline;
     text-underline-offset: 0.2em;

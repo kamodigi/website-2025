@@ -17,7 +17,7 @@
 
   // 製品ページ（LP）がある WORK。詳細ページの一番上に、製品ページへのボタンを出す
   const PRODUCT_PAGES: Record<string, string> = {
-    promptnotes: resolve("/promptnotes"),
+    promptnotes: localeHref("/promptnotes"),
   };
   const productPage = PRODUCT_PAGES[slug];
 </script>

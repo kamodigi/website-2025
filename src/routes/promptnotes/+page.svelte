@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { asset, resolve } from "$app/paths";
+  import { asset } from "$app/paths";
   import { page } from "$app/state";
   import { track } from "$lib/analytics";
   import Button from "$lib/components/ui/Button.svelte";
@@ -8,6 +8,7 @@
   import {
     detectPlatform,
     fetchLatestRelease,
+    PROMPTNOTES_COPY_LOCALES,
     PROMPTNOTES_NIX_COMMAND,
     PROMPTNOTES_RELEASES_URL,
     PROMPTNOTES_XATTR_COMMAND,
@@ -15,7 +16,9 @@
     type LatestRelease,
     type Platform,
   } from "$lib/data/promptnotes";
+  import { displayedLocale, localeHref } from "$lib/i18n";
   import { m } from "$lib/paraglide/messages";
+  import { getLocale } from "$lib/paraglide/runtime";
   import { absoluteUrl, ogImageUrl } from "$lib/utils/seo";
   import { onMount } from "svelte";
 
@@ -44,7 +47,10 @@
     track("download_click", { platform: platform ?? "unknown", format: "releases_page" });
   }
 
-  const title = m.pn_meta_title();
+  // 文言のない言語では日本語などで表示するので、本文の lang を実際に表示する言語にする（WORKS の pickLocalized と同じ）
+  const copyLang = displayedLocale(PROMPTNOTES_COPY_LOCALES, getLocale());
+
+  const title = `${m.pn_meta_title()} | kamodigi`;
   const description = m.pn_hero_subtitle();
 
   const solutions = [
@@ -81,6 +87,7 @@
   <meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 
+<div lang={copyLang}>
 <section class="section hero">
   <div class="container">
     <div class="hero-text">
@@ -116,7 +123,14 @@
     </div>
 
     <div class="screenshot">
-      <ThemedImage src={asset("/works/promptnotes/feed-light.webp")} alt={m.pn_screenshot_alt()} />
+      <!-- ファーストビューの画像なので遅延読み込みにしない。幅と高さは feed-light / feed-dark.webp の実寸 -->
+      <ThemedImage
+        src={asset("/works/promptnotes/feed-light.webp")}
+        alt={m.pn_screenshot_alt()}
+        loading="eager"
+        width={800}
+        height={967}
+      />
     </div>
   </div>
 </section>
@@ -227,7 +241,7 @@
     <p class="text">
       <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
       <a href={PROMPTNOTES_RELEASES_URL} target="_blank" rel="noopener noreferrer" class="text-link" onclick={trackReleasesPage}
-        >{m.pn_platforms_releases()}</a
+        >{m.pn_platforms_releases()}<span class="visually-hidden">{m.a11y_opens_new_tab()}</span></a
       >
     </p>
   </div>
@@ -238,10 +252,11 @@
     <h2 class="section-title">{m.pn_behind_heading()}</h2>
     <p class="text">{m.pn_behind_body()}</p>
     <p class="text">
-      <a href={resolve("/works/[slug]", { slug: "promptnotes" })} class="text-link">{m.pn_behind_link()} &rarr;</a>
+      <a href={localeHref("/works/promptnotes")} class="text-link">{m.pn_behind_link()} &rarr;</a>
     </p>
   </div>
 </section>
+</div>
 
 <style>
   .hero {
@@ -372,6 +387,11 @@
   @media (min-width: 768px) {
     .card-grid {
       grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* 枚数が奇数のとき（解決の 3 枚）、最後の 1 枚が左に残らないように 2 列分に広げる */
+    .card-grid > li:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
     }
   }
 

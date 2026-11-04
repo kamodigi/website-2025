@@ -4,6 +4,11 @@
  * ページを開いたときに GitHub の API から最新のリリースを取得してリンクを組み立てる。
  */
 
+import type { Locale } from '$lib/paraglide/runtime';
+
+/** LP の文言（messages の pn_*）がある言語。翻訳を足したらここにも足す（ない言語では lang をフォールバック先にする） */
+export const PROMPTNOTES_COPY_LOCALES: readonly Locale[] = ['ja'];
+
 export const PROMPTNOTES_REPO_URL = 'https://github.com/dev-komenzar/promptnotes';
 /** API の取得に失敗したときのリンク先 */
 export const PROMPTNOTES_RELEASES_URL = `${PROMPTNOTES_REPO_URL}/releases/latest`;
