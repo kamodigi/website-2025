@@ -123,7 +123,7 @@
 	"pn_platforms_linux": "Linux",
 	"pn_platforms_linux_detail": "x86_64（AppImage、.deb、.rpm、Nix flake）",
 	"pn_platforms_nix": "Nix flake の場合は、次のコマンドで起動できます。",
-	"pn_platforms_unsupported": "Intel の Mac と Windows には対応していません。",
+	"pn_platforms_unsupported": "Intel の Mac には対応していません。Windows には将来対応予定。",
 	"pn_platforms_releases": "すべての配布ファイル（GitHub Releases）",
 	"pn_behind_heading": "開発の裏側",
 	"pn_behind_body": "promptnotes をどう作ったか（技術の選び方、自作のフレームワーク ori を使った進め方、苦労した点）は、WORKS で紹介しています。",
