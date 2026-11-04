@@ -2,6 +2,7 @@
 	import { asset, resolve } from "$app/paths";
 	import { page } from "$app/state";
 	import { absoluteUrl, ogImageUrl } from "$lib/utils/seo";
+	import JapaneseOnlyBadge from "$lib/components/ui/JapaneseOnlyBadge.svelte";
 	import ThumbnailCard from "$lib/components/ui/ThumbnailCard.svelte";
 	import type { PageData } from './$types';
 
@@ -41,17 +42,18 @@
 		<!-- 記事ヘッダー -->
 		<header class="article-header">
 			<div class="article-meta">
-				<time class="article-date" datetime={blog.metadata.publishedAt}>
+				<time class="article-date" datetime={blog.metadata.publishedAt} lang="ja">
 					{formatDate(blog.metadata.publishedAt)}
 				</time>
 				{#if blog.metadata.updatedAt}
-					<span class="article-updated">
+					<span class="article-updated" lang="ja">
 						(更新: {formatDate(blog.metadata.updatedAt)})
 					</span>
 				{/if}
+				<JapaneseOnlyBadge />
 			</div>
-			<h1 class="article-title">{blog.metadata.title}</h1>
-			<p class="article-description">{blog.metadata.description}</p>
+			<h1 class="article-title" lang="ja">{blog.metadata.title}</h1>
+			<p class="article-description" lang="ja">{blog.metadata.description}</p>
 			<div class="article-tags">
 				{#each blog.metadata.tags as tag (tag)}
 					<span class="tag">{tag}</span>
@@ -70,7 +72,7 @@
 		{/if}
 
 		<!-- 記事コンテンツ -->
-		<div class="article-content">
+		<div class="article-content" lang="ja">
 			{@html blog.content}
 		</div>
 
@@ -92,7 +94,7 @@
 							gradientId={id}
 							href={resolve(`/blog/${id}`)}
 						>
-							<div class="related-content">
+							<div class="related-content" lang="ja">
 								<h3 class="related-blog-title">{title}</h3>
 								<p class="related-blog-description">{description}</p>
 							</div>

@@ -2,13 +2,10 @@
 id: 'promptnotes'
 title:
   ja: 'promptnotes'
-  en: 'promptnotes'
 shortDescription:
   ja: 'AI に送る前のプロンプトを、Enter を押しても送信されない場所で書き溜めるデスクトップのメモアプリ'
-  en: 'AI に送る前のプロンプトを、Enter を押しても送信されない場所で書き溜めるデスクトップのメモアプリ'
 description:
   ja: 'Claude Code や Codex で Enter を押して意図せず送信してしまう悩みから作った、プロンプト専用のデスクトップのメモアプリ。Tauri v2、SvelteKit、Rust、CodeMirror 6 で作り、開発には自作のフレームワーク ori を使いました。'
-  en: 'Claude Code や Codex で Enter を押して意図せず送信してしまう悩みから作った、プロンプト専用のデスクトップのメモアプリ。Tauri v2、SvelteKit、Rust、CodeMirror 6 で作り、開発には自作のフレームワーク ori を使いました。'
 technologies:
   - 'Tauri v2'
   - 'SvelteKit'

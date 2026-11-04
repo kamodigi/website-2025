@@ -3,6 +3,7 @@
   import { getWorkBySlugRemote } from "$lib/data/works/data.remote.js";
   import { m } from "$lib/paraglide/messages";
   import { getLocale } from "$lib/paraglide/runtime.js";
+  import { pickLocalized } from "$lib/i18n";
   import ThemedImage from "$lib/components/ui/ThemedImage.svelte";
   import { TinySlider } from "svelte-tiny-slider";
 
@@ -33,17 +34,19 @@
       <p class="loading-message">Loading work...</p>
     {:else if query.current}
       {@const work = query.current}
+      <!-- 画像のない WORK（portfolio など）では空のパスの img を出さない -->
       {@const images = [
         work.metadata.images.thumbnail,
         ...work.metadata.images.gallery,
-      ]}
-      {@const { thumbnail, gallery } = work.metadata.images}
+      ].filter(Boolean)}
+      {@const title = pickLocalized(work.metadata.title, lang)}
+      {@const content = pickLocalized(work.content, lang)}
       <div class="content">
+        {#if images.length > 0}
         <div class="gallery">
           <TinySlider>
-            <ThemedImage src={asset(thumbnail)} alt={work.metadata.title[lang]} />
-            {#each gallery as image (image.toString())}
-              <ThemedImage src={asset(image)} alt={work.metadata.title[lang]} />
+            {#each images as image (image.toString())}
+              <ThemedImage src={asset(`/works/${image}`)} alt={title.value} />
             {/each}
 
             {#snippet controls({ setIndex, currentIndex })}
@@ -56,7 +59,7 @@
                     aria-label="Go to slide {i + 1}"
                   >
                     <ThemedImage
-                      src={asset(image)}
+                      src={asset(`/works/${image}`)}
                       alt={`Pic ${i}`}
                       class="thumbnail"
                     />
@@ -66,7 +69,8 @@
             {/snippet}
           </TinySlider>
         </div>
-        <h2>{work.metadata.title[lang]}</h2>
+        {/if}
+        <h2 lang={title.locale}>{title.value}</h2>
         {#if work.metadata.links.demo || work.metadata.links.github || work.metadata.links.website}
           <!-- eslint-disable svelte/no-navigation-without-resolve -->
           <ul class="links">
@@ -82,8 +86,8 @@
           </ul>
           <!-- eslint-enable svelte/no-navigation-without-resolve -->
         {/if}
-        <div>
-          {@html work.content}
+        <div lang={content.locale}>
+          {@html content.value}
         </div>
       </div>
     {:else}

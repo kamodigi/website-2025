@@ -1,15 +1,30 @@
 <script lang="ts">
   import { afterNavigate } from "$app/navigation";
   import { resolve } from "$app/paths";
+  import { page } from "$app/state";
   import { initAnalytics, trackPageView } from "$lib/analytics";
   import SiteToolbar from "$lib/components/layout/SiteToolbar.svelte";
   import { m } from "$lib/paraglide/messages";
+  import { localizedPath } from "$lib/i18n";
+  import { baseLocale, deLocalizeHref, getLocale, locales } from "$lib/paraglide/runtime";
+  import { absoluteUrl } from "$lib/utils/seo";
   import { onMount, type Snippet } from "svelte";
   import "../lib/styles/global.css";
 
   const { children }: { children: Snippet } = $props();
 
   const year = new Date().getFullYear();
+
+  const locale = getLocale();
+  // 中国語のページでだけ読み込む（日本語のページの読み込みは増やさない）。font-family は variables.css で切り替える
+  const CHINESE_FONTS: Partial<Record<typeof locale, string>> = {
+    "zh-Hans": "https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap",
+    "zh-Hant": "https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap",
+  };
+  const chineseFont = CHINESE_FONTS[locale];
+
+  // hreflang 用に、同じページのほかの言語の URL を出す。プリレンダーするのでパスだけを使う
+  const basePath = $derived(deLocalizeHref(page.url.pathname));
 
   // 初回表示とクライアント側の遷移ごとに 1 回ずつページビューを送る。
   // 初回は onMount で送る（このプロジェクトでは afterNavigate の type: "enter" が呼ばれないため。
@@ -28,6 +43,13 @@
 </script>
 
 <svelte:head>
+  {#if chineseFont}
+    <link rel="stylesheet" href={chineseFont} />
+  {/if}
+  {#each locales as hreflang (hreflang)}
+    <link rel="alternate" {hreflang} href={absoluteUrl(localizedPath(basePath, hreflang))} />
+  {/each}
+  <link rel="alternate" hreflang="x-default" href={absoluteUrl(localizedPath(basePath, baseLocale))} />
   <script
     async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8951400341045454"
