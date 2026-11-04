@@ -2,10 +2,16 @@
 id: 'promptnotes'
 title:
   ja: 'promptnotes'
+  zh-Hans: 'promptnotes'
+  zh-Hant: 'promptnotes'
 shortDescription:
   ja: 'AI に送る前のプロンプトを、Enter を押しても送信されない場所で書き溜めるデスクトップのメモアプリ'
+  zh-Hans: '一款桌面笔记应用，在按 Enter 也不会发送的地方，写好并保存发送给 AI 之前的提示词'
+  zh-Hant: '一款桌面筆記應用程式，在按 Enter 也不會送出的地方，寫好並保存要傳給 AI 的提示詞'
 description:
   ja: 'Claude Code や Codex で Enter を押して意図せず送信してしまう悩みから作った、プロンプト専用のデスクトップのメモアプリ。Tauri v2、SvelteKit、Rust、CodeMirror 6 で作り、開発には自作のフレームワーク ori を使いました。'
+  zh-Hans: '源于在 Claude Code 和 Codex 中按下 Enter 会误发送的烦恼而做的、专门用于提示词的桌面笔记应用。使用 Tauri v2、SvelteKit、Rust、CodeMirror 6 开发，开发中使用了我自己做的框架 ori。'
+  zh-Hant: '源於在 Claude Code 和 Codex 中按下 Enter 會誤送出的困擾而做的、專門用於提示詞的桌面筆記應用程式。使用 Tauri v2、SvelteKit、Rust、CodeMirror 6 開發，開發時使用了我自己做的框架 ori。'
 technologies:
   - 'Tauri v2'
   - 'SvelteKit'
