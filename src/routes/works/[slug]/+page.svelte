@@ -110,7 +110,7 @@
     max-width: min(100%, 720px);
     max-height: 70vh;
     object-fit: contain;
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
   }
 
   .controls-wrapper {
@@ -129,7 +129,7 @@
     width: 120px;
     height: 60px;
     object-fit: cover;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
   }
 
   .links {
@@ -170,7 +170,7 @@
     text-align: center;
     padding: var(--space-8);
     border: 1px dashed var(--color-border);
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
   }
 
   /* Responsive layout */

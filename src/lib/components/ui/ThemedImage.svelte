@@ -3,6 +3,9 @@
 	 * `...-light.<ext>` という名前の画像には、同じ場所の `...-dark.<ext>` が対になっているものとして扱い、
 	 * サイトのテーマに合わせて出し分ける（--display-light-only / --display-dark-only）。
 	 * それ以外の画像は、そのまま 1 枚だけ表示する。
+	 *
+	 * 表示しない側の画像は `display: none` になり、`loading="lazy"` が付いているので、ブラウザは読み込まない
+	 * （テーマは data-theme 属性でも切り替わるため、<picture> の media では出し分けられない）。
 	 */
 	type Props = {
 		src: string;
@@ -17,8 +20,8 @@
 
 <span class="themed-image">
 	{#if darkSrc}
-		<img {src} {alt} class="{className} light-only" />
-		<img src={darkSrc} {alt} class="{className} dark-only" />
+		<img {src} {alt} loading="lazy" decoding="async" class="{className} light-only" />
+		<img src={darkSrc} {alt} loading="lazy" decoding="async" class="{className} dark-only" />
 	{:else}
 		<img {src} {alt} class={className} />
 	{/if}

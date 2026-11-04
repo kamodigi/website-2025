@@ -155,10 +155,11 @@
   --space-24: 6rem;
   --space-32: 8rem;
 
-  /* Radius
-   * --radius-card は Card.svelte（0.5rem）と同じ。--radius-sm/md/lg は
-   * コード中で参照されているが未定義（website-2025 の別 issue で整理する）。 */
-  --radius-card: 0.5rem;
+  /* Radius: sm = タグ・小さい画像、md = ボタン・入力、lg = カード・モーダル・コードブロック */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-card: var(--radius-lg);
   --radius-full: 9999px;
 
   /* Layout */

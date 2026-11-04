@@ -25,7 +25,7 @@
 
 <style>
   .card {
-    border-radius: 0.5rem;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     transition: var(--transition-base);
   }
