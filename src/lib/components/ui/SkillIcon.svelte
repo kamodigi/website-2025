@@ -17,7 +17,7 @@
 		align-items: center;
 		gap: 0.5rem;
 		padding: 1rem;
-		border-radius: 0.5rem;
+		border-radius: var(--radius-lg);
 		transition: background-color 0.2s;
 	}
 
