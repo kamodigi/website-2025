@@ -26,9 +26,12 @@
   // 画面の回転やウィンドウのリサイズで位置がずれるので、幅が変わったら今のスライドに合わせ直す
   let slider = $state<InstanceType<typeof TinySlider>>();
   let sliderWidth = $state(0);
+  let maxWidth = $state(0);
   let currentIndex = $state(0);
   $effect(() => {
-    if (!sliderWidth) return;
+    // maxWidth（全スライドの幅の合計）は ResizeObserver で遅れて入る。入る前に setIndex すると、
+    // maxWidth - sliderWidth がマイナスになり、位置がマイナスの端に飛ぶ（直接開いた直後に 1 枚分ずれる）
+    if (!sliderWidth || maxWidth < sliderWidth) return;
     tick().then(() => untrack(() => slider?.setIndex(currentIndex)));
   });
 </script>
@@ -66,7 +69,7 @@
       <div class="content">
         {#if images.length > 0}
         <div class="gallery">
-          <TinySlider bind:this={slider} bind:sliderWidth bind:currentIndex>
+          <TinySlider bind:this={slider} bind:sliderWidth bind:maxWidth bind:currentIndex>
             {#each images as image (image.toString())}
               <div class="slide">
                 <ThemedImage src={asset(`/works/${image}`)} alt={title.value} />
