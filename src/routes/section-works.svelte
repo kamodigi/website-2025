@@ -19,12 +19,12 @@ const lang = getLocale()
       <a href={localeHref("/works")} class="view-all-link">{m.view_all_works()} &rarr;</a>
     </div>
     {#if query.error}
-      <p class="error-message">Error loading works: {query.error.message}</p>
+      <p class="error-message">{m.works_error({ message: query.error.message })}</p>
     {:else if query.loading}
-      <p class="loading-message">Loading works...</p>
+      <p class="loading-message">{m.works_loading()}</p>
     {:else if query.current}
       {#if query.current.length === 0}
-        <p class="no-works-message">No works found.</p>
+        <p class="no-works-message">{m.works_empty()}</p>
       {:else}
         <div class="works-grid">
           {#each query.current as work (work.metadata.id)}

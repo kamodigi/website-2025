@@ -1,12 +1,15 @@
 <script lang="ts">
   import { page } from "$app/state";
-  import { localeHref } from "$lib/i18n";
+  import { localeHref, localizedPath } from "$lib/i18n";
   import Card from "$lib/components/ui/Card.svelte";
   import { CONTACT_EMAIL } from "$lib/data/social";
   import { m } from "$lib/paraglide/messages";
+  import { getLocale } from "$lib/paraglide/runtime";
   import { absoluteUrl } from "$lib/utils/seo";
   import type { Snippet } from "svelte";
 
+  // 翻訳版では、日本語版が正本である旨を冒頭に出す（日本語のページには出さない）
+  const isTranslation = getLocale() !== "ja";
 </script>
 
 <svelte:head>
@@ -21,6 +24,15 @@
 <article class="privacy-page">
   <div class="container">
     <h1 class="page-title">{m.privacy_title()}</h1>
+    {#if isTranslation}
+      <p class="translation-notice">
+        {m.privacy_translation_notice()}
+        <!-- 言語を変えるリンクなので、LanguageSwitcher と同じくページを読み込み直す -->
+        <a href={localizedPath("/privacy", "ja")} hreflang="ja" data-sveltekit-reload
+          >{m.privacy_translation_notice_link()}</a
+        >
+      </p>
+    {/if}
     <p>{m.privacy_intro()}</p>
 
     <section>
@@ -220,6 +232,14 @@
   a:hover {
     color: var(--color-link);
     text-decoration-thickness: 2px;
+  }
+
+  .translation-notice {
+    margin-bottom: var(--space-8);
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    color: var(--color-text-secondary);
   }
 
   .established {
