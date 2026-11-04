@@ -9,7 +9,7 @@ All notes are saved as local `.md` files. They coexist with other tools, and you
 ## Choosing the tech
 
 - **Tauri v2**: The foundation of the desktop app. It is distributed for macOS and Linux.
-- **SvelteKit**: The UI is built with SvelteKit (static adapter), the same favorite framework as this site.
+- **SvelteKit**: The UI is built with SvelteKit (static adapter), a framework I love, and the one this site is built with.
 - **Rust**: Processing close to the OS, such as saving files and checking for updates, is written in Rust as Tauri commands.
 - **CodeMirror 6**: Handles Markdown syntax highlighting and list and bracket completion.
 
@@ -21,7 +21,7 @@ In the documents, I split the app into four bounded contexts (note creation, fee
 
 ## What I held to in the design
 
-In `idea.md`, I wrote down what to protect at the very start. In particular, I listed mistakes the AI made in past implementations as things never to repeat.
+In `idea.md`, I wrote down the rules to follow before anything else. In particular, I listed mistakes the AI made in past implementations as things never to repeat.
 
 - **Single pane only**: No sidebar. When AI hears "note app," it wants to build a sidebar plus main pane layout.
 - **No app-name header**: The OS title bar is already there, so don't add a band with the same name beneath it.

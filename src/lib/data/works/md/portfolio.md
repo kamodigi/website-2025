@@ -4,11 +4,11 @@ title:
   ja: 'ポートフォリオ'
   en: 'Portfolio'
 shortDescription:
-  ja: '米谷拓哉のポートフォント。作成したプロジェクトなどを紹介しています。'
-  en: 'The portfolio of Takuya Kometani, introducing the projects he has built and more.'
+  ja: '米谷拓哉のポートフォリオ。作成したプロジェクトなどを紹介しています。'
+  en: "Takuya Kometani's portfolio, featuring projects I've built and more."
 description:
   ja: 'フロントエンドが得意なwebアプリケーション・エンジニアです。React/Vueの経験があり、いちばん好きなフレームワークはSvelteです。LPから複雑なサイトの立ち上げまでweb制作ができます。個人開発のwebアプリも多数リリースしています。セルフホストに関心がありVercelからCoolifyへ移行した経験があります。'
-  en: 'I am a web application engineer specializing in frontend development. I have experience with React and Vue, and my favorite framework is Svelte. I can build websites ranging from landing pages to complex sites. I have released many web applications as personal works. I am interested in self-hosting and have experience migrating from Vercel to Coolify.'
+  en: 'I am a web application engineer specializing in frontend development. I have experience with React and Vue, and my favorite framework is Svelte. I can build websites ranging from landing pages to complex sites. I have released many web applications as personal projects. I am interested in self-hosting and have experience migrating from Vercel to Coolify.'
 technologies:
   - 'SvelteKit'
   - 'TypeScript'
@@ -40,7 +40,7 @@ SvelteKitを採用したのは、個人的に好きなフレームワークで�
 
 このプロジェクトでは、Gemini CLIとKiroを使ったAI駆動開発を試してみました。ただし、実際にはAIにコーディングをさせた後、3割ほど自分の手で修正するというワークフローが多かったように思います。
 
-特に苦労したのは、Geminiがこのプロジェクトで使用しているSvelteKit v5ではなく、v4の文法で書くことが多かった点です。また、Paraglide JSについてはAIがほぼ理解していないようだったので、多言語対応の部分は全て自分で書きました。
+特に苦労したのは、Geminiがこのプロジェクトで使用しているSvelte 5ではなく、Svelte 4の文法で書くことが多かった点です。また、Paraglide JSについてはAIがほぼ理解していないようだったので、多言語対応の部分は全て自分で書きました。
 
 AI駆動開発は完全に自動化されたものではなく、AIが生成したコードを人間が適切にレビューし、修正することで初めて実用的なコードになるということを実感しました。特に新しいバージョンのライブラリやマイナーなライブラリについては、AIの知識が追いついていないことが多いため、人間の判断が不可欠です。
 

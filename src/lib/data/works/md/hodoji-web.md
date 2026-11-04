@@ -7,7 +7,7 @@ shortDescription:
   ja: '現代社会に仏教思想を実装する実験寺院のサイト'
   en: 'The website of an experimental temple that puts Buddhist thought into practice in modern society'
 description:
-  ja: '寳幢寺の公式ウェブサイトは、仏教を現代日本にどう実装するかというチャレンジを、モダンなウェブデザインを伝えています。訪問者が寺院のイベント、アクセス方法などの情報を簡単に見つけられるよう設計されています。レスポンシブデザインにより、あらゆるデバイスで最適な表示が可能です。'
+  ja: '寳幢寺の公式ウェブサイトは、仏教を現代日本にどう実装するかというチャレンジを、モダンなウェブデザインで伝えています。訪問者が寺院のイベント、アクセス方法などの情報を簡単に見つけられるよう設計されています。レスポンシブデザインにより、あらゆるデバイスで最適な表示が可能です。'
   en: 'The official website of Hodoji Temple conveys, through modern web design, the challenge of how to put Buddhism into practice in modern Japan. It is designed so that visitors can easily find information such as temple events and directions. Responsive design ensures the site displays well on any device.'
 technologies:
   - 'Next.js'
@@ -27,7 +27,7 @@ featured: true
 order: 11
 ---
 
-寳幢寺公式ウェブサイトは、仏教を現代日本にどう実装するかというチャレンジを、現代的なウェブデザインを伝えています。訪問者が寺院のイベント、アクセス方法などの情報を簡単に見つけられるよう設計されています。レスポンシブデザインにより、あらゆるデバイスで最適な表示が可能です。
+寳幢寺公式ウェブサイトは、仏教を現代日本にどう実装するかというチャレンジを、現代的なウェブデザインで伝えています。訪問者が寺院のイベント、アクセス方法などの情報を簡単に見つけられるよう設計されています。レスポンシブデザインにより、あらゆるデバイスで最適な表示が可能です。
 
 ## 主な機能
 

@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"cd /home/takuya/orca/workspaces/website-2025/pr2-i18n-en/src/lib/data/works/md && sed -n 28,200p ori.md; echo =======; sed -n 1,50p portfolio.md\"}",
-  "error": "Exit code 1\n\nAI に任せて開発すると、仕様がコードの中にしか残らなくなりがちです。指示を重ねるうちに、最初に決めたことと実装がずれていきます。\n\nori は、DDD のドキュメントを唯一の正（Single Source of Truth）にします。仕様もコードも、ドキュメントから派生するものとして扱います。直接直してよいのはドキュメントだけで、変更は slice 単位で伝播させます。AI に与えるのは、任意のスタイルで書く自由ではなく、決められた枠を埋める自由です。\n\n## 全体の流れ\n\nプロジェクトの立ち上げは、次の順に進めます。\n\n1. `/ori-init`: `.ori/` の骨組みを作ります。\n2. `/ori-distill`: AI との対話で、DDD のドキュメントを作ります。\n3. `/ori-architect`: 要件の対話から、アーキテクチャを `.ori/architecture.md` に決めます。\n4. `/ori-bootstrap`: フレームワークの初期化を案内し、ビルドできる状態か確認します。\n5. `/ori-flow`: slic...",
-  "timestamp": "2026-11-04T08:35:44.286Z",
-  "retry_count": 2
-}

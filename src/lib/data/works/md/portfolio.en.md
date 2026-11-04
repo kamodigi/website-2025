@@ -1,6 +1,6 @@
 ## About this site
 
-This is the portfolio site of Takuya Kometani (this site). Built with SvelteKit and TypeScript, it introduces my personal projects and tech stack. This time I adopted AI for development and tried AI-driven development with Gemini CLI and Kiro.
+This site is Takuya Kometani's portfolio. Built with SvelteKit and TypeScript, it introduces my personal projects and tech stack. This time I adopted AI for development and tried AI-driven development with Gemini CLI and Kiro.
 
 ## Choosing the tech
 
@@ -20,7 +20,7 @@ Also, now that generative AI can help, it has become easier to write plain CSS w
 
 In this project I tried AI-driven development with Gemini CLI and Kiro. In practice, though, the workflow was often to let the AI write the code and then fix about 30% of it by hand.
 
-What was especially hard was that Gemini often wrote in SvelteKit v4 syntax rather than the v5 this project uses. And since the AI seemed to know almost nothing about Paraglide JS, I wrote all of the internationalization part myself.
+What was especially hard was that Gemini often wrote Svelte 4 syntax rather than the Svelte 5 (runes) syntax this project uses. And since the AI seemed to know almost nothing about Paraglide JS, I wrote all of the internationalization part myself.
 
 I came to feel that AI-driven development is not fully automated: AI-generated code becomes practical only after a human reviews and fixes it properly. Especially with new versions of libraries and minor libraries, the AI's knowledge often hasn't caught up, so human judgment is essential.
 

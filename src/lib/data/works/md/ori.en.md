@@ -2,7 +2,7 @@
 
 When you hand development over to AI, the spec tends to survive only inside the code. As instructions pile up, the implementation drifts away from what you decided at the start.
 
-ori makes DDD documents the Single Source of Truth. Both the spec and the code are treated as derived from the documents. Only the documents may be edited directly, and changes are propagated slice by slice. What the AI gets is not the freedom to write in any style, but the freedom to fill in a fixed frame.
+ori makes DDD documents the single source of truth. Both the spec and the code are treated as derived from the documents. Only the documents may be edited directly, and changes are propagated slice by slice. What the AI gets is not the freedom to write in any style, but the freedom to fill in a fixed frame.
 
 ## The overall flow
 
@@ -20,7 +20,7 @@ When you edit the domain documents after implementation, `/ori-sync` marks the a
 
 `/ori-flow` runs through 7 stages in order: derive (create the spec from the documents), plan, test-red (a failing test), impl-green (an implementation that passes the test), refactor, review, and finalize. Each stage can also be run on its own.
 
-A slice cannot be cleaned of its dirty mark until it passes review. If the verdict in `review.md` is not PASS, the script that clears the mark refuses. Even if you edit `status.yaml` by hand, `/ori-doctor` detects it.
+A slice's dirty mark can't be cleared until it passes review. If the verdict in `review.md` is not PASS, the script that clears the mark refuses. Even if you edit `status.yaml` by hand, `/ori-doctor` detects it.
 
 ## Works with many AI CLIs
 
