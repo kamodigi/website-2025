@@ -242,6 +242,11 @@
     color: var(--color-text-secondary);
   }
 
+  /* 「查看日文版」などのリンクが 1 文字だけ次の行に残らないようにする */
+  .translation-notice a {
+    white-space: nowrap;
+  }
+
   .established {
     margin-top: var(--space-10);
     color: var(--color-text-secondary);

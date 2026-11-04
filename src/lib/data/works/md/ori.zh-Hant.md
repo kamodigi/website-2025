@@ -28,7 +28,7 @@ ori 把 DDD 的文件作為唯一的事實來源（Single Source of Truth）。�
 
 ## 實際使用的例子
 
-[promptnotes](/zh-hant/works/promptnotes) 就是用 ori 做的。從 `idea.md` 生成 DDD 的文件，按 slice 實作，規格的變更也透過 `/ori-sync` 傳播。
+[promptnotes](/works/promptnotes) 就是用 ori 做的。從 `idea.md` 生成 DDD 的文件，按 slice 實作，規格的變更也透過 `/ori-sync` 傳播。
 
 ## 現狀
 

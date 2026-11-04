@@ -1,6 +1,6 @@
 ## 關於本網站
 
-這是米谷拓哉的作品集網站（也就是本網站）。使用 SvelteKit 和 TypeScript 構建，介紹個人開發的作品和技術棧。這次在開發中引入了 AI，嘗試用 Gemini CLI 和 Kiro 進行 AI 驅動開發。
+這是米谷拓哉的作品集網站（也就是本網站）。使用 SvelteKit 和 TypeScript 建置，介紹個人開發的作品和技術棧。這次在開發中引入了 AI，嘗試用 Gemini CLI 和 Kiro 進行 AI 驅動開發。
 
 ## 技術選型
 
