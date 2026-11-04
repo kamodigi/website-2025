@@ -69,5 +69,20 @@
 	"privacy_contact_body": "For questions about this policy and how information is handled, please write to the email address below.",
 	"privacy_changes_heading": "Changes",
 	"privacy_changes_body": "We may revise this policy to reflect changes in law or in how the Site is run. Revisions take effect when they are posted on this page.",
-	"privacy_established": "Established: November 3, 2026"
+	"privacy_established": "Established: November 3, 2026",
+	"common_backToHome": "Back to the home page",
+	"works_loading": "Loading WORKS…",
+	"works_error": "Couldn't load WORKS: {message}",
+	"works_empty": "No WORKS yet.",
+	"work_loading": "Loading this work…",
+	"work_error": "Couldn't load this work: {message}",
+	"work_goToSlide": "Show image {index}",
+	"contact_description": "Whether it's a website, frontend development, or an invitation to collaborate, feel free to get in touch. Technical discussions and feedback are welcome too!",
+	"sections_blog": "Tech Articles",
+	"blog_viewAll": "View all articles",
+	"blog_loading": "Loading articles…",
+	"blog_error": "Couldn't load articles: {message}",
+	"blog_empty": "No articles yet.",
+	"privacy_translation_notice": "This page is a translation of the Japanese version. The Japanese version is the authoritative text; if the translation differs from it, the Japanese version prevails.",
+	"privacy_translation_notice_link": "View the Japanese version"
 }

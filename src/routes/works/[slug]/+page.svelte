@@ -30,9 +30,9 @@
     </div>
 
     {#if query.error}
-      <p class="error-message">Error loading work: {query.error.message}</p>
+      <p class="error-message">{m.work_error({ message: query.error.message })}</p>
     {:else if query.loading}
-      <p class="loading-message">Loading work...</p>
+      <p class="loading-message">{m.work_loading()}</p>
     {:else if query.current}
       {@const work = query.current}
       <!-- 画像のない WORK（portfolio など）では空のパスの img を出さない -->
@@ -57,11 +57,11 @@
                     class:active={i === currentIndex}
                     onclick={() => setIndex(i)}
                     onfocus={() => setIndex(i)}
-                    aria-label="Go to slide {i + 1}"
+                    aria-label={m.work_goToSlide({ index: i + 1 })}
                   >
                     <ThemedImage
                       src={asset(`/works/${image}`)}
-                      alt={`Pic ${i}`}
+                      alt=""
                       class="thumbnail"
                     />
                   </button>
@@ -92,7 +92,7 @@
         </div>
       </div>
     {:else}
-      <p class="not-found">Work data not found.</p>
+      <p class="not-found">{m.work_notFound()}</p>
     {/if}
   </div>
 </section>
