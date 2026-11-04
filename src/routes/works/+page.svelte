@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { asset, resolve } from "$app/paths";
+	import { asset } from "$app/paths";
+	import { localeHref } from "$lib/i18n";
 	import ThumbnailCard from "$lib/components/ui/ThumbnailCard.svelte";
 	import { getWorksRemote } from "$lib/data/works/data.remote";
 	import { m } from "$lib/paraglide/messages";
@@ -39,7 +40,7 @@
 							hover
 							{thumbnailUrl}
 							thumbnailAlt={title.value}
-							href={resolve(`/works/${id}`)}
+							href={localeHref(`/works/${id}`)}
 						>
 							<h3 class="work-title" lang={title.locale}>{title.value}</h3>
 							<p class="work-description" lang={shortDescription.locale}>{shortDescription.value}</p>
@@ -51,7 +52,7 @@
 	</div>
 
 	<div class="back-link">
-		<a href={resolve("/")}>← トップページへ戻る</a>
+		<a href={localeHref("/")}>← トップページへ戻る</a>
 	</div>
 </section>
 

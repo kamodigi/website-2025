@@ -1,5 +1,6 @@
 <script lang="ts">
-import { asset, resolve } from '$app/paths';
+import { asset } from '$app/paths';
+import { localeHref } from '$lib/i18n';
 import JapaneseOnlyBadge from '$lib/components/ui/JapaneseOnlyBadge.svelte';
 import ThumbnailCard from '$lib/components/ui/ThumbnailCard.svelte';
 import { getBlogs } from '$lib/data/blog';
@@ -21,7 +22,7 @@ function formatDate(dateString: string): string {
 	<div class="container">
 		<div class="section-header">
 			<h2 class="section-title">技術記事</h2>
-			<a href={resolve("/blog")} class="view-all-link">すべての記事を見る &rarr;</a>
+			<a href={localeHref("/blog")} class="view-all-link">すべての記事を見る &rarr;</a>
 		</div>
 		{#await blogsPromise}
 			<p class="loading-message">Loading articles...</p>
@@ -42,7 +43,7 @@ function formatDate(dateString: string): string {
 								gradientTitle={title}
 								gradientTags={tags}
 								gradientId={id}
-								href={resolve(`/blog/${id}`)}
+								href={localeHref(`/blog/${id}`)}
 							>
 								<div class="blog-content">
 									<div class="blog-meta">

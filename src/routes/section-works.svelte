@@ -1,5 +1,6 @@
 <script lang="ts">
-import { asset, resolve } from '$app/paths';
+import { asset } from '$app/paths';
+import { localeHref } from '$lib/i18n';
 import ThumbnailCard from '$lib/components/ui/ThumbnailCard.svelte';
 import { getWorksRemote } from '$lib/data/works/data.remote';
 import { m } from '$lib/paraglide/messages';
@@ -15,7 +16,7 @@ const lang = getLocale()
   <div class="container">
     <div class="section-header">
       <h2 class="section-title">{m.sections_works()}</h2>
-      <a href={resolve("/works")} class="view-all-link">{m.view_all_works()} &rarr;</a>
+      <a href={localeHref("/works")} class="view-all-link">{m.view_all_works()} &rarr;</a>
     </div>
     {#if query.error}
       <p class="error-message">Error loading works: {query.error.message}</p>
@@ -36,7 +37,7 @@ const lang = getLocale()
               hover
               thumbnailUrl={thumbnailUrl}
               thumbnailAlt={title.value}
-              href={resolve(`/works/${id}`)}
+              href={localeHref(`/works/${id}`)}
             >
               <h3 class="work-title" lang={title.locale}>{title.value}</h3>
               <p class="work-description" lang={shortDescription.locale}>{shortDescription.value}</p>
