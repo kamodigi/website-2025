@@ -1,6 +1,6 @@
 <script lang="ts">
   import { afterNavigate } from "$app/navigation";
-  import { resolve } from "$app/paths";
+  import { localeHref } from "$lib/i18n";
   import { page } from "$app/state";
   import { initAnalytics, trackPageView } from "$lib/analytics";
   import SiteToolbar from "$lib/components/layout/SiteToolbar.svelte";
@@ -66,7 +66,7 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <a href={resolve("/privacy")} class="footer-link">{m.footer_privacy()}</a>
+      <a href={localeHref("/privacy")} class="footer-link">{m.footer_privacy()}</a>
       <small class="footer-copyright">{m.footer_copyright({ year })}</small>
     </div>
   </footer>

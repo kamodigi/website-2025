@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { asset, resolve } from "$app/paths";
+  import { asset } from "$app/paths";
+  import { localeHref } from "$lib/i18n";
   import { getWorkBySlugRemote } from "$lib/data/works/data.remote.js";
   import { m } from "$lib/paraglide/messages";
   import { getLocale } from "$lib/paraglide/runtime.js";
@@ -29,7 +30,7 @@
 <section class="detail">
   <div class="container">
     <div class="header">
-      <a href={resolve("/works")} class="back-link"
+      <a href={localeHref("/works")} class="back-link"
         >&larr; {m.work_backToWorks()}</a
       >
       <h1 class="title">{m.work_title()} - {slug}</h1>
@@ -96,7 +97,7 @@
           </ul>
           <!-- eslint-enable svelte/no-navigation-without-resolve -->
         {/if}
-        <div lang={content.locale}>
+        <div class="prose" lang={content.locale}>
           {@html content.value}
         </div>
       </div>
