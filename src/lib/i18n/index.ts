@@ -1,4 +1,4 @@
-import type { Locale } from '$lib/paraglide/runtime';
+import { localizeHref, type Locale } from '$lib/paraglide/runtime';
 import { LOCALE_FALLBACKS } from './fallback.js';
 
 /** 言語ごとの値。基準の言語（ja）だけは必須 */
@@ -32,4 +32,12 @@ export function pickLocalized<T>(values: Localized<T>, locale: Locale): { value:
 /** `pickLocalized` の値だけを返す */
 export function localized<T>(values: Localized<T>, locale: Locale): T {
 	return pickLocalized(values, locale).value;
+}
+
+/**
+ * そのページの、指定した言語のパス。paraglide の localizeHref はトップを `/en/` のように末尾の / 付きで返すので、
+ * ほかのページ（`/en/works`）とそろえて末尾の / を取る（日本語のトップの `/` はそのまま）
+ */
+export function localizedPath(path: string, locale: Locale): string {
+	return localizeHref(path, { locale }).replace(/(.)\/$/, '$1');
 }

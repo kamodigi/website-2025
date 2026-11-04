@@ -12,7 +12,7 @@ function collectSources(): Map<string, WorkSource> {
   const sources = new Map<string, WorkSource>();
   for (const [path, content] of Object.entries(modules)) {
     const fileName = path.replace(/^.*\/md\//, '').replace(/\.md$/, '');
-    const locale = locales.find((l) => l !== 'ja' && fileName.endsWith(`.${l}`)) as Exclude<Locale, 'ja'> | undefined;
+    const locale = locales.find((l) => l !== 'ja' && fileName.toLowerCase().endsWith(`.${l.toLowerCase()}`)) as Exclude<Locale, 'ja'> | undefined;
     const slug = locale ? fileName.slice(0, -(locale.length + 1)) : fileName;
     const entry = sources.get(slug) ?? { translations: {} };
     if (locale) entry.translations[locale] = content;

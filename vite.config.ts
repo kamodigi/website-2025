@@ -6,13 +6,13 @@ import { resolveMessages, SOURCE_DIR } from './scripts/resolve-messages.mjs';
 // paraglide が読む前に、フォールバックを埋めた文言を書き出しておく（scripts/resolve-messages.mjs）
 resolveMessages();
 
-/** dev サーバーで messages/*.json を直したら書き出し直す。paraglide は書き出し先の変更を見て再コンパイルする */
+/** dev サーバーで messages/*.json を足す・直す・消すと書き出し直す。paraglide は書き出し先の変更を見て再コンパイルする */
 function resolveMessagesOnChange(): Plugin {
 	return {
 		name: 'resolve-messages-on-change',
 		configureServer(server) {
 			server.watcher.add(SOURCE_DIR);
-			server.watcher.on('change', (file) => {
+			server.watcher.on('all', (_event, file) => {
 				if (file.startsWith(SOURCE_DIR) && file.endsWith('.json')) resolveMessages();
 			});
 		}

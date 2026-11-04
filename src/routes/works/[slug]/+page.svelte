@@ -43,9 +43,9 @@
       <div class="content">
         <div class="gallery">
           <TinySlider>
-            <img src={asset(thumbnail)} alt="サムネイル" />
+            <img src={asset(`/works/${thumbnail}`)} alt="サムネイル" />
             {#each gallery as image (image.toString())}
-              <img src={asset(image)} alt={title.value} />
+              <img src={asset(`/works/${image}`)} alt={title.value} />
             {/each}
 
             {#snippet controls({ setIndex, currentIndex })}
@@ -58,7 +58,7 @@
                     aria-label="Go to slide {i + 1}"
                   >
                     <img
-                      src={asset(image)}
+                      src={asset(`/works/${image}`)}
                       alt={`Pic ${i}`}
                       class="thumbnail"
                     />

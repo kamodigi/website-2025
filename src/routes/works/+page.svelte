@@ -32,7 +32,7 @@
 						{@const title = pickLocalized(work.metadata.title, lang)}
 						{@const shortDescription = pickLocalized(work.metadata.shortDescription, lang)}
 						{@const thumbnailUrl = images.thumbnail
-							? asset("works/" + images.thumbnail)
+							? asset(`/works/${images.thumbnail}`)
 							: undefined}
 						<ThumbnailCard
 							variant="bordered"

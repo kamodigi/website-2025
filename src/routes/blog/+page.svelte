@@ -84,7 +84,7 @@
 						>
 							<div class="blog-content">
 								<div class="blog-meta">
-									<time class="blog-date" datetime={publishedAt}>
+									<time class="blog-date" datetime={publishedAt} lang="ja">
 										{formatDate(publishedAt)}
 									</time>
 									<JapaneseOnlyBadge />

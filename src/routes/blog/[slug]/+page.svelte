@@ -42,11 +42,11 @@
 		<!-- 記事ヘッダー -->
 		<header class="article-header">
 			<div class="article-meta">
-				<time class="article-date" datetime={blog.metadata.publishedAt}>
+				<time class="article-date" datetime={blog.metadata.publishedAt} lang="ja">
 					{formatDate(blog.metadata.publishedAt)}
 				</time>
 				{#if blog.metadata.updatedAt}
-					<span class="article-updated">
+					<span class="article-updated" lang="ja">
 						(更新: {formatDate(blog.metadata.updatedAt)})
 					</span>
 				{/if}

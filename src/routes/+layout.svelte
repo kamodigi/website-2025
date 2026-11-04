@@ -5,7 +5,8 @@
   import { initAnalytics, trackPageView } from "$lib/analytics";
   import SiteToolbar from "$lib/components/layout/SiteToolbar.svelte";
   import { m } from "$lib/paraglide/messages";
-  import { baseLocale, deLocalizeHref, getLocale, locales, localizeHref } from "$lib/paraglide/runtime";
+  import { localizedPath } from "$lib/i18n";
+  import { baseLocale, deLocalizeHref, getLocale, locales } from "$lib/paraglide/runtime";
   import { absoluteUrl } from "$lib/utils/seo";
   import { onMount, type Snippet } from "svelte";
   import "../lib/styles/global.css";
@@ -46,9 +47,9 @@
     <link rel="stylesheet" href={chineseFont} />
   {/if}
   {#each locales as hreflang (hreflang)}
-    <link rel="alternate" {hreflang} href={absoluteUrl(localizeHref(basePath, { locale: hreflang }))} />
+    <link rel="alternate" {hreflang} href={absoluteUrl(localizedPath(basePath, hreflang))} />
   {/each}
-  <link rel="alternate" hreflang="x-default" href={absoluteUrl(localizeHref(basePath, { locale: baseLocale }))} />
+  <link rel="alternate" hreflang="x-default" href={absoluteUrl(localizedPath(basePath, baseLocale))} />
   <script
     async
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8951400341045454"

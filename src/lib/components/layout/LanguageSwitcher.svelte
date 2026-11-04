@@ -1,8 +1,8 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { m } from '$lib/paraglide/messages';
-  import { LOCALE_LABELS } from '$lib/i18n';
-  import { deLocalizeHref, getLocale, localizeHref, locales } from '$lib/paraglide/runtime';
+  import { LOCALE_LABELS, localizedPath } from '$lib/i18n';
+  import { deLocalizeHref, getLocale, locales } from '$lib/paraglide/runtime';
 
   // 表示名は各言語での自称（エンドニム）。src/lib/i18n の LOCALE_LABELS にある
   const LANGUAGES = locales.map((locale) => ({ locale, label: LOCALE_LABELS[locale] }));
@@ -135,13 +135,13 @@
     {#each LANGUAGES as { locale, label } (locale)}
       {@const isCurrent = locale === currentLocale}
       <!-- 言語ごとにページを再読み込みする（ロケールはプリレンダー時に決まるため） -->
-      <!-- paraglide の localizeHref が返す /en/... は resolve() の型付きルートに当てはまらない -->
+      <!-- localizedPath（paraglide の localizeHref）が返す /en/... は resolve() の型付きルートに当てはまらない -->
       <!-- eslint-disable svelte/no-navigation-without-resolve -->
       <a
         class="language-option"
         role="menuitemradio"
         aria-checked={isCurrent}
-        href={localizeHref(basePath, { locale })}
+        href={localizedPath(basePath, locale)}
         hreflang={locale}
         lang={locale}
         tabindex="-1"
