@@ -4,6 +4,7 @@
   import { m } from "$lib/paraglide/messages";
   import { getLocale } from "$lib/paraglide/runtime.js";
   import { pickLocalized } from "$lib/i18n";
+  import ThemedImage from "$lib/components/ui/ThemedImage.svelte";
   import { TinySlider } from "svelte-tiny-slider";
 
   // Get the slug from the URL using $props()
@@ -45,7 +46,7 @@
         <div class="gallery">
           <TinySlider>
             {#each images as image (image.toString())}
-              <img src={asset(`/works/${image}`)} alt={title.value} />
+              <ThemedImage src={asset(`/works/${image}`)} alt={title.value} />
             {/each}
 
             {#snippet controls({ setIndex, currentIndex })}
@@ -57,7 +58,7 @@
                     onfocus={() => setIndex(i)}
                     aria-label="Go to slide {i + 1}"
                   >
-                    <img
+                    <ThemedImage
                       src={asset(`/works/${image}`)}
                       alt={`Pic ${i}`}
                       class="thumbnail"
@@ -70,6 +71,21 @@
         </div>
         {/if}
         <h2 lang={title.locale}>{title.value}</h2>
+        {#if work.metadata.links.demo || work.metadata.links.github || work.metadata.links.website}
+          <!-- eslint-disable svelte/no-navigation-without-resolve -->
+          <ul class="links">
+            {#if work.metadata.links.demo}
+              <li><a href={work.metadata.links.demo} target="_blank" rel="noopener noreferrer">{m.work_viewDemo()}</a></li>
+            {/if}
+            {#if work.metadata.links.github}
+              <li><a href={work.metadata.links.github} target="_blank" rel="noopener noreferrer">{m.work_viewCode()}</a></li>
+            {/if}
+            {#if work.metadata.links.website}
+              <li><a href={work.metadata.links.website} target="_blank" rel="noopener noreferrer">{m.work_viewSite()}</a></li>
+            {/if}
+          </ul>
+          <!-- eslint-enable svelte/no-navigation-without-resolve -->
+        {/if}
         <div lang={content.locale}>
           {@html content.value}
         </div>
@@ -94,8 +110,10 @@
     overflow: hidden;
   }
 
-  img {
-    max-width: 720px;
+  .gallery :global(img) {
+    max-width: min(100%, 720px);
+    max-height: 70vh;
+    object-fit: contain;
     border-radius: var(--radius-lg);
   }
 
@@ -111,11 +129,20 @@
     border: none;
   }
 
-  .thumbnail {
+  .controls-wrapper :global(.thumbnail) {
     width: 120px;
     height: 60px;
     object-fit: cover;
     border-radius: var(--radius-sm);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-2) 0 var(--space-4);
   }
 
   .back-link {

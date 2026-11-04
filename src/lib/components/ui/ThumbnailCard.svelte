@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Card from "$lib/components/ui/Card.svelte";
+	import ThemedImage from "$lib/components/ui/ThemedImage.svelte";
 	import GradientThumbnail from "$lib/components/ui/GradientThumbnail.svelte";
 	import type { Snippet } from "svelte";
 
@@ -36,7 +37,7 @@
 		<a {href} class="card-link" target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noopener noreferrer' : undefined}>
 			<div class="thumbnail-wrapper">
 				{#if thumbnailUrl}
-					<img src={thumbnailUrl} alt={thumbnailAlt} class="thumbnail-image" />
+					<ThemedImage src={thumbnailUrl} alt={thumbnailAlt} class="thumbnail-image" />
 				{:else if gradientTitle && gradientTags && gradientId}
 					<GradientThumbnail title={gradientTitle} tags={gradientTags} id={gradientId} />
 				{/if}
@@ -48,7 +49,7 @@
 	{:else}
 		<div class="thumbnail-wrapper">
 			{#if thumbnailUrl}
-				<img src={thumbnailUrl} alt={thumbnailAlt} class="thumbnail-image" />
+				<ThemedImage src={thumbnailUrl} alt={thumbnailAlt} class="thumbnail-image" />
 			{:else if gradientTitle && gradientTags && gradientId}
 				<GradientThumbnail title={gradientTitle} tags={gradientTags} id={gradientId} />
 			{/if}
@@ -71,7 +72,7 @@
 		overflow: hidden;
 	}
 
-	.thumbnail-image {
+	:global(.thumbnail-image) {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
