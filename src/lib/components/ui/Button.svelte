@@ -11,6 +11,7 @@
     type = 'button',
     href = undefined,
     external = false,
+    onclick = undefined,
     children
   } = $props<{
     variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
@@ -20,6 +21,8 @@
     type?: 'button' | 'submit' | 'reset';
     href?: string;
     external?: boolean;
+    /** 計測（track）などに使う。リンクの遷移は止めない */
+    onclick?: (_event: MouseEvent) => void;
     children?: Snippet;
   }>();
 
@@ -34,6 +37,7 @@
     target={external ? '_blank' : undefined} 
     rel={external ? 'noopener noreferrer' : undefined}
     aria-disabled={disabled}
+    {onclick}
   >
     {@render children?.()}
   </a>
@@ -42,6 +46,7 @@
     {type} 
     class={buttonClass} 
     {disabled}
+    {onclick}
   >
     {@render children?.()}
   </button>
