@@ -57,7 +57,9 @@
         <div class="gallery">
           <TinySlider>
             {#each images as image (image.toString())}
-              <ThemedImage src={asset(`/works/${image}`)} alt={title.value} />
+              <div class="slide">
+                <ThemedImage src={asset(`/works/${image}`)} alt={title.value} />
+              </div>
             {/each}
 
             {#snippet controls({ setIndex, currentIndex })}
@@ -119,21 +121,31 @@
   .gallery {
     position: relative;
     overflow: hidden;
+    max-width: 720px;
+    /* スライドの幅をこの枠の幅にそろえるための基準 */
+    container-type: inline-size;
   }
 
-  .gallery :global(img) {
-    max-width: min(100%, 720px);
+  /* .slider-content は width: fit-content の flex なので、スライドの幅は % ではなく
+     コンテナ幅（cqw）で決める。flex-shrink で縮んで 1 行に並ぶのを防ぐ */
+  .slide {
+    flex: 0 0 100cqw;
+    width: 100cqw;
+  }
+
+  .slide :global(img) {
+    display: block;
+    max-width: 100%;
     max-height: 70vh;
     object-fit: contain;
     border-radius: var(--radius-lg);
   }
 
   .controls-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
     margin-top: var(--space-4);
-  }
-
-  .controls-wrapper > * + * {
-    margin-left: var(--space-2);
   }
 
   button {
