@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { asset, resolve } from "$app/paths";
+	import { asset } from "$app/paths";
+	import { localeHref } from "$lib/i18n";
 	import { page } from "$app/state";
 	import { absoluteUrl, ogImageUrl } from "$lib/utils/seo";
 	import JapaneseOnlyBadge from "$lib/components/ui/JapaneseOnlyBadge.svelte";
@@ -34,7 +35,7 @@
 <article class="blog-detail">
 	<div class="container">
 		<div class="header">
-			<a href={resolve("/blog")} class="back-link">
+			<a href={localeHref("/blog")} class="back-link">
 				← 記事一覧へ戻る
 			</a>
 		</div>
@@ -92,7 +93,7 @@
 							gradientTitle={title}
 							gradientTags={tags}
 							gradientId={id}
-							href={resolve(`/blog/${id}`)}
+							href={localeHref(`/blog/${id}`)}
 						>
 							<div class="related-content" lang="ja">
 								<h3 class="related-blog-title">{title}</h3>
@@ -105,7 +106,7 @@
 		{/if}
 
 		<div class="back-link-bottom">
-			<a href={resolve("/blog")}>← 記事一覧へ戻る</a>
+			<a href={localeHref("/blog")}>← 記事一覧へ戻る</a>
 		</div>
 	</div>
 </article>

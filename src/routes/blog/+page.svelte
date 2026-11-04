@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { asset, resolve } from "$app/paths";
+	import { asset } from "$app/paths";
+	import { localeHref } from "$lib/i18n";
 	import JapaneseOnlyBadge from "$lib/components/ui/JapaneseOnlyBadge.svelte";
 	import ThumbnailCard from "$lib/components/ui/ThumbnailCard.svelte";
 	import type { PageData } from './$types';
@@ -80,7 +81,7 @@
 							gradientTitle={title}
 							gradientTags={tags}
 							gradientId={id}
-							href={resolve(`/blog/${id}`)}
+							href={localeHref(`/blog/${id}`)}
 						>
 							<div class="blog-content">
 								<div class="blog-meta">
@@ -105,7 +106,7 @@
 	</div>
 
 	<div class="back-link">
-		<a href={resolve("/")}>← トップページへ戻る</a>
+		<a href={localeHref("/")}>← トップページへ戻る</a>
 	</div>
 </section>
 

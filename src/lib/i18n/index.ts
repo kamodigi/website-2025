@@ -1,4 +1,5 @@
-import { localizeHref, type Locale } from '$lib/paraglide/runtime';
+import { base } from '$app/paths';
+import { getLocale, localizeHref, type Locale } from '$lib/paraglide/runtime';
 import { LOCALE_FALLBACKS } from './fallback.js';
 
 /** 言語ごとの値。基準の言語（ja）だけは必須 */
@@ -40,4 +41,24 @@ export function localized<T>(values: Localized<T>, locale: Locale): T {
  */
 export function localizedPath(path: string, locale: Locale): string {
 	return localizeHref(path, { locale }).replace(/(.)\/$/, '$1');
+}
+
+/**
+ * サイト内のリンク先。パスを今の言語の URL にする（`/works` → `/en/works`）。
+ * `<a href={localeHref('/works')}>` のように使う。
+ *
+ * `resolve()` は使わない。@sveltejs/kit 2.x の `resolve()` は prerender 中に相対パス（`../works`）を返し
+ * （`paths.relative` が既定の true のとき）、localizeHref がそれを `http://sveltekit-prerender/...` の
+ * 絶対 URL にしてしまうため、`base` + パスの絶対パスを渡している。
+ *
+ * 前提: `paths.base` は空（svelte.config.js に設定なし）。`base` を設定すると localizeHref が
+ * `/en/base/works` のように接頭辞の位置を誤るので、使う場合は base を外してから localize し、前に付け直すこと
+ * （LanguageSwitcher も同じ前提）
+ */
+export function localeHref(path: `/${string}`): string {
+	const href = localizedPath(`${base}${path}`, getLocale());
+	// prerender 中は origin（http://sveltekit-prerender）つきで返ってくることがあるので、パスだけにする
+	if (!/^https?:\/\//.test(href)) return href;
+	const url = new URL(href);
+	return url.pathname + url.search + url.hash;
 }

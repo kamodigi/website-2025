@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from "$app/state";
-  import { resolve } from "$app/paths";
+  import { localeHref } from "$lib/i18n";
   import Card from "$lib/components/ui/Card.svelte";
   import { CONTACT_EMAIL } from "$lib/data/social";
   import { m } from "$lib/paraglide/messages";
@@ -134,7 +134,7 @@
     <p class="established">{m.privacy_established()}</p>
 
     <div class="back-link">
-      <a href={resolve("/")}>← kamodigi</a>
+      <a href={localeHref("/")}>← kamodigi</a>
     </div>
   </div>
 </article>
