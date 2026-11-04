@@ -2,14 +2,17 @@
 id: 'ori'
 title:
   ja: 'ori（織）'
+  en: 'ori'
   zh-Hans: 'ori（织）'
   zh-Hant: 'ori（織）'
 shortDescription:
   ja: 'DDD のドキュメントを唯一の正として、slice ごとに軽量な TDD と変更の伝播を回す開発フレームワーク'
+  en: 'A development framework that treats DDD documents as the single source of truth and runs lightweight TDD and change propagation slice by slice'
   zh-Hans: '以 DDD 文档为唯一事实来源，按 slice 进行轻量 TDD 并传播变更的开发框架'
   zh-Hant: '以 DDD 文件為唯一事實來源，依 slice 進行輕量 TDD 並傳播變更的開發框架'
 description:
   ja: 'DDD のドキュメントを Single Source of Truth とし、slice ごとに軽量な TDD と変更の伝播を回す開発フレームワーク。Claude Code、Codex、Cursor など、多くの AI CLI に対応しています。MIT ライセンスで公開しています。'
+  en: 'A development framework that treats DDD documents as the single source of truth and runs lightweight TDD and change propagation slice by slice. It works with many AI CLIs, including Claude Code, Codex, and Cursor. Released under the MIT license.'
   zh-Hans: '以 DDD 文档为唯一事实来源（Single Source of Truth），按 slice 进行轻量 TDD 并传播变更的开发框架。支持 Claude Code、Codex、Cursor 等多种 AI CLI。以 MIT 许可证开源。'
   zh-Hant: '以 DDD 文件為唯一事實來源（Single Source of Truth），依 slice 進行輕量 TDD 並傳播變更的開發框架。支援 Claude Code、Codex、Cursor 等多種 AI CLI。以 MIT 授權開源。'
 technologies:

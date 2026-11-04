@@ -4,7 +4,7 @@
   import { getWorkBySlugRemote } from "$lib/data/works/data.remote.js";
   import { m } from "$lib/paraglide/messages";
   import { getLocale } from "$lib/paraglide/runtime.js";
-  import { pickLocalized } from "$lib/i18n";
+  import { localizeHtmlLinks, pickLocalized } from "$lib/i18n";
   import ThemedImage from "$lib/components/ui/ThemedImage.svelte";
   import { TinySlider } from "svelte-tiny-slider";
 
@@ -88,7 +88,7 @@
           <!-- eslint-enable svelte/no-navigation-without-resolve -->
         {/if}
         <div class="prose" lang={content.locale}>
-          {@html content.value}
+          {@html localizeHtmlLinks(content.value, lang)}
         </div>
       </div>
     {:else}
