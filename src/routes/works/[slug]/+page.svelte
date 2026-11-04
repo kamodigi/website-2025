@@ -87,7 +87,7 @@
           </ul>
           <!-- eslint-enable svelte/no-navigation-without-resolve -->
         {/if}
-        <div lang={content.locale}>
+        <div class="prose" lang={content.locale}>
           {@html content.value}
         </div>
       </div>
