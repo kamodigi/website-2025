@@ -30,6 +30,14 @@ export function pickLocalized<T>(values: Localized<T>, locale: Locale): { value:
 	return { value: values.ja, locale: 'ja' };
 }
 
+/**
+ * 文言がある言語の一覧（`available`）から、フォールバックの順で実際に表示する言語を返す（`lang` 属性に使う）。
+ * paraglide の文言は、翻訳がなければ別の言語で出るので、ページの文言がある言語を呼び出し側で渡す。
+ */
+export function displayedLocale(available: readonly Locale[], locale: Locale): Locale {
+	return fallbackChain(locale).find((candidate) => available.includes(candidate)) ?? 'ja';
+}
+
 /** `pickLocalized` の値だけを返す */
 export function localized<T>(values: Localized<T>, locale: Locale): T {
 	return pickLocalized(values, locale).value;

@@ -6,6 +6,7 @@
   import { getLocale } from "$lib/paraglide/runtime.js";
   import { localizeHtmlLinks, pickLocalized } from "$lib/i18n";
   import ThemedImage from "$lib/components/ui/ThemedImage.svelte";
+  import Button from "$lib/components/ui/Button.svelte";
   import { TinySlider } from "svelte-tiny-slider";
 
   // Get the slug from the URL using $props()
@@ -13,6 +14,12 @@
   const { slug } = params;
   const query = getWorkBySlugRemote(slug);
   const lang = getLocale();
+
+  // 製品ページ（LP）がある WORK。詳細ページの一番上に、製品ページへのボタンを出す
+  const PRODUCT_PAGES: Record<string, string> = {
+    promptnotes: localeHref("/promptnotes"),
+  };
+  const productPage = PRODUCT_PAGES[slug];
 </script>
 
 <svelte:head>
@@ -27,6 +34,9 @@
         >&larr; {m.work_backToWorks()}</a
       >
       <h1 class="title">{m.work_title()} - {slug}</h1>
+      {#if productPage}
+        <Button href={productPage}>{m.work_productPage()}</Button>
+      {/if}
     </div>
 
     {#if query.error}
