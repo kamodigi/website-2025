@@ -2,10 +2,13 @@
 id: 'ori'
 title:
   ja: 'ori（織）'
+  en: 'ori'
 shortDescription:
   ja: 'DDD のドキュメントを唯一の正として、slice ごとに軽量な TDD と変更の伝播を回す開発フレームワーク'
+  en: 'A development framework that treats DDD documents as the single source of truth and runs lightweight TDD and change propagation slice by slice'
 description:
   ja: 'DDD のドキュメントを Single Source of Truth とし、slice ごとに軽量な TDD と変更の伝播を回す開発フレームワーク。Claude Code、Codex、Cursor など、多くの AI CLI に対応しています。MIT ライセンスで公開しています。'
+  en: 'A development framework that treats DDD documents as the Single Source of Truth and runs lightweight TDD and change propagation slice by slice. It works with many AI CLIs, including Claude Code, Codex, and Cursor. Released under the MIT license.'
 technologies:
   - 'TypeScript'
   - 'DDD'

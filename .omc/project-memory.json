@@ -1,0 +1,176 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1793781302430,
+  "projectRoot": "/home/takuya/orca/workspaces/website-2025/pr2-i18n-en",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": "22",
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "@sveltejs/kit",
+        "version": "2.22.0",
+        "category": "fullstack"
+      },
+      {
+        "name": "svelte",
+        "version": "5.0.0",
+        "category": "frontend"
+      },
+      {
+        "name": "vite",
+        "version": "7.1.5",
+        "category": "build"
+      }
+    ],
+    "packageManager": "pnpm",
+    "runtime": "Node.js 22"
+  },
+  "build": {
+    "buildCommand": "pnpm build",
+    "testCommand": null,
+    "lintCommand": "pnpm lint",
+    "devCommand": "pnpm dev",
+    "scripts": {
+      "dev": "vite dev --port=5177 --open",
+      "build": "vite build",
+      "preview": "vite preview",
+      "prepare": "husky",
+      "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+      "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+      "lint": "eslint . -c ./eslint.config.js",
+      "lint:fix": "eslint . --fix -c ./eslint.config.js",
+      "type-check": "svelte-check --tsconfig ./tsconfig.json",
+      "check:all": "pnpm run lint && pnpm run type-check",
+      "compile:translations": "node scripts/resolve-messages.mjs && pnpm paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide",
+      "start": "serve build"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": "ES modules",
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs",
+      "scripts",
+      "src",
+      "static"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 1,
+      "lastAccessed": 1793781302407,
+      "keyFiles": [
+        "design-review.md"
+      ]
+    },
+    "messages": {
+      "path": "messages",
+      "purpose": null,
+      "fileCount": 4,
+      "lastAccessed": 1793781302411,
+      "keyFiles": [
+        "en.json",
+        "ja.json",
+        "zh-Hans.json",
+        "zh-Hant.json"
+      ]
+    },
+    "project.inlang": {
+      "path": "project.inlang",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1793781302418,
+      "keyFiles": [
+        "settings.json"
+      ]
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 4,
+      "lastAccessed": 1793781302420,
+      "keyFiles": [
+        "generate-brand-sprite.mjs",
+        "generate-favicons.mjs",
+        "generate-ogp.mjs",
+        "resolve-messages.mjs"
+      ]
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 4,
+      "lastAccessed": 1793781302421,
+      "keyFiles": [
+        "app.d.ts",
+        "app.html",
+        "hooks.server.ts",
+        "hooks.ts"
+      ]
+    },
+    "static": {
+      "path": "static",
+      "purpose": "Static files",
+      "fileCount": 6,
+      "lastAccessed": 1793781302422,
+      "keyFiles": [
+        "ads.txt",
+        "apple-touch-icon.png",
+        "favicon.ico",
+        "favicon.svg",
+        "icon-512.png"
+      ]
+    },
+    "src/lib": {
+      "path": "src/lib",
+      "purpose": "Library code",
+      "fileCount": 1,
+      "lastAccessed": 1793781302427,
+      "keyFiles": [
+        "index.ts"
+      ]
+    },
+    "src/routes": {
+      "path": "src/routes",
+      "purpose": "Route handlers",
+      "fileCount": 9,
+      "lastAccessed": 1793781302427,
+      "keyFiles": [
+        "+layout.server.js",
+        "+layout.svelte",
+        "+page.svelte"
+      ]
+    }
+  },
+  "hotPaths": [],
+  "userDirectives": []
+}

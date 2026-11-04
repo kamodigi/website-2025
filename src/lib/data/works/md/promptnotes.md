@@ -2,10 +2,13 @@
 id: 'promptnotes'
 title:
   ja: 'promptnotes'
+  en: 'promptnotes'
 shortDescription:
   ja: 'AI に送る前のプロンプトを、Enter を押しても送信されない場所で書き溜めるデスクトップのメモアプリ'
+  en: 'A desktop note-taking app for drafting prompts before sending them to an AI, where pressing Enter never sends anything'
 description:
   ja: 'Claude Code や Codex で Enter を押して意図せず送信してしまう悩みから作った、プロンプト専用のデスクトップのメモアプリ。Tauri v2、SvelteKit、Rust、CodeMirror 6 で作り、開発には自作のフレームワーク ori を使いました。'
+  en: 'A desktop note-taking app made just for prompts, born from the annoyance of accidentally sending a prompt by pressing Enter in Claude Code or Codex. Built with Tauri v2, SvelteKit, Rust, and CodeMirror 6, and developed with ori, my own framework.'
 technologies:
   - 'Tauri v2'
   - 'SvelteKit'

@@ -5,7 +5,7 @@ title:
   en: 'Portfolio'
 shortDescription:
   ja: '米谷拓哉のポートフォント。作成したプロジェクトなどを紹介しています。'
-  en: 'The portfolio of Takuya Kometani. Show works I joined and other information.'
+  en: 'The portfolio of Takuya Kometani, introducing the projects he has built and more.'
 description:
   ja: 'フロントエンドが得意なwebアプリケーション・エンジニアです。React/Vueの経験があり、いちばん好きなフレームワークはSvelteです。LPから複雑なサイトの立ち上げまでweb制作ができます。個人開発のwebアプリも多数リリースしています。セルフホストに関心がありVercelからCoolifyへ移行した経験があります。'
   en: 'I am a web application engineer specializing in frontend development. I have experience with React and Vue, and my favorite framework is Svelte. I can build websites ranging from landing pages to complex sites. I have released many web applications as personal works. I am interested in self-hosting and have experience migrating from Vercel to Coolify.'
