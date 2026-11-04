@@ -58,9 +58,21 @@ export default ts.config(
 			"svelte/no-at-html-tags": "warn",
 			"svelte/valid-compile": "warn",
 			"svelte/no-unused-svelte-ignore": "warn",
-			// サイト内のリンクは localeHref（$lib/i18n。base と localizeHref を使う）で作る。
-			// このルールは resolve() 以外を認識できないため、リンクの検査は切る（goto などは引き続き検査する）
-			"svelte/no-navigation-without-resolve": ["error", { ignoreLinks: true }]
+			// サイト内のリンクは localeHref（$lib/i18n）で作る。上のルールは resolve() しか認識できないので、
+			// リンクの検査は切り（goto などは引き続き検査する）、代わりに下の no-restricted-syntax で
+			// 接頭辞なしの内部リンク（href="/works"、href={`/blog/${id}`} など）を禁止する
+			"svelte/no-navigation-without-resolve": ["error", { ignoreLinks: true }],
+			"no-restricted-syntax": [
+				"error",
+				...[
+					"SvelteAttribute[key.name='href'] > SvelteLiteral[value=/^\\x2f/]",
+					"SvelteAttribute[key.name='href'] > SvelteMustacheTag > Literal[value=/^\\x2f/]",
+					"SvelteAttribute[key.name='href'] > SvelteMustacheTag > TemplateLiteral > TemplateElement:first-child[value.cooked=/^\\x2f/]"
+				].map((selector) => ({
+					selector,
+					message: "サイト内のリンクは localeHref()（$lib/i18n）で作る。接頭辞なしの内部リンクは今の言語を保てない"
+				}))
+			]
 		}
 	},
 	{
