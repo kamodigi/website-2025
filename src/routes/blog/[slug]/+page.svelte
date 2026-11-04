@@ -236,7 +236,7 @@
 
 	.article-content :global(pre) {
 		background: var(--color-surface);
-		border-radius: var(--radius-md);
+		border-radius: var(--radius-lg);
 		padding: var(--space-4);
 		margin-bottom: var(--space-4);
 		overflow-x: auto;
@@ -275,7 +275,7 @@
 	.article-content :global(img) {
 		max-width: 100%;
 		height: auto;
-		border-radius: var(--radius-md);
+		border-radius: var(--radius-lg);
 		margin: var(--space-6) 0;
 	}
 
