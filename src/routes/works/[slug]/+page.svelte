@@ -95,7 +95,7 @@
 
   img {
     max-width: 720px;
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
   }
 
   .controls-wrapper {
@@ -114,7 +114,7 @@
     width: 120px;
     height: 60px;
     object-fit: cover;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
   }
 
   .back-link {
@@ -146,7 +146,7 @@
     text-align: center;
     padding: var(--space-8);
     border: 1px dashed var(--color-border);
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
   }
 
   /* Responsive layout */

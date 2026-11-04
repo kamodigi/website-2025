@@ -52,7 +52,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 0.375rem;
+    border-radius: var(--radius-md);
     font-weight: 500;
     transition: var(--transition-base);
     cursor: pointer;

@@ -13,6 +13,7 @@ UI を変更する PR で、デザインの整合性をレビューするとき�
 | 色 | `--color-*`（意味ベース） | `--color-background`, `--color-surface`, `--color-surface-elevated`, `--color-text`, `--color-text-secondary`, `--color-text-muted`, `--color-border`, `--color-link`, `--color-link-hover`, `--color-primary-fill` / `--color-on-primary-fill`, `--color-brand`, `--color-focus-ring`, `--color-overlay`, `--color-hover-overlay` |
 | 影 | `--shadow-*` | `--shadow-sm`, `--shadow-md`, `--shadow-lg` |
 | テーマで出し分け | `--display-light-only`, `--display-dark-only` | ライト用とダーク用の画像やアイコンを `display` で切り替える |
+| 角丸 | `--radius-sm`（0.25rem）, `--radius-md`（0.375rem）, `--radius-lg`（0.5rem）, `--radius-card`, `--radius-full` | タグ・小さい画像は sm、ボタンは md、カード・モーダル・コードブロックは lg |
 | 余白 | `--space-*` | `--space-4`（1rem）, `--space-8`（2rem）, `--space-16`（4rem） |
 | 文字サイズ | `--text-*` | `--text-xl`, `--text-3xl`, `--text-4xl` |
 | 太さ・行間 | `--font-*`, `--leading-*` | `--font-bold`, `--leading-relaxed` |
