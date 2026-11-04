@@ -33,18 +33,18 @@
       <p class="loading-message">Loading work...</p>
     {:else if query.current}
       {@const work = query.current}
+      <!-- 画像のない WORK（portfolio など）では空のパスの img を出さない -->
       {@const images = [
         work.metadata.images.thumbnail,
         ...work.metadata.images.gallery,
-      ]}
-      {@const { thumbnail, gallery } = work.metadata.images}
+      ].filter(Boolean)}
       {@const title = pickLocalized(work.metadata.title, lang)}
       {@const content = pickLocalized(work.content, lang)}
       <div class="content">
+        {#if images.length > 0}
         <div class="gallery">
           <TinySlider>
-            <img src={asset(`/works/${thumbnail}`)} alt="サムネイル" />
-            {#each gallery as image (image.toString())}
+            {#each images as image (image.toString())}
               <img src={asset(`/works/${image}`)} alt={title.value} />
             {/each}
 
@@ -68,6 +68,7 @@
             {/snippet}
           </TinySlider>
         </div>
+        {/if}
         <h2 lang={title.locale}>{title.value}</h2>
         <div lang={content.locale}>
           {@html content.value}
