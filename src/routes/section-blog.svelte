@@ -1,5 +1,6 @@
 <script lang="ts">
 import { asset, resolve } from '$app/paths';
+import JapaneseOnlyBadge from '$lib/components/ui/JapaneseOnlyBadge.svelte';
 import ThumbnailCard from '$lib/components/ui/ThumbnailCard.svelte';
 import { getBlogs } from '$lib/data/blog';
 
@@ -44,11 +45,14 @@ function formatDate(dateString: string): string {
 								href={resolve(`/blog/${id}`)}
 							>
 								<div class="blog-content">
-									<time class="blog-date" datetime={publishedAt}>
-										{formatDate(publishedAt)}
-									</time>
-									<h3 class="blog-title">{title}</h3>
-									<p class="blog-description">{description}</p>
+									<div class="blog-meta">
+										<time class="blog-date" datetime={publishedAt} lang="ja">
+											{formatDate(publishedAt)}
+										</time>
+										<JapaneseOnlyBadge />
+									</div>
+									<h3 class="blog-title" lang="ja">{title}</h3>
+									<p class="blog-description" lang="ja">{description}</p>
 									<div class="blog-tags">
 										{#each tags.slice(0, 3) as tag (tag)}
 											<span class="tag">{tag}</span>
@@ -97,6 +101,13 @@ function formatDate(dateString: string): string {
 	.blog-content {
 		display: flex;
 		flex-direction: column;
+		gap: var(--space-2);
+	}
+
+	.blog-meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
 		gap: var(--space-2);
 	}
 

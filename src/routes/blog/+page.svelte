@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { asset, resolve } from "$app/paths";
+	import JapaneseOnlyBadge from "$lib/components/ui/JapaneseOnlyBadge.svelte";
 	import ThumbnailCard from "$lib/components/ui/ThumbnailCard.svelte";
 	import type { PageData } from './$types';
 
@@ -82,11 +83,14 @@
 							href={resolve(`/blog/${id}`)}
 						>
 							<div class="blog-content">
-								<time class="blog-date" datetime={publishedAt}>
-									{formatDate(publishedAt)}
-								</time>
-								<h2 class="blog-title">{title}</h2>
-								<p class="blog-description">{description}</p>
+								<div class="blog-meta">
+									<time class="blog-date" datetime={publishedAt} lang="ja">
+										{formatDate(publishedAt)}
+									</time>
+									<JapaneseOnlyBadge />
+								</div>
+								<h2 class="blog-title" lang="ja">{title}</h2>
+								<p class="blog-description" lang="ja">{description}</p>
 								<div class="blog-tags">
 									{#each tags as tag (tag)}
 										<span class="tag">{tag}</span>
@@ -164,6 +168,13 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-3);
+	}
+
+	.blog-meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--space-2);
 	}
 
 	.blog-date {

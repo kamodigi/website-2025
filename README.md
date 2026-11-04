@@ -74,6 +74,13 @@ Svelteコンポーネント、ユーティリティ関数、型定義など、�
 このプロジェクトでは Paraglide JS を使用して国際化に対応しています。
 
 - 翻訳メッセージは messages/{lang}.json に定義します。
+- 言語は `ja`（基準）, `en`, `zh-Hans`, `zh-Hant`。URL は `/`, `/en/`, `/zh-hans/`, `/zh-hant/`。
+- 翻訳がない文言は `zh-Hant` → `zh-Hans` → `en` → `ja` の順で代わりに出ます（順番は `src/lib/i18n/fallback.js`）。
+  paraglide のフォールバックは 1 段（→ ja）しかないため、`scripts/resolve-messages.mjs` が足りない文言を埋めたものを
+  `project.inlang/resolved-messages/`（gitignore）に書き出し、paraglide はそちらを読みます。
+- **翻訳を編集するのは `messages/{lang}.json` だけ**です。`project.inlang/resolved-messages/` はビルドのたびに作り直されるので、
+  そこを編集しても消えます。inlang の編集ツール（Sherlock、Fink など）は `project.inlang/settings.json` の `pathPattern` から
+  `resolved-messages/` を開くため、使わないでください（使うと埋めた文言が本物の翻訳に見えます）。
 - 新しいメッセージを追加・変更した後は pnpm run compile:translations を実行して型定義を更新してください。
 - Svelteコンポーネント内では、import * as m from '$lib/paraglide/messages' のようにインポートして使用します。
 
