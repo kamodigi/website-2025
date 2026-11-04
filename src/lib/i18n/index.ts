@@ -70,3 +70,19 @@ export function localeHref(path: `/${string}`): string {
 	const url = new URL(href);
 	return url.pathname + url.search + url.hash;
 }
+
+/**
+ * Markdown から作った HTML の、サイト内リンク（`href="/works/ori"` のように / で始まるもの）を、
+ * 表示する言語の URL にする。Markdown には言語を書かずに済む。`//` 始まり（外部）は変えない。
+ * ja は接頭辞がないので変わらない。localeHref と同じく `paths.base` は空である前提。
+ * `href` がダブルクォートで書かれている前提（rehype-stringify の出力はそうなる）。
+ * シングルクォートや引用符なしの `href` は書き換えない
+ */
+export function localizeHtmlLinks(html: string, locale: Locale): string {
+	return html.replace(/(<a\s[^>]*?href=")(\/(?!\/)[^"]*)(")/g, (_, head: string, path: string, tail: string) => {
+		// 最初の ? か # から後ろ（?a=1#h のように両方あっても）は、そのまま残す
+		const cut = path.search(/[?#]/);
+		const [pathname, rest] = cut === -1 ? [path, ''] : [path.slice(0, cut), path.slice(cut)];
+		return `${head}${localizedPath(`${base}${pathname}`, locale)}${rest}${tail}`;
+	});
+}

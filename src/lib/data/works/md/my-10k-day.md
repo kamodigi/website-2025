@@ -3,12 +3,18 @@ id: 'my-10k-day'
 title:
   ja: 'My 10k Day'
   en: 'My 10k Day'
+  zh-Hans: 'My 10k Day'
+  zh-Hant: 'My 10k Day'
 shortDescription:
   ja: '生まれてから1万日目を計算するwebアプリケーション'
-  en: 'Web application to calculate your 10,000th day after birth'
+  en: 'A web app that calculates your 10,000th day since birth'
+  zh-Hans: '计算出生后第 1 万天的 Web 应用'
+  zh-Hant: '計算出生後第 1 萬天的 Web 應用程式'
 description:
   ja: '生まれてから1万日目を計算するwebアプリケーション。言語はTypeScript、フロントエンドフレームワークはSvelteKit、多言語対応にParaglide JSを採用しています。VPS上のCoolifyにデプロイしています。'
-  en: 'Web application to calculate your 10,000th day after birth. Language: TypeScript, frontend framework: SvelteKit, i18n: Paraglide JS. Deploy on Coolify using my VPS.'
+  en: 'A web app that calculates your 10,000th day since birth. Built with TypeScript and SvelteKit, using Paraglide JS for internationalization. Deployed on Coolify on a VPS.'
+  zh-Hans: '计算出生后第 1 万天的 Web 应用。语言为 TypeScript，前端框架为 SvelteKit，多语言支持采用 Paraglide JS。部署在 VPS 上的 Coolify 中。'
+  zh-Hant: '計算出生後第 1 萬天的 Web 應用程式。語言為 TypeScript，前端框架為 SvelteKit，多語言支援採用 Paraglide JS。部署在 VPS 上的 Coolify 中。'
 technologies:
   - 'SvelteKit'
   - 'TypeScript'

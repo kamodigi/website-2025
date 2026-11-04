@@ -3,12 +3,18 @@ id: 'portfolio'
 title:
   ja: 'ポートフォリオ'
   en: 'Portfolio'
+  zh-Hans: '作品集'
+  zh-Hant: '作品集'
 shortDescription:
-  ja: '米谷拓哉のポートフォント。作成したプロジェクトなどを紹介しています。'
-  en: 'The portfolio of Takuya Kometani. Show works I joined and other information.'
+  ja: '米谷拓哉のポートフォリオ。作成したプロジェクトなどを紹介しています。'
+  en: "Takuya Kometani's portfolio, featuring projects I've built and more."
+  zh-Hans: '米谷拓哉的作品集，介绍我做过的项目等内容。'
+  zh-Hant: '米谷拓哉的作品集，介紹我做過的專案等內容。'
 description:
   ja: 'フロントエンドが得意なwebアプリケーション・エンジニアです。React/Vueの経験があり、いちばん好きなフレームワークはSvelteです。LPから複雑なサイトの立ち上げまでweb制作ができます。個人開発のwebアプリも多数リリースしています。セルフホストに関心がありVercelからCoolifyへ移行した経験があります。'
-  en: 'I am a web application engineer specializing in frontend development. I have experience with React and Vue, and my favorite framework is Svelte. I can build websites ranging from landing pages to complex sites. I have released many web applications as personal works. I am interested in self-hosting and have experience migrating from Vercel to Coolify.'
+  en: 'I am a web application engineer specializing in frontend development. I have experience with React and Vue, and my favorite framework is Svelte. I can build websites ranging from landing pages to complex sites. I have released many web applications as personal projects. I am interested in self-hosting and have experience migrating from Vercel to Coolify.'
+  zh-Hans: '擅长前端的 Web 应用工程师。有 React/Vue 的开发经验，最喜欢的框架是 Svelte。从落地页（LP）到复杂网站的搭建，都能完成网页制作。也发布了许多个人开发的 Web 应用。关注自托管，有从 Vercel 迁移到 Coolify 的经验。'
+  zh-Hant: '擅長前端的 Web 應用程式工程師。有 React/Vue 的開發經驗，最喜歡的框架是 Svelte。從到達頁面（LP）到複雜網站的建置，都能完成網頁製作。也發布了許多個人開發的 Web 應用程式。關注自架服務（self-hosting），有從 Vercel 遷移到 Coolify 的經驗。'
 technologies:
   - 'SvelteKit'
   - 'TypeScript'
@@ -40,7 +46,7 @@ SvelteKitを採用したのは、個人的に好きなフレームワークで�
 
 このプロジェクトでは、Gemini CLIとKiroを使ったAI駆動開発を試してみました。ただし、実際にはAIにコーディングをさせた後、3割ほど自分の手で修正するというワークフローが多かったように思います。
 
-特に苦労したのは、Geminiがこのプロジェクトで使用しているSvelteKit v5ではなく、v4の文法で書くことが多かった点です。また、Paraglide JSについてはAIがほぼ理解していないようだったので、多言語対応の部分は全て自分で書きました。
+特に苦労したのは、Geminiがこのプロジェクトで使用しているSvelte 5ではなく、Svelte 4の文法で書くことが多かった点です。また、Paraglide JSについてはAIがほぼ理解していないようだったので、多言語対応の部分は全て自分で書きました。
 
 AI駆動開発は完全に自動化されたものではなく、AIが生成したコードを人間が適切にレビューし、修正することで初めて実用的なコードになるということを実感しました。特に新しいバージョンのライブラリやマイナーなライブラリについては、AIの知識が追いついていないことが多いため、人間の判断が不可欠です。
 

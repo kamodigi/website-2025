@@ -128,5 +128,20 @@
 	"pn_behind_heading": "開発の裏側",
 	"pn_behind_body": "promptnotes をどう作ったか（技術の選び方、自作のフレームワーク ori を使った進め方、苦労した点）は、WORKS で紹介しています。",
 	"pn_behind_link": "開発事例を読む",
-	"a11y_opens_new_tab": "（新しいタブで開きます）"
+	"a11y_opens_new_tab": "（新しいタブで開きます）",
+	"common_backToHome": "トップページへ戻る",
+	"works_loading": "WORKS を読み込んでいます…",
+	"works_error": "WORKS を読み込めませんでした: {message}",
+	"works_empty": "WORKS はまだありません。",
+	"work_loading": "WORK を読み込んでいます…",
+	"work_error": "WORK を読み込めませんでした: {message}",
+	"work_goToSlide": "{index} 枚目の画像を表示",
+	"contact_description": "Webサイト制作、フロントエンド開発に関するご相談、共同開発のお誘いなど、お気軽にご連絡ください。技術に関するディスカッションやフィードバックも歓迎です！",
+	"sections_blog": "技術記事",
+	"blog_viewAll": "すべての記事を見る",
+	"blog_loading": "記事を読み込んでいます…",
+	"blog_error": "記事を読み込めませんでした: {message}",
+	"blog_empty": "記事がまだありません。",
+	"privacy_translation_notice": "このページは日本語版を翻訳したものです。日本語版が正本であり、翻訳と内容が食い違う場合は日本語版が優先します。",
+	"privacy_translation_notice_link": "日本語版を見る"
 }
