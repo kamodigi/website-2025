@@ -292,6 +292,16 @@
     text-wrap: balance;
   }
 
+  /*
+   * 中国語は auto-phrase が効かず、balance だと「提示／词」のように語の途中で折り返す。
+   * 空白と句読点（「，」など）の後でだけ折り返し、それでも収まらないときだけ、はみ出す位置で折り返す
+   */
+  .section-title:lang(zh) {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+    text-wrap: wrap;
+  }
+
   .hero-subtitle {
     font-size: var(--text-xl);
     color: var(--color-text-secondary);
@@ -319,6 +329,11 @@
   .download-note {
     font-size: var(--text-sm);
     color: var(--color-text-secondary);
+  }
+
+  /* 中国語で「载。」のように 1〜2 文字だけの行が残らないようにする */
+  .download-note:lang(zh) {
+    text-wrap: pretty;
   }
 
   .other-os-link,
