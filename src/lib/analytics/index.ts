@@ -3,6 +3,7 @@
  * 解析サービスを替えるとき（例: Umami）は、このファイルだけを差し替える。
  */
 import { browser, dev } from '$app/environment';
+import { deLocalizeHref } from '$lib/paraglide/runtime';
 
 /** GA4 の測定 ID（kamodigi.work 用プロパティ）。公開して問題のない値なので定数で置く。 */
 export const GA_MEASUREMENT_ID = 'G-S4Q2XGQ3D7';
@@ -52,8 +53,12 @@ export function track(name: string, props: EventProps = {}): void {
  * 初回は UTM パラメータ付きの URL をそのまま page_location に入れ、流入元を GA4 に渡す。
  */
 export function trackPageView(url: URL): void {
+	// content_group は LP のページビューにだけ付ける。gtag('set') だと遷移後も値が残るので、毎回パラメータで渡す。
+	// 言語プレフィックスを外してから判定する（/en/promptnotes なども対象）。
+	const path = deLocalizeHref(url.pathname).replace(/\/+$/, '');
 	track('page_view', {
 		page_location: url.href,
-		page_title: document.title
+		page_title: document.title,
+		...(path === '/promptnotes' ? { content_group: 'promptnotes' } : {})
 	});
 }
