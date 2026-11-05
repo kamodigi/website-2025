@@ -143,6 +143,6 @@
 	"blog_meta_description": "技術文章和部落格文章的列表，內容涉及 SvelteKit、TypeScript 和 Web 應用程式開發。",
 	"blog_filter_all": "全部",
 	"blog_backToList": "返回文章列表",
-	"blog_updated": "更新：{date}",
+	"blog_updated": "（更新：{date}）",
 	"blog_related": "相關文章"
 }

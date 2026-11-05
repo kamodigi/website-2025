@@ -148,6 +148,6 @@
 	"blog_meta_description": "A list of tech articles and blog posts about SvelteKit, TypeScript, and web application development.",
 	"blog_filter_all": "All",
 	"blog_backToList": "Back to the article list",
-	"blog_updated": "Updated: {date}",
+	"blog_updated": "(Updated: {date})",
 	"blog_related": "Related articles"
 }

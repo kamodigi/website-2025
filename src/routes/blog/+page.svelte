@@ -78,7 +78,7 @@
 							variant="bordered"
 							hover
 							{thumbnailUrl}
-							thumbnailAlt={title}
+							thumbnailAlt=""
 							gradientTitle={title}
 							gradientTags={tags}
 							gradientId={id}

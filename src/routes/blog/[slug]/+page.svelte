@@ -51,7 +51,7 @@
 				</time>
 				{#if blog.metadata.updatedAt}
 					<span class="article-updated">
-						({m.blog_updated({ date: formatDate(blog.metadata.updatedAt) })})
+						{m.blog_updated({ date: formatDate(blog.metadata.updatedAt) })}
 					</span>
 				{/if}
 				<JapaneseOnlyBadge />
@@ -93,7 +93,7 @@
 							variant="bordered"
 							hover
 							{thumbnailUrl}
-							thumbnailAlt={title}
+							thumbnailAlt=""
 							gradientTitle={title}
 							gradientTags={tags}
 							gradientId={id}
@@ -141,6 +141,7 @@
 
 	.article-meta {
 		display: flex;
+		flex-wrap: wrap;
 		gap: var(--space-2);
 		align-items: center;
 		margin-bottom: var(--space-4);
@@ -150,6 +151,12 @@
 
 	.article-date {
 		font-weight: 500;
+	}
+
+	/* 日付の途中（en の「May 14, / 2024」など）で折り返さず、日付の単位で折り返す */
+	.article-date,
+	.article-updated {
+		white-space: nowrap;
 	}
 
 	.article-updated {

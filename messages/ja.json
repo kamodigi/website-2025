@@ -148,6 +148,6 @@
 	"blog_meta_description": "技術記事やブログ記事の一覧です。SvelteKit、TypeScript、Webアプリケーション開発について書いています。",
 	"blog_filter_all": "すべて",
 	"blog_backToList": "記事一覧へ戻る",
-	"blog_updated": "更新: {date}",
+	"blog_updated": "(更新: {date})",
 	"blog_related": "関連記事"
 }
