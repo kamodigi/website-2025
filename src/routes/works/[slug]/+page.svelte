@@ -8,6 +8,7 @@
   import ThemedImage from "$lib/components/ui/ThemedImage.svelte";
   import Button from "$lib/components/ui/Button.svelte";
   import { TinySlider } from "svelte-tiny-slider";
+  import { tick, untrack } from "svelte";
 
   // Get the slug from the URL using $props()
   const { params } = $props();
@@ -20,6 +21,19 @@
     promptnotes: localeHref("/promptnotes"),
   };
   const productPage = PRODUCT_PAGES[slug];
+
+  // svelte-tiny-slider は表示中のスライドの位置を px で持ち、幅が変わっても計算し直さない。
+  // 画面の回転やウィンドウのリサイズで位置がずれるので、幅が変わったら今のスライドに合わせ直す
+  let slider = $state<InstanceType<typeof TinySlider>>();
+  let sliderWidth = $state(0);
+  let maxWidth = $state(0);
+  let currentIndex = $state(0);
+  $effect(() => {
+    // maxWidth（全スライドの幅の合計）は ResizeObserver で遅れて入る。入る前に setIndex すると、
+    // maxWidth - sliderWidth がマイナスになり、位置がマイナスの端に飛ぶ（直接開いた直後に 1 枚分ずれる）
+    if (!sliderWidth || maxWidth < sliderWidth) return;
+    tick().then(() => untrack(() => slider?.setIndex(currentIndex)));
+  });
 </script>
 
 <svelte:head>
@@ -55,9 +69,11 @@
       <div class="content">
         {#if images.length > 0}
         <div class="gallery">
-          <TinySlider>
+          <TinySlider bind:this={slider} bind:sliderWidth bind:maxWidth bind:currentIndex>
             {#each images as image (image.toString())}
-              <ThemedImage src={asset(`/works/${image}`)} alt={title.value} />
+              <div class="slide">
+                <ThemedImage src={asset(`/works/${image}`)} alt={title.value} />
+              </div>
             {/each}
 
             {#snippet controls({ setIndex, currentIndex })}
@@ -119,21 +135,41 @@
   .gallery {
     position: relative;
     overflow: hidden;
+    /* 影の余白は枠ではなく各スライドの内側に取る（枠の幅 = スライド 1 枚の幅にして、
+       隣のスライドが見えないようにする）。余白の分だけ負のマージンで広げ、
+       画像の見た目の位置と幅は本文にそろえる */
+    --gallery-bleed: var(--space-4);
+    margin: calc(-1 * var(--gallery-bleed));
+    max-width: calc(720px + 2 * var(--gallery-bleed));
+    /* スライドの幅をこの枠の幅にそろえるための基準 */
+    container-type: inline-size;
   }
 
-  .gallery :global(img) {
-    max-width: min(100%, 720px);
+  /* .slider-content は width: fit-content の flex なので、スライドの幅は % ではなく
+     コンテナ幅（cqw）で決める。flex-shrink で縮んで 1 行に並ぶのを防ぐ */
+  .slide {
+    flex: 0 0 100cqw;
+    width: 100cqw;
+    padding: var(--gallery-bleed);
+  }
+
+  /* display は書かない（ThemedImage が light-only / dark-only で出し分けている。global.css で img は block） */
+  .slide :global(img) {
+    max-width: 100%;
     max-height: 70vh;
     object-fit: contain;
     border-radius: var(--radius-lg);
+    /* 背景が白い画像でもページの背景と見分けがつくように。ダークは影が見えないので縁も付ける */
+    box-shadow: var(--shadow-md), 0 0 0 1px var(--color-image-ring);
   }
 
   .controls-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
     margin-top: var(--space-4);
-  }
-
-  .controls-wrapper > * + * {
-    margin-left: var(--space-2);
+    /* サムネイルの影が枠で切れないように */
+    padding: 0 var(--gallery-bleed) var(--gallery-bleed);
   }
 
   button {
@@ -145,6 +181,7 @@
     height: 60px;
     object-fit: cover;
     border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm), 0 0 0 1px var(--color-image-ring);
   }
 
   .links {
