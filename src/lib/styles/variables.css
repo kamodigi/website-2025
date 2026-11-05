@@ -104,6 +104,8 @@
   --text-7xl: 4.5rem;
   /* 72px */
   --text-8xl: 6rem;
+  /* 親の文字サイズに対する相対値（本文中のインラインコード用） */
+  --text-code-inline: 0.9em;
   /* 96px */
 
   /* Font weights */
@@ -135,11 +137,8 @@
   --tracking-widest: 0.1em;
 
   /* Border widths */
-  --border-width-thin: 2px;
+  --border-width-medium: 2px;
   --border-width-thick: 4px;
-
-  /* Em-relative sizes */
-  --text-code-inline: 0.9em;
 
   /* Transitions */
   --transition-fast: 0.15s ease-out;

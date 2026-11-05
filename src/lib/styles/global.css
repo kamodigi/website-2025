@@ -111,7 +111,7 @@ img {
   font-weight: var(--font-bold);
   margin-top: var(--space-12);
   margin-bottom: var(--space-4);
-  border-bottom: var(--border-width-thin) solid var(--color-border);
+  border-bottom: var(--border-width-medium) solid var(--color-border);
   padding-bottom: var(--space-2);
 }
 
