@@ -41,6 +41,8 @@
   --color-focus-ring: var(--color-link);
   --color-overlay: oklch(0% 0 0 / 0.5);
   --color-shadow: oklch(0% 0 0 / 0.1);
+  /* 画像の外周の細い縁。ライトは影だけで足りるので透明 */
+  --color-image-ring: transparent;
   --color-hover-overlay: oklch(0% 0 0 / 0.05);
   /* Hero shader dots (read by Scene.svelte) */
   --color-hero-dots: #39bc47;
@@ -211,6 +213,7 @@
   --color-focus-ring: oklch(75% 0.15 151.2);
   --color-overlay: oklch(0% 0 0 / 0.65);
   --color-shadow: oklch(0% 0 0 / 0.4);
+  --color-image-ring: var(--color-border);
   --color-hover-overlay: oklch(100% 0 0 / 0.06);
   --color-hero-dots: #3fae4b;
   --display-light-only: none;
@@ -236,6 +239,7 @@
     --color-focus-ring: oklch(75% 0.15 151.2);
     --color-overlay: oklch(0% 0 0 / 0.65);
     --color-shadow: oklch(0% 0 0 / 0.4);
+    --color-image-ring: var(--color-border);
     --color-hover-overlay: oklch(100% 0 0 / 0.06);
     --color-hero-dots: #3fae4b;
     --display-light-only: none;

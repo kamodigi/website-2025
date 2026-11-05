@@ -159,8 +159,8 @@
     max-height: 70vh;
     object-fit: contain;
     border-radius: var(--radius-lg);
-    /* 背景が白い画像でもページの背景と見分けがつくように */
-    box-shadow: var(--shadow-md);
+    /* 背景が白い画像でもページの背景と見分けがつくように。ダークは影が見えないので縁も付ける */
+    box-shadow: var(--shadow-md), 0 0 0 1px var(--color-image-ring);
   }
 
   .controls-wrapper {
@@ -181,7 +181,7 @@
     height: 60px;
     object-fit: cover;
     border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-sm), 0 0 0 1px var(--color-image-ring);
   }
 
   .links {
