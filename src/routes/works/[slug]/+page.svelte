@@ -135,10 +135,10 @@
   .gallery {
     position: relative;
     overflow: hidden;
-    /* 画像の影が overflow: hidden で切れないよう、上下左右に余白を取り、
-       同じ分だけ負のマージンで打ち消して見た目の位置を変えない */
+    /* 影の余白は枠ではなく各スライドの内側に取る（枠の幅 = スライド 1 枚の幅にして、
+       隣のスライドが見えないようにする）。余白の分だけ負のマージンで広げ、
+       画像の見た目の位置と幅は本文にそろえる */
     --gallery-bleed: var(--space-4);
-    padding: var(--gallery-bleed);
     margin: calc(-1 * var(--gallery-bleed));
     max-width: calc(720px + 2 * var(--gallery-bleed));
     /* スライドの幅をこの枠の幅にそろえるための基準 */
@@ -150,6 +150,7 @@
   .slide {
     flex: 0 0 100cqw;
     width: 100cqw;
+    padding: var(--gallery-bleed);
   }
 
   /* display は書かない（ThemedImage が light-only / dark-only で出し分けている。global.css で img は block） */
@@ -167,6 +168,8 @@
     flex-wrap: wrap;
     gap: var(--space-2);
     margin-top: var(--space-4);
+    /* サムネイルの影が枠で切れないように */
+    padding: 0 var(--gallery-bleed) var(--gallery-bleed);
   }
 
   button {
