@@ -28,6 +28,9 @@
   let sliderWidth = $state(0);
   let maxWidth = $state(0);
   let currentIndex = $state(0);
+  // h1 とタイトルは作品名。読み込み前・エラー時・見つからないときは固定の「WORK 詳細」にする
+  const work = $derived(query.current);
+  const heading = $derived(work ? pickLocalized(work.metadata.title, lang) : undefined);
   $effect(() => {
     // maxWidth（全スライドの幅の合計）は ResizeObserver で遅れて入る。入る前に setIndex すると、
     // maxWidth - sliderWidth がマイナスになり、位置がマイナスの端に飛ぶ（直接開いた直後に 1 枚分ずれる）
@@ -37,7 +40,7 @@
 </script>
 
 <svelte:head>
-  <title>{m.work_title()} - {slug}</title>
+  <title>{heading?.value ?? m.work_title()}</title>
   <meta name="description" content={m.work_title()} />
 </svelte:head>
 
@@ -47,7 +50,7 @@
       <a href={localeHref("/works")} class="back-link"
         >&larr; {m.work_backToWorks()}</a
       >
-      <h1 class="title">{m.work_title()} - {slug}</h1>
+      <h1 class="title" lang={heading?.locale}>{heading?.value ?? m.work_title()}</h1>
       {#if productPage}
         <Button href={productPage}>{m.work_productPage()}</Button>
       {/if}
@@ -57,14 +60,13 @@
       <p class="error-message">{m.work_error({ message: query.error.message })}</p>
     {:else if query.loading}
       <p class="loading-message">{m.work_loading()}</p>
-    {:else if query.current}
-      {@const work = query.current}
+    {:else if work}
       <!-- 画像のない WORK（portfolio など）では空のパスの img を出さない -->
       {@const images = [
         work.metadata.images.thumbnail,
         ...work.metadata.images.gallery,
       ].filter(Boolean)}
-      {@const title = pickLocalized(work.metadata.title, lang)}
+      {@const title = heading!}
       {@const content = pickLocalized(work.content, lang)}
       <div class="content">
         {#if images.length > 0}
@@ -97,7 +99,6 @@
           </TinySlider>
         </div>
         {/if}
-        <h2 lang={title.locale}>{title.value}</h2>
         {#if work.metadata.links.demo || work.metadata.links.github || work.metadata.links.website}
           <!-- eslint-disable svelte/no-navigation-without-resolve -->
           <ul class="links">
