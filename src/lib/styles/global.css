@@ -95,34 +95,36 @@ img {
   }
 }
 
-/* Markdown を HTML にした本文（ブログの記事、WORKS の詳細）。
+/* Markdown を HTML にした本文（ブログの記事、WORKS の詳細）専用のスタイル。
+   Markdown 由来の要素（h2, p, pre など）をクラスなしで装飾するため、
+   手で書いたマークアップには使わない。値はすべて variables.css の変数で指定する。
    リセットで padding が 0 になるため、リストの余白をここで戻す。 */
 .prose {
   font-size: var(--text-base);
-  line-height: 1.8;
+  line-height: var(--leading-prose);
   color: var(--color-text);
   overflow-wrap: anywhere;
 }
 
 .prose h2 {
   font-size: var(--text-2xl);
-  font-weight: 700;
+  font-weight: var(--font-bold);
   margin-top: var(--space-12);
   margin-bottom: var(--space-4);
-  border-bottom: 2px solid var(--color-border);
+  border-bottom: var(--border-width-thin) solid var(--color-border);
   padding-bottom: var(--space-2);
 }
 
 .prose h3 {
   font-size: var(--text-xl);
-  font-weight: 600;
+  font-weight: var(--font-semibold);
   margin-top: var(--space-8);
   margin-bottom: var(--space-3);
 }
 
 .prose h4 {
   font-size: var(--text-lg);
-  font-weight: 600;
+  font-weight: var(--font-semibold);
   margin-top: var(--space-6);
   margin-bottom: var(--space-2);
 }
@@ -153,8 +155,8 @@ img {
   background: var(--color-surface);
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-sm);
-  font-size: 0.9em;
-  font-family: 'Courier New', monospace;
+  font-size: var(--text-code-inline);
+  font-family: var(--font-mono);
 }
 
 .prose pre code {
@@ -164,7 +166,7 @@ img {
 }
 
 .prose blockquote {
-  border-left: 4px solid var(--color-brand);
+  border-left: var(--border-width-thick) solid var(--color-brand);
   padding-left: var(--space-4);
   margin: var(--space-6) 0;
   color: var(--color-text-secondary);
