@@ -135,7 +135,12 @@
   .gallery {
     position: relative;
     overflow: hidden;
-    max-width: 720px;
+    /* 画像の影が overflow: hidden で切れないよう、上下左右に余白を取り、
+       同じ分だけ負のマージンで打ち消して見た目の位置を変えない */
+    --gallery-bleed: var(--space-4);
+    padding: var(--gallery-bleed);
+    margin: calc(-1 * var(--gallery-bleed));
+    max-width: calc(720px + 2 * var(--gallery-bleed));
     /* スライドの幅をこの枠の幅にそろえるための基準 */
     container-type: inline-size;
   }
@@ -153,6 +158,8 @@
     max-height: 70vh;
     object-fit: contain;
     border-radius: var(--radius-lg);
+    /* 背景が白い画像でもページの背景と見分けがつくように */
+    box-shadow: var(--shadow-md);
   }
 
   .controls-wrapper {
@@ -171,6 +178,7 @@
     height: 60px;
     object-fit: cover;
     border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
   }
 
   .links {
