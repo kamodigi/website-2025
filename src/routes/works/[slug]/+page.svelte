@@ -11,7 +11,7 @@
   import { tick, untrack } from "svelte";
 
   // Get the slug from the URL using $props()
-  const { params } = $props();
+  const { params, data } = $props();
   const { slug } = params;
   const query = getWorkBySlugRemote(slug);
   const lang = getLocale();
@@ -30,7 +30,7 @@
   let currentIndex = $state(0);
   // h1 とタイトルは作品名。読み込み前・エラー時・見つからないときは固定の「WORK 詳細」にする
   const work = $derived(query.current);
-  const heading = $derived(work ? pickLocalized(work.metadata.title, lang) : undefined);
+  const heading = data.workTitle ? pickLocalized(data.workTitle, lang) : undefined;
   $effect(() => {
     // maxWidth（全スライドの幅の合計）は ResizeObserver で遅れて入る。入る前に setIndex すると、
     // maxWidth - sliderWidth がマイナスになり、位置がマイナスの端に飛ぶ（直接開いた直後に 1 枚分ずれる）
@@ -60,13 +60,13 @@
       <p class="error-message">{m.work_error({ message: query.error.message })}</p>
     {:else if query.loading}
       <p class="loading-message">{m.work_loading()}</p>
-    {:else if work}
+    {:else if work && heading}
       <!-- 画像のない WORK（portfolio など）では空のパスの img を出さない -->
       {@const images = [
         work.metadata.images.thumbnail,
         ...work.metadata.images.gallery,
       ].filter(Boolean)}
-      {@const title = heading!}
+      {@const title = heading}
       {@const content = pickLocalized(work.content, lang)}
       <div class="content">
         {#if images.length > 0}
