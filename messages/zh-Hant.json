@@ -138,5 +138,11 @@
 	"pn_behind_heading": "開發幕後",
 	"pn_behind_body": "promptnotes 是如何開發的（技術選型、使用自製框架 ori 的開發方式、遇到的難處），請參閱 WORKS 中的介紹。",
 	"pn_behind_link": "閱讀開發案例",
-	"a11y_opens_new_tab": "（在新分頁中開啟）"
+	"a11y_opens_new_tab": "（在新分頁中開啟）",
+	"blog_description": "這裡收錄技術文章和部落格文章，分享開發過程和學到的東西。",
+	"blog_meta_description": "技術文章和部落格文章的列表，內容涉及 SvelteKit、TypeScript 和 Web 應用程式開發。",
+	"blog_filter_all": "全部",
+	"blog_backToList": "返回文章列表",
+	"blog_updated": "更新：{date}",
+	"blog_related": "相關文章"
 }

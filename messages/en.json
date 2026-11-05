@@ -143,5 +143,11 @@
 	"pn_behind_heading": "Behind the scenes",
 	"pn_behind_body": "How promptnotes was built (how I chose the tech stack, how I worked with ori, my own framework, and what was hard) is covered in WORKS.",
 	"pn_behind_link": "Read the case study",
-	"a11y_opens_new_tab": " (opens in a new tab)"
+	"a11y_opens_new_tab": " (opens in a new tab)",
+	"blog_description": "Tech articles and blog posts. I share how I build things and what I learn along the way.",
+	"blog_meta_description": "A list of tech articles and blog posts about SvelteKit, TypeScript, and web application development.",
+	"blog_filter_all": "All",
+	"blog_backToList": "Back to the article list",
+	"blog_updated": "Updated: {date}",
+	"blog_related": "Related articles"
 }

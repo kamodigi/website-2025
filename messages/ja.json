@@ -143,5 +143,11 @@
 	"blog_error": "記事を読み込めませんでした: {message}",
 	"blog_empty": "記事がまだありません。",
 	"privacy_translation_notice": "このページは日本語版を翻訳したものです。日本語版が正本であり、翻訳と内容が食い違う場合は日本語版が優先します。",
-	"privacy_translation_notice_link": "日本語版を見る"
+	"privacy_translation_notice_link": "日本語版を見る",
+	"blog_description": "技術記事やブログ記事を掲載しています。開発の過程や学んだことをシェアします。",
+	"blog_meta_description": "技術記事やブログ記事の一覧です。SvelteKit、TypeScript、Webアプリケーション開発について書いています。",
+	"blog_filter_all": "すべて",
+	"blog_backToList": "記事一覧へ戻る",
+	"blog_updated": "更新: {date}",
+	"blog_related": "関連記事"
 }

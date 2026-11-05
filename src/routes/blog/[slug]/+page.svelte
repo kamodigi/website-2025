@@ -5,6 +5,8 @@
 	import { absoluteUrl, ogImageUrl } from "$lib/utils/seo";
 	import JapaneseOnlyBadge from "$lib/components/ui/JapaneseOnlyBadge.svelte";
 	import ThumbnailCard from "$lib/components/ui/ThumbnailCard.svelte";
+	import { m } from "$lib/paraglide/messages";
+	import { getLocale } from "$lib/paraglide/runtime";
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -13,7 +15,8 @@
 
 	function formatDate(dateString: string): string {
 		const date = new Date(dateString);
-		return new Intl.DateTimeFormat('ja', {
+		// 日付は UI の一部なので、ページの言語の書式にする（記事の本文と違って翻訳する）
+		return new Intl.DateTimeFormat(getLocale(), {
 			year: 'numeric',
 			month: 'long',
 			day: 'numeric'
@@ -36,19 +39,19 @@
 	<div class="container">
 		<div class="header">
 			<a href={localeHref("/blog")} class="back-link">
-				← 記事一覧へ戻る
+				← {m.blog_backToList()}
 			</a>
 		</div>
 
 		<!-- 記事ヘッダー -->
 		<header class="article-header">
 			<div class="article-meta">
-				<time class="article-date" datetime={blog.metadata.publishedAt} lang="ja">
+				<time class="article-date" datetime={blog.metadata.publishedAt}>
 					{formatDate(blog.metadata.publishedAt)}
 				</time>
 				{#if blog.metadata.updatedAt}
-					<span class="article-updated" lang="ja">
-						(更新: {formatDate(blog.metadata.updatedAt)})
+					<span class="article-updated">
+						({m.blog_updated({ date: formatDate(blog.metadata.updatedAt) })})
 					</span>
 				{/if}
 				<JapaneseOnlyBadge />
@@ -66,6 +69,7 @@
 		{#if blog.metadata.thumbnail}
 			<div class="article-thumbnail">
 				<img
+					lang="ja"
 					src={asset(blog.metadata.thumbnail)}
 					alt={blog.metadata.title}
 				/>
@@ -80,7 +84,7 @@
 		<!-- 関連記事 -->
 		{#if relatedBlogs.length > 0}
 			<section class="related-section">
-				<h2 class="related-title">関連記事</h2>
+				<h2 class="related-title">{m.blog_related()}</h2>
 				<div class="related-grid">
 					{#each relatedBlogs as relatedBlog (relatedBlog.metadata.id)}
 						{@const { title, description, tags, thumbnail, id } = relatedBlog.metadata}
@@ -106,7 +110,7 @@
 		{/if}
 
 		<div class="back-link-bottom">
-			<a href={localeHref("/blog")}>← 記事一覧へ戻る</a>
+			<a href={localeHref("/blog")}>← {m.blog_backToList()}</a>
 		</div>
 	</div>
 </article>
