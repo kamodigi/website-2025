@@ -39,3 +39,6 @@ project.inlang/project_id
 
 # oh-my-claudecode の実行時の状態
 .omc/
+
+# エージェント用ツール（Playwright MCP）が作るスクリーンショットやログ
+.playwright-mcp/
