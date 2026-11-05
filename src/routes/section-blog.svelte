@@ -5,13 +5,15 @@ import JapaneseOnlyBadge from '$lib/components/ui/JapaneseOnlyBadge.svelte';
 import ThumbnailCard from '$lib/components/ui/ThumbnailCard.svelte';
 import { getBlogs } from '$lib/data/blog';
 import { m } from '$lib/paraglide/messages';
+import { getLocale } from '$lib/paraglide/runtime';
 
 // 最新3件の記事を取得
 const blogsPromise = getBlogs({ excludeDrafts: true }, 'newest');
 
 function formatDate(dateString: string): string {
 	const date = new Date(dateString);
-	return new Intl.DateTimeFormat('ja', {
+	// 日付は UI の一部なので、ページの言語の書式にする（記事の本文と違って翻訳する）
+	return new Intl.DateTimeFormat(getLocale(), {
 		year: 'numeric',
 		month: 'short',
 		day: 'numeric'
@@ -40,7 +42,7 @@ function formatDate(dateString: string): string {
 								variant="bordered"
 								hover
 								{thumbnailUrl}
-								thumbnailAlt={title}
+								thumbnailAlt=""
 								gradientTitle={title}
 								gradientTags={tags}
 								gradientId={id}
@@ -48,7 +50,7 @@ function formatDate(dateString: string): string {
 							>
 								<div class="blog-content">
 									<div class="blog-meta">
-										<time class="blog-date" datetime={publishedAt} lang="ja">
+										<time class="blog-date" datetime={publishedAt}>
 											{formatDate(publishedAt)}
 										</time>
 										<JapaneseOnlyBadge />

@@ -3,6 +3,8 @@
 	import { localeHref } from "$lib/i18n";
 	import JapaneseOnlyBadge from "$lib/components/ui/JapaneseOnlyBadge.svelte";
 	import ThumbnailCard from "$lib/components/ui/ThumbnailCard.svelte";
+	import { m } from "$lib/paraglide/messages";
+	import { getLocale } from "$lib/paraglide/runtime";
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -22,7 +24,8 @@
 
 	function formatDate(dateString: string): string {
 		const date = new Date(dateString);
-		return new Intl.DateTimeFormat('ja', {
+		// 日付は UI の一部なので、ページの言語の書式にする（記事の本文と違って翻訳する）
+		return new Intl.DateTimeFormat(getLocale(), {
 			year: 'numeric',
 			month: 'long',
 			day: 'numeric'
@@ -31,16 +34,14 @@
 </script>
 
 <svelte:head>
-	<title>技術記事 | Blog</title>
-	<meta name="description" content="技術記事やブログ記事の一覧です。SvelteKit、TypeScript、Webアプリケーション開発について書いています。" />
+	<title>{m.sections_blog()}</title>
+	<meta name="description" content={m.blog_meta_description()} />
 </svelte:head>
 
 <section class="blog-page">
 	<div class="container">
-		<h1 class="page-title">技術記事</h1>
-		<p class="page-description">
-			技術記事やブログ記事を掲載しています。開発の過程や学んだことをシェアします。
-		</p>
+		<h1 class="page-title">{m.sections_blog()}</h1>
+		<p class="page-description">{m.blog_description()}</p>
 
 		<!-- タグフィルター -->
 		{#if allTags.length > 0}
@@ -50,7 +51,7 @@
 					class:active={selectedTag === null}
 					on:click={() => selectedTag = null}
 				>
-					すべて
+					{m.blog_filter_all()}
 				</button>
 				{#each allTags as tag (tag)}
 					<button
@@ -66,7 +67,7 @@
 
 		<!-- ブログ記事一覧 -->
 		{#if filteredBlogs.length === 0}
-			<p class="no-blogs-message">記事がありません。</p>
+			<p class="no-blogs-message">{m.blog_empty()}</p>
 		{:else}
 			<div class="blogs-grid">
 				{#each filteredBlogs as blog (blog.metadata.id)}
@@ -77,7 +78,7 @@
 							variant="bordered"
 							hover
 							{thumbnailUrl}
-							thumbnailAlt={title}
+							thumbnailAlt=""
 							gradientTitle={title}
 							gradientTags={tags}
 							gradientId={id}
@@ -85,7 +86,7 @@
 						>
 							<div class="blog-content">
 								<div class="blog-meta">
-									<time class="blog-date" datetime={publishedAt} lang="ja">
+									<time class="blog-date" datetime={publishedAt}>
 										{formatDate(publishedAt)}
 									</time>
 									<JapaneseOnlyBadge />
@@ -106,7 +107,7 @@
 	</div>
 
 	<div class="back-link">
-		<a href={localeHref("/")}>← トップページへ戻る</a>
+		<a href={localeHref("/")}>← {m.common_backToHome()}</a>
 	</div>
 </section>
 
