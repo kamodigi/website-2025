@@ -17,7 +17,7 @@ const LATEST_RELEASE_API = 'https://api.github.com/repos/dev-komenzar/promptnote
 /** Nix flake は配布ファイルがないので、コマンドで案内する */
 export const PROMPTNOTES_NIX_COMMAND = 'nix run github:dev-komenzar/promptnotes';
 /** macOS の Gatekeeper の警告を解除するコマンド（promptnotes の README と同じ） */
-export const PROMPTNOTES_XATTR_COMMAND = 'xattr -dr com.apple.quarantine /Applications/promptnotes.app';
+export const PROMPTNOTES_XATTR_COMMAND = 'xattr -dr com.apple.quarantine /Applications/PromptNotes.app';
 
 export type Platform = 'macos' | 'linux' | 'other';
 export type DownloadFormat = 'dmg' | 'appimage' | 'deb' | 'rpm';
