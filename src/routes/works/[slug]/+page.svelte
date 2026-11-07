@@ -22,6 +22,15 @@
   };
   const productPage = PRODUCT_PAGES[slug];
 
+  // macOS のウィンドウの形に切り抜いてある画像（角の外側が透明で、輪郭は画像自身が持っている）。
+  // 角丸・縁・box-shadow を付けると四角い外形に付いて輪郭が二重になるので、drop-shadow だけにする
+  const WINDOW_SHAPED_IMAGES = new Set([
+    "promptnotes/thumbnail-light.webp",
+    "promptnotes/feed-light.webp",
+  ]);
+  const imageClass = (image: string, base = "") =>
+    `${base} ${WINDOW_SHAPED_IMAGES.has(image) ? "window-shaped" : ""}`.trim();
+
   // svelte-tiny-slider は表示中のスライドの位置を px で持ち、幅が変わっても計算し直さない。
   // 画面の回転やウィンドウのリサイズで位置がずれるので、幅が変わったら今のスライドに合わせ直す
   let slider = $state<InstanceType<typeof TinySlider>>();
@@ -74,7 +83,11 @@
           <TinySlider bind:this={slider} bind:sliderWidth bind:maxWidth bind:currentIndex>
             {#each images as image (image.toString())}
               <div class="slide">
-                <ThemedImage src={asset(`/works/${image}`)} alt={title.value} />
+                <ThemedImage
+                  src={asset(`/works/${image}`)}
+                  alt={title.value}
+                  class={imageClass(image)}
+                />
               </div>
             {/each}
 
@@ -90,7 +103,7 @@
                     <ThemedImage
                       src={asset(`/works/${image}`)}
                       alt=""
-                      class="thumbnail"
+                      class={imageClass(image, "thumbnail")}
                     />
                   </button>
                 {/each}
@@ -164,6 +177,12 @@
     box-shadow: var(--shadow-md), 0 0 0 1px var(--color-image-ring);
   }
 
+  .slide :global(img.window-shaped) {
+    border-radius: 0;
+    box-shadow: none;
+    filter: drop-shadow(var(--drop-shadow-md));
+  }
+
   .controls-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -183,6 +202,12 @@
     object-fit: cover;
     border-radius: var(--radius-sm);
     box-shadow: var(--shadow-sm), 0 0 0 1px var(--color-image-ring);
+  }
+
+  .controls-wrapper :global(.thumbnail.window-shaped) {
+    border-radius: 0;
+    box-shadow: none;
+    filter: drop-shadow(var(--drop-shadow-sm));
   }
 
   .links {

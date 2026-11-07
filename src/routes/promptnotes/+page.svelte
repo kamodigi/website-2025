@@ -362,9 +362,10 @@
     max-width: 100%;
     height: auto;
     margin: 0 auto;
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-lg);
+    /* 画像は macOS のウィンドウの形に切り抜いてあり、角の外側は透明で、輪郭は画像自身が持っている。
+       border / border-radius / box-shadow を付けると四角い外形に付いて輪郭が二重になるので、
+       透明部分に沿う drop-shadow だけにする */
+    filter: drop-shadow(var(--drop-shadow-lg));
   }
 
   .lead {
