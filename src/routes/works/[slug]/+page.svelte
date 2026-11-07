@@ -22,6 +22,15 @@
   };
   const productPage = PRODUCT_PAGES[slug];
 
+  // macOS のウィンドウの形に切り抜いてある画像（角の外側が透明で、輪郭は画像自身が持っている）。
+  // 角丸・縁・box-shadow を付けると四角い外形に付いて輪郭が二重になるので、drop-shadow だけにする
+  const WINDOW_SHAPED_IMAGES = new Set([
+    "promptnotes/thumbnail-light.webp",
+    "promptnotes/feed-light.webp",
+  ]);
+  // サムネイルは 120×60 の cover で切り取られて四角くなり、輪郭が二重にならないので対象外
+  const slideClass = (image: string) => (WINDOW_SHAPED_IMAGES.has(image) ? "window-shaped" : "");
+
   // svelte-tiny-slider は表示中のスライドの位置を px で持ち、幅が変わっても計算し直さない。
   // 画面の回転やウィンドウのリサイズで位置がずれるので、幅が変わったら今のスライドに合わせ直す
   let slider = $state<InstanceType<typeof TinySlider>>();
@@ -74,7 +83,11 @@
           <TinySlider bind:this={slider} bind:sliderWidth bind:maxWidth bind:currentIndex>
             {#each images as image (image.toString())}
               <div class="slide">
-                <ThemedImage src={asset(`/works/${image}`)} alt={title.value} />
+                <ThemedImage
+                  src={asset(`/works/${image}`)}
+                  alt={title.value}
+                  class={slideClass(image)}
+                />
               </div>
             {/each}
 
@@ -162,6 +175,13 @@
     border-radius: var(--radius-lg);
     /* 背景が白い画像でもページの背景と見分けがつくように。ダークは影が見えないので縁も付ける */
     box-shadow: var(--shadow-md), 0 0 0 1px var(--color-image-ring);
+  }
+
+  .slide :global(img.window-shaped) {
+    border-radius: 0;
+    box-shadow: none;
+    /* ring は dark だけ見える（light は transparent）。ウィンドウの形に沿った縁になる */
+    filter: drop-shadow(var(--drop-shadow-ring)) drop-shadow(var(--drop-shadow-md));
   }
 
   .controls-wrapper {

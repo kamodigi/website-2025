@@ -54,6 +54,11 @@
   --shadow-sm: 0 2px 4px -1px var(--color-shadow);
   --shadow-md: 0 4px 12px var(--color-shadow);
   --shadow-lg: 0 10px 15px -3px var(--color-shadow), 0 4px 6px -2px var(--color-shadow);
+  /* 透明な部分のある画像（ウィンドウの形に切り抜いたスクリーンショット）用。filter: drop-shadow() に渡す。
+     box-shadow は画像の四角い外形に付くので、角丸の外側に影の縁が見えてしまう */
+  --drop-shadow-ring: 0 0 1px var(--color-image-ring);
+  --drop-shadow-md: 0 4px 12px var(--color-shadow);
+  --drop-shadow-lg: 0 10px 15px var(--color-shadow);
 
   /*
    * Text/chips drawn on generated gradient thumbnails (GradientThumbnail).
