@@ -123,13 +123,13 @@
     </div>
 
     <div class="screenshot">
-      <!-- ファーストビューの画像なので遅延読み込みにしない。幅と高さは feed-light / feed-dark.webp の実寸 -->
+      <!-- ファーストビューの画像なので遅延読み込みにしない。幅と高さは feed-light / feed-dark.webp の実寸（縦横比の確保が目的で、表示の大きさは CSS の max-width で決まる） -->
       <ThemedImage
         src={asset("/works/promptnotes/feed-light.webp")}
         alt={m.pn_screenshot_alt()}
         loading="eager"
-        width={800}
-        height={967}
+        width={1440}
+        height={1740}
       />
     </div>
   </div>
