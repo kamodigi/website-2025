@@ -28,8 +28,8 @@
     "promptnotes/thumbnail-light.webp",
     "promptnotes/feed-light.webp",
   ]);
-  const imageClass = (image: string, base = "") =>
-    `${base} ${WINDOW_SHAPED_IMAGES.has(image) ? "window-shaped" : ""}`.trim();
+  // サムネイルは 120×60 の cover で切り取られて四角くなり、輪郭が二重にならないので対象外
+  const slideClass = (image: string) => (WINDOW_SHAPED_IMAGES.has(image) ? "window-shaped" : "");
 
   // svelte-tiny-slider は表示中のスライドの位置を px で持ち、幅が変わっても計算し直さない。
   // 画面の回転やウィンドウのリサイズで位置がずれるので、幅が変わったら今のスライドに合わせ直す
@@ -86,7 +86,7 @@
                 <ThemedImage
                   src={asset(`/works/${image}`)}
                   alt={title.value}
-                  class={imageClass(image)}
+                  class={slideClass(image)}
                 />
               </div>
             {/each}
@@ -103,7 +103,7 @@
                     <ThemedImage
                       src={asset(`/works/${image}`)}
                       alt=""
-                      class={imageClass(image, "thumbnail")}
+                      class="thumbnail"
                     />
                   </button>
                 {/each}
@@ -180,7 +180,8 @@
   .slide :global(img.window-shaped) {
     border-radius: 0;
     box-shadow: none;
-    filter: drop-shadow(var(--drop-shadow-md));
+    /* ring は dark だけ見える（light は transparent）。ウィンドウの形に沿った縁になる */
+    filter: drop-shadow(var(--drop-shadow-ring)) drop-shadow(var(--drop-shadow-md));
   }
 
   .controls-wrapper {
@@ -202,12 +203,6 @@
     object-fit: cover;
     border-radius: var(--radius-sm);
     box-shadow: var(--shadow-sm), 0 0 0 1px var(--color-image-ring);
-  }
-
-  .controls-wrapper :global(.thumbnail.window-shaped) {
-    border-radius: 0;
-    box-shadow: none;
-    filter: drop-shadow(var(--drop-shadow-sm));
   }
 
   .links {

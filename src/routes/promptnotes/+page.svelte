@@ -364,8 +364,8 @@
     margin: 0 auto;
     /* 画像は macOS のウィンドウの形に切り抜いてあり、角の外側は透明で、輪郭は画像自身が持っている。
        border / border-radius / box-shadow を付けると四角い外形に付いて輪郭が二重になるので、
-       透明部分に沿う drop-shadow だけにする */
-    filter: drop-shadow(var(--drop-shadow-lg));
+       透明部分に沿う drop-shadow だけにする（ring は dark で背景との境目を出す） */
+    filter: drop-shadow(var(--drop-shadow-ring)) drop-shadow(var(--drop-shadow-lg));
   }
 
   .lead {
