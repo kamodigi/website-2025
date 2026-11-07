@@ -123,13 +123,13 @@
     </div>
 
     <div class="screenshot">
-      <!-- ファーストビューの画像なので遅延読み込みにしない。幅と高さは feed-light / feed-dark.webp の実寸 -->
+      <!-- ファーストビューの画像なので遅延読み込みにしない。幅と高さは feed-light / feed-dark.webp の実寸（縦横比の確保が目的で、表示の大きさは CSS の max-width で決まる） -->
       <ThemedImage
         src={asset("/works/promptnotes/feed-light.webp")}
         alt={m.pn_screenshot_alt()}
         loading="eager"
-        width={800}
-        height={967}
+        width={1440}
+        height={1740}
       />
     </div>
   </div>
@@ -362,9 +362,10 @@
     max-width: 100%;
     height: auto;
     margin: 0 auto;
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-lg);
+    /* 画像は macOS のウィンドウの形に切り抜いてあり、角の外側は透明で、輪郭は画像自身が持っている。
+       border / border-radius / box-shadow を付けると四角い外形に付いて輪郭が二重になるので、
+       透明部分に沿う drop-shadow だけにする（ring は dark で背景との境目を出す） */
+    filter: drop-shadow(var(--drop-shadow-ring)) drop-shadow(var(--drop-shadow-lg));
   }
 
   .lead {
