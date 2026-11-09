@@ -1,0 +1,68 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "このファイルは kamodigi/renovate-config の default.json の写し（public リポジトリは private の preset を読めないため）。共通設定を直したら、ここも同じに直す。リポジトリ固有の設定は、写しの後ろ（packageRules の末尾）に足す。",
+  "extends": [
+    "config:recommended"
+  ],
+  "timezone": "Asia/Tokyo",
+  "schedule": [
+    "before 9am on monday"
+  ],
+  "labels": [
+    "dependencies"
+  ],
+  "automerge": false,
+  "nix": {
+    "enabled": true
+  },
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": false,
+    "schedule": [
+      "before 9am on monday"
+    ]
+  },
+  "packageRules": [
+    {
+      "description": "npm の minor / patch は1本の PR にまとめる",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "groupName": "npm non-major"
+    },
+    {
+      "description": "GitHub Actions はまとめて1本の PR にする",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchDepTypes": [
+        "action"
+      ],
+      "groupName": "github-actions"
+    },
+    {
+      "description": "eslint と @eslint/*（js・compat）は major が同時に上がるので、major を含めて1本の PR でそろえる",
+      "matchPackageNames": [
+        "eslint",
+        "@eslint/*"
+      ],
+      "groupName": "eslint",
+      "separateMajorMinor": false,
+      "separateMultipleMajor": false
+    },
+    {
+      "description": "@sveltejs/*（kit・adapter・vite-plugin-svelte など）と vite は版がそろわないとビルドできない（SvelteKit 3 / Vite 8 のとき別々の PR がどれも失敗した）ので、major を含めて1本の PR でそろえる",
+      "matchPackageNames": [
+        "@sveltejs/*",
+        "vite"
+      ],
+      "groupName": "sveltekit and vite",
+      "separateMajorMinor": false,
+      "separateMultipleMajor": false
+    }
+  ]
+}
