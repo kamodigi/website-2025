@@ -63,6 +63,33 @@
       "groupName": "sveltekit and vite",
       "separateMajorMinor": false,
       "separateMultipleMajor": false
+    },
+    {
+      "description": "ここから下は website-2025 独自の設定（kamodigi/renovate-config にはない）。major の更新は PR を自動で作らず、Dependency Dashboard で承認したときだけ作る",
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "dependencyDashboardApproval": true
+    },
+    {
+      "description": "typescript-eslint が TypeScript 7 に対応するまで、TypeScript は 6.x までにとどめる",
+      "matchPackageNames": [
+        "typescript"
+      ],
+      "allowedVersions": "<7"
+    },
+    {
+      "description": "GitHub Actions の runner の ubuntu は ubuntu-24.04 にわざと固定している（deploy.yml・docker-build.yml）ので、major を上げない",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchDepNames": [
+        "ubuntu"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "enabled": false
     }
   ]
 }
