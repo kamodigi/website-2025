@@ -3,9 +3,9 @@
 	"private": true,
 	"version": "1.0",
 	"type": "module",
-	"packageManager": "pnpm@10.23.0",
+	"packageManager": "pnpm@10.34.9",
 	"engines": {
-		"pnpm": "10.23.0",
+		"pnpm": "10.34.9",
 		"node": "22"
 	},
 	"pnpm": {
@@ -57,14 +57,14 @@
 		"@threlte/core": "^8.1.5",
 		"@threlte/extras": "^9.5.4",
 		"@types/node": "^24.0.14",
-		"@types/three": "^0.180.0",
+		"@types/three": "^0.187.0",
 		"js-yaml": "^4.1.0",
 		"rehype-stringify": "^10.0.1",
 		"remark-frontmatter": "^5.0.0",
 		"remark-parse": "^11.0.0",
 		"remark-rehype": "^11.1.2",
 		"serve": "^14.2.5",
-		"three": "^0.180.0",
+		"three": "^0.187.0",
 		"unified": "^11.0.5",
 		"valibot": "^1.1.0"
 	}
