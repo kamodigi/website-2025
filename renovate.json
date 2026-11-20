@@ -12,6 +12,8 @@
     "dependencies"
   ],
   "automerge": false,
+  "minimumReleaseAge": "3 days",
+  "updateNotScheduled": false,
   "nix": {
     "enabled": true
   },
