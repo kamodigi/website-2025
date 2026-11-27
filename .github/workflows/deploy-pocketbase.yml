@@ -1,0 +1,142 @@
+name: Deploy PocketBase
+
+# main への push（apps/pocketbase/ などが変わったとき）で次の順に実行する（前のジョブが失敗したら後続は実行しない）。
+#   build-and-push（apps/pocketbase/Dockerfile からビルドし :<sha> と :latest を GHCR に push）
+#   → deploy（Coolify の webhook でデプロイし、終わるまで待つ → cms.kamodigi.work の確認）
+# Coolify は Docker Image リソースとして ghcr.io/kamodigi/website-2025-pocketbase:latest を pull するだけで、ConoHa 上ではビルドしない。
+# ロールバックは Coolify のイメージタグを前の :<sha> に変えて再デプロイする（マイグレーションは戻らないので、pb_data のバックアップから戻す）。
+# Coolify のリソースを作る前（secret が無いとき）は、イメージの push までにして、デプロイを飛ばす。手順は docs/pocketbase-operations.md。
+on:
+  push:
+    branches: [main]
+    paths:
+      - apps/pocketbase/**
+      - .github/workflows/deploy-pocketbase.yml
+      - .github/scripts/coolify-deploy.sh
+  workflow_dispatch:
+
+# Coolify のデプロイは GitHub のジョブをキャンセルしても止まらず、:latest と本番が食い違うため、後続は待たせる
+concurrency:
+  group: deploy-pocketbase
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  IMAGE_NAME: ghcr.io/kamodigi/website-2025-pocketbase
+  PRODUCTION_URL: https://cms.kamodigi.work
+
+jobs:
+  build-and-push:
+    name: Build & Push image
+    # workflow_dispatch は任意のブランチを選べるため、main 以外からは本番に出さない（後続ジョブも needs でスキップされる）
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Log in to GHCR
+        uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550 # v4.8.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      # org.opencontainers.image.source を付けて、GHCR のパッケージをこのリポジトリにつなげる
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
+        with:
+          images: ${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha,prefix=,format=long
+            type=raw,value=latest
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+
+      # push する前に、PR と同じ確認（マイグレーション・フック・CMS）をこのイメージで行う
+      - name: Build
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: apps/pocketbase
+          file: apps/pocketbase/Dockerfile
+          platforms: linux/amd64
+          load: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=pocketbase
+          cache-to: type=gha,mode=max,scope=pocketbase
+
+      - name: Smoke test
+        run: apps/pocketbase/scripts/smoke-test.sh "$IMAGE_NAME:$GITHUB_SHA"
+
+      - name: Push
+        run: |
+          docker push "$IMAGE_NAME:$GITHUB_SHA"
+          docker push "$IMAGE_NAME:latest"
+
+  deploy:
+    name: Trigger Coolify deploy & verify
+    needs: build-and-push
+    runs-on: ubuntu-24.04
+    # .github/scripts/coolify-deploy.sh が完了を最大 10 分待つ + 確認の分
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      # Coolify のリソースを作る前にマージしても失敗しないよう、secret が未設定ならデプロイを飛ばす
+      - name: Check Coolify secrets
+        id: secrets
+        env:
+          COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+          COOLIFY_WEBHOOK_URL: ${{ secrets.COOLIFY_WEBHOOK_PB }}
+        run: |
+          if [ -z "$COOLIFY_TOKEN" ] || [ -z "$COOLIFY_WEBHOOK_URL" ]; then
+            echo "::notice::secret COOLIFY_TOKEN / COOLIFY_WEBHOOK_PB が未設定のため、PocketBase のデプロイを飛ばします（イメージの push までは済んでいます）"
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout
+        if: steps.secrets.outputs.configured == 'true'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Trigger Coolify deploy and wait for the result
+        if: steps.secrets.outputs.configured == 'true'
+        env:
+          COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+          COOLIFY_WEBHOOK_URL: ${{ secrets.COOLIFY_WEBHOOK_PB }}
+        run: bash .github/scripts/coolify-deploy.sh
+
+      # Coolify がデプロイを finished にした後、公開の URL で PocketBase と CMS が応答することを確かめる（各 最大 90 秒）
+      - name: Smoke test
+        if: steps.secrets.outputs.configured == 'true'
+        run: |
+          for path in /api/health /edit/ /edit/config.json; do
+            status=""
+            SECONDS=0
+            while [ "$SECONDS" -lt 90 ]; do
+              status="$(curl -sS -o /dev/null -w '%{http_code}' --max-time 10 "$PRODUCTION_URL$path" || true)"
+              [ "$status" = "200" ] && break
+              sleep 10
+            done
+            if [ "$status" != "200" ]; then
+              echo "::error::$PRODUCTION_URL$path が 200 を返しません（$status）。Coolify のデプロイログを確認してください"
+              exit 1
+            fi
+            echo "OK  $path"
+          done

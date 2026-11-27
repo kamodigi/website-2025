@@ -1,0 +1,20 @@
+# 手元の開発用の PocketBase（本番と同じイメージ）。apps/pocketbase/ で docker compose up -d --build を実行する。
+#   PocketBase: http://localhost:8090（ダッシュボード /_/ は admin@example.com / password1234）
+#   CMS:        http://localhost:8090/edit/（editor@example.com / password1234）
+# アカウントは dev/pb_migrations/ のマイグレーションが作る（開発専用。本番のイメージには入らない）。
+# 8090 が使われているときは PB_PORT=8091 docker compose up -d --build のようにポートを変える。
+# データは Docker のボリュームに入り、docker compose down -v で消える。
+name: website-2025-pocketbase
+services:
+  pocketbase:
+    build: .
+    ports:
+      - '127.0.0.1:${PB_PORT:-8090}:8090'
+    environment:
+      PBCMS_PUBLIC_URL: http://localhost:${PB_PORT:-8090}
+    volumes:
+      - pb_data:/pb/pb_data
+      - ./dev/pb_migrations/1799999999_seed_dev_users.js:/pb/pb_migrations/1799999999_seed_dev_users.js:ro
+
+volumes:
+  pb_data:
