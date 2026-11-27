@@ -12,9 +12,9 @@ const config = {
 		adapter: adapter(),
 		csrf: {
 			// pocketbase-cms の「サイトで確認」は、CMS のオリジンからフォームを POST する（/preview。apps/pocketbase/cms.config.json の previewUrl）。
-			// SvelteKit は別のオリジンからのフォームの POST を断るので、CMS のオリジンだけを許す。
-			// 手元の開発用の PocketBase（apps/pocketbase/compose.yaml）は http://localhost:8090
-			trustedOrigins: ['https://cms.kamodigi.work', 'http://localhost:8090', 'http://127.0.0.1:8090']
+			// SvelteKit は別のオリジンからのフォームの POST を断るので、本番の CMS のオリジンだけを許す。
+			// 手元の開発（vite dev）では SvelteKit がこの検査をしないので、開発用の CMS（http://localhost:8090）を足さなくてよい
+			trustedOrigins: ['https://cms.kamodigi.work']
 		},
 		paths: {
 			assets: '',
