@@ -2,11 +2,15 @@
 
 ## Directory Organization
 
-### Root Structure
+### Repository Structure
+- `apps/website/` - The SvelteKit site (source, `package.json`, lockfile, `Dockerfile`). No root workspace; run pnpm commands here. All paths below are relative to this directory
+- `docs/` - Documentation
+- `.kiro/` - Kiro specifications and steering rules (repository root)
+
+### Website Structure (`apps/website/`)
 - `src/` - Main source code
 - `static/` - Static assets (favicon, etc.)
 - `messages/` - Internationalization message files
-- `.kiro/` - Kiro specifications and steering rules
 - `.husky/` - Git hooks configuration
 
 ### Source Code Structure

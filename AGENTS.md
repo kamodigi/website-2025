@@ -127,6 +127,10 @@ bd prime                # Refresh Beads context
 **Architecture in one line:** issues live in a local Dolt DB; sync uses `refs/dolt/data` on your git remote; `.beads/issues.jsonl` is a passive export. See https://github.com/gastownhall/beads/blob/main/docs/core-concepts/sync-concepts.md for details and anti-patterns.
 <!-- END BEADS CODEX SETUP -->
 
+## リポジトリの構成
+
+トップレベルはドキュメント、AI 関連の設定、`.github`、`renovate.json` だけにする。サイトは `apps/website/` にあり、ルートにワークスペースは作らない。pnpm のコマンド（`pnpm install`・`pnpm run build`・`pnpm run lint`）は `apps/website/` で実行する。
+
 ## UI を変更するときの進め方
 
 UI を変更する issue では、次のサイクルを必ず回す（2026-11-03 に決定）。

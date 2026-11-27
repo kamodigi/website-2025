@@ -1,6 +1,6 @@
 name: Docker build
 
-# PR で Dockerfile からイメージがビルドできることだけを確かめる（push はしない）。
+# PR で apps/website/Dockerfile からイメージがビルドできることだけを確かめる（push はしない）。
 # public リポジトリのため pull_request_target は使わない。pull_request なら、外部（fork）からの PR には
 # secret が渡らず、GITHUB_TOKEN も読み取り専用になる。このワークフローは secret も packages: write も使わない。
 on:
@@ -31,8 +31,8 @@ jobs:
       - name: Build
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
-          context: .
-          file: Dockerfile
+          context: apps/website
+          file: apps/website/Dockerfile
           platforms: linux/amd64
           push: false
           cache-from: type=gha

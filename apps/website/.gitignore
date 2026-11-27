@@ -1,0 +1,37 @@
+node_modules
+
+# Output
+.output
+.vercel
+.netlify
+.wrangler
+/.svelte-kit
+/build
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+!.env.example
+!.env.test
+
+# Direnv
+.direnv
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# Paraglide
+src/lib/paraglide
+project.inlang/cache
+project.inlang/project_id
+
+# oh-my-claudecode の実行時の状態
+.omc/
+
+# エージェント用ツール（Playwright MCP）が作るスクリーンショットやログ
+.playwright-mcp/
