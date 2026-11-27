@@ -93,6 +93,42 @@
         "major"
       ],
       "enabled": false
+    },
+    {
+      "description": "pocketbase-cms（apps/pocketbase/Dockerfile の PBCMS_VERSION）。CMS のイメージとフックの zip を同じ版で取る。0.x の間は minor でも互換性が壊れうるので、リリースノートを読み、cms.config.json とマイグレーションを確かめてからマージする。自分たちのパッケージなので、リリースを待たずに PR を作る",
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "ghcr.io/kamodigi/pocketbase-cms"
+      ],
+      "minimumReleaseAge": null,
+      "prBodyNotes": [
+        "pocketbase-cms は 0.x のため minor でも互換性が壊れうる。リリースノートを読み、`apps/pocketbase/cms.config.json` とマイグレーションを確かめる。main へのマージで cms.kamodigi.work にデプロイされる。"
+      ]
+    },
+    {
+      "description": "PocketBase 本体（apps/pocketbase/Dockerfile の PB_VERSION）。配布元が ganigeorgiev.com に移ったので Go モジュールの版で追う。タグは v 付き・ARG は v なしなので v を外す。0.x で minor でも互換性が壊れうるうえ、main へのマージで本番に自動デプロイされる（事前に本番の pb_data のバックアップが要る）ので、Dependency Dashboard のチェックを付けたときだけ PR を作る",
+      "matchDatasources": [
+        "go"
+      ],
+      "matchPackageNames": [
+        "ganigeorgiev.com/pocketbase/pocketbase"
+      ],
+      "extractVersion": "^v(?<version>.+)$",
+      "dependencyDashboardApproval": true
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "website-2025 独自の設定。apps/pocketbase/Dockerfile の ARG（PBCMS_VERSION・PB_VERSION）を、直前の # renovate: コメントの指定で更新する",
+      "managerFilePatterns": [
+        "/(^|/)Dockerfile$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\nARG \\w+=(?<currentValue>\\S+)"
+      ]
     }
   ]
 }

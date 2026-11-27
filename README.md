@@ -14,11 +14,12 @@
 ホスティング
 
 - Coolify: 自分のサーバーでホスティング
-- Docker: GitHub Actions で `apps/website/Dockerfile` からイメージをビルドし、Coolify が pull してデプロイ
+- Docker: GitHub Actions で `apps/website/Dockerfile`・`apps/pocketbase/Dockerfile` からイメージをビルドし、Coolify が pull してデプロイ
 
 ## リポジトリの構成
 
 - `apps/website/`: サイト（SvelteKit）。ソース、`package.json`、lockfile、`Dockerfile` はここに置きます。
+- `apps/pocketbase/`: 制作実績を入れる PocketBase（`cms.kamodigi.work`、pocketbase-cms を `/edit/` に置く）。[apps/pocketbase/README.md](apps/pocketbase/README.md) と [docs/pocketbase-operations.md](docs/pocketbase-operations.md) を見てください。
 - `docs/`: ドキュメント。
 
 ルートにはワークスペース（`package.json`）を置きません。pnpm のコマンドは `apps/website/` で実行します。

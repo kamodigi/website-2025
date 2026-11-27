@@ -1,0 +1,184 @@
+{
+	"$schema": "https://raw.githubusercontent.com/kamodigi/pocketbase-cms/v0.2.0/schema/cms.config.schema.json",
+	"version": 1,
+	"brand": { "name": "kamodigi.work" },
+	"locales": ["ja", "en", "zh-Hans", "zh-Hant"],
+	"editor": {
+		"features": [
+			"heading",
+			"bold",
+			"italic",
+			"strike",
+			"code",
+			"link",
+			"bulletList",
+			"orderedList",
+			"blockquote",
+			"codeBlock",
+			"horizontalRule",
+			"image",
+			"table"
+		],
+		"headingLevels": [2, 3, 4]
+	},
+	"media": {
+		"collection": "media",
+		"fileField": "file",
+		"altField": "alt",
+		"captionField": "caption",
+		"widthField": "width",
+		"heightField": "height",
+		"mimeField": "mime",
+		"compress": { "maxWidth": 1920, "quality": 0.85, "format": "webp" }
+	},
+	"nav": [{ "label": { "ja": "コンテンツ", "en": "Content" }, "items": ["works", "media"] }],
+	"collections": {
+		"works": {
+			"label": { "ja": "制作実績", "en": "Works" },
+			"icon": "briefcase",
+			"titleField": "title",
+			"previewUrl": "https://kamodigi.work/preview",
+			"status": { "draftField": "draft" },
+			"list": {
+				"columns": ["title", "work_status", "$status", "sort_order", "updated"],
+				"sort": "sort_order",
+				"perPage": 50,
+				"search": ["title", "slug"]
+			},
+			"form": {
+				"main": ["title", "short_description", "description", "body", "gallery"],
+				"side": [
+					"slug",
+					"draft",
+					"featured",
+					"sort_order",
+					"thumbnail",
+					"category",
+					"work_status",
+					"start_date",
+					"end_date",
+					"technologies",
+					"link_demo",
+					"link_github",
+					"link_website"
+				]
+			},
+			"fields": {
+				"title": { "label": { "ja": "タイトル", "en": "Title" }, "localized": true },
+				"slug": {
+					"label": { "ja": "スラッグ", "en": "Slug" },
+					"widget": "slug",
+					"slugFrom": "title",
+					"help": {
+						"ja": "URL の /works/◯◯ の部分。英小文字・数字・ハイフンだけ。公開後に変えると古い URL が使えなくなります。",
+						"en": "The ◯◯ in /works/◯◯. Lower-case letters, digits and hyphens only. Changing it after publishing breaks the old URL."
+					}
+				},
+				"short_description": {
+					"label": { "ja": "短い説明", "en": "Short description" },
+					"localized": true,
+					"widget": "textarea",
+					"help": { "ja": "一覧のカードに出す一文。", "en": "One sentence shown on the list card." }
+				},
+				"description": {
+					"label": { "ja": "説明", "en": "Description" },
+					"localized": true,
+					"widget": "textarea",
+					"help": {
+						"ja": "詳細ページの冒頭と、検索結果の説明文に使います。",
+						"en": "Shown at the top of the page and used as the search result description."
+					}
+				},
+				"body": { "label": { "ja": "本文", "en": "Body" }, "localized": true },
+				"gallery": {
+					"label": { "ja": "ギャラリー", "en": "Gallery" },
+					"widget": "media",
+					"help": { "ja": "選んだ順に並びます。", "en": "Shown in the order you pick them." }
+				},
+				"thumbnail": { "label": { "ja": "サムネイル", "en": "Thumbnail" }, "widget": "media" },
+				"technologies": {
+					"label": { "ja": "使った技術", "en": "Technologies" },
+					"help": {
+						"ja": "カンマ（,）で区切って並べます。例：SvelteKit, TypeScript",
+						"en": "Separate with commas, e.g. SvelteKit, TypeScript"
+					}
+				},
+				"category": {
+					"label": { "ja": "種類", "en": "Category" },
+					"options": {
+						"web": { "ja": "Web", "en": "Web" },
+						"mobile": { "ja": "モバイル", "en": "Mobile" },
+						"desktop": { "ja": "デスクトップ", "en": "Desktop" },
+						"other": { "ja": "その他", "en": "Other" }
+					}
+				},
+				"work_status": {
+					"label": { "ja": "制作の状態", "en": "Project status" },
+					"options": {
+						"completed": { "ja": "完了", "en": "Completed" },
+						"in-progress": { "ja": "進行中", "en": "In progress" },
+						"archived": { "ja": "終了", "en": "Archived" }
+					}
+				},
+				"start_date": { "label": { "ja": "開始日", "en": "Start date" }, "widget": "date" },
+				"end_date": {
+					"label": { "ja": "終了日", "en": "End date" },
+					"widget": "date",
+					"help": { "ja": "進行中なら空のままにします。", "en": "Leave empty while in progress." }
+				},
+				"link_demo": { "label": { "ja": "デモの URL", "en": "Demo URL" } },
+				"link_github": { "label": { "ja": "GitHub の URL", "en": "GitHub URL" } },
+				"link_website": { "label": { "ja": "サイトの URL", "en": "Website URL" } },
+				"featured": {
+					"label": { "ja": "トップに出す", "en": "Featured" },
+					"badge": { "ja": "トップ", "en": "Featured" },
+					"help": { "ja": "トップページの制作実績に出します。", "en": "Shown in the works section of the home page." }
+				},
+				"sort_order": {
+					"label": { "ja": "表示順", "en": "Order" },
+					"help": { "ja": "小さいほど先に出ます。", "en": "Smaller numbers come first." }
+				},
+				"draft": {
+					"label": { "ja": "下書き", "en": "Draft" },
+					"help": {
+						"ja": "下書きはサイトに出ません。「サイトで確認」で見られます。",
+						"en": "Drafts are not shown on the site. Use Preview on site to see them."
+					}
+				}
+			}
+		},
+		"media": {
+			"label": { "ja": "メディア", "en": "Media" },
+			"icon": "image",
+			"titleField": "alt",
+			"list": {
+				"columns": ["file", "alt", "caption", "created"],
+				"sort": "-created",
+				"perPage": 40,
+				"search": ["alt", "caption"]
+			},
+			"fields": {
+				"file": { "label": { "ja": "画像", "en": "Image" } },
+				"file_dark": {
+					"label": { "ja": "ダークテーマの画像", "en": "Dark theme image" },
+					"help": {
+						"ja": "任意。サイトがダークテーマのときに、上の画像の代わりに出します。同じ大きさの画像にしてください。",
+						"en": "Optional. Shown instead of the image above when the site uses the dark theme. Use the same size."
+					}
+				},
+				"alt": {
+					"label": { "ja": "代替テキスト", "en": "Alt text" },
+					"help": {
+						"ja": "画像の内容を短く書きます。読み上げソフトが読み、画像が出ないときに表示されます。",
+						"en": "Describe the image briefly. Screen readers read it, and browsers show it when the image fails to load."
+					}
+				},
+				"caption": { "label": { "ja": "キャプション", "en": "Caption" } },
+				"width": { "label": { "ja": "幅", "en": "Width" }, "readonly": true },
+				"height": { "label": { "ja": "高さ", "en": "Height" }, "readonly": true },
+				"mime": { "hidden": true },
+				"uploadedBy": { "autofill": "currentUser" }
+			}
+		}
+	}
+}
