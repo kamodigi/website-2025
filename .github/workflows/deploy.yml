@@ -1,7 +1,7 @@
 name: Deploy
 
 # main への push で次の順に実行する（前のジョブが失敗したら後続は実行しない）。
-#   build-and-push（Dockerfile からビルドし :<sha> と :latest を GHCR に push）→ deploy（Coolify の webhook → 公開ページの確認）
+#   build-and-push（apps/website/Dockerfile からビルドし :<sha> と :latest を GHCR に push）→ deploy（Coolify の webhook → 公開ページの確認）
 # Coolify は Docker Image リソースとして ghcr.io/kamodigi/website-2025:latest を pull するだけで、ConoHa 上ではビルドしない。
 # ロールバックは Coolify のイメージタグを前の :<sha> に変えて再デプロイする。
 # public リポジトリのため、runner は GitHub が用意する ubuntu-24.04 を使う（self-hosted runner は使わない）。ubuntu-latest は使わない（Ubuntu 26 への移行で挙動が変わるため固定する）。
@@ -63,8 +63,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
-          context: .
-          file: Dockerfile
+          context: apps/website
+          file: apps/website/Dockerfile
           platforms: linux/amd64
           push: true
           tags: ${{ steps.meta.outputs.tags }}

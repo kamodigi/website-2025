@@ -14,14 +14,23 @@
 ホスティング
 
 - Coolify: 自分のサーバーでホスティング
-- Docker: Coolifyでアプリケーションをビルド
+- Docker: GitHub Actions で `apps/website/Dockerfile` からイメージをビルドし、Coolify が pull してデプロイ
+
+## リポジトリの構成
+
+- `apps/website/`: サイト（SvelteKit）。ソース、`package.json`、lockfile、`Dockerfile` はここに置きます。
+- `docs/`: ドキュメント。
+
+ルートにはワークスペース（`package.json`）を置きません。pnpm のコマンドは `apps/website/` で実行します。
+以下の説明と「プロジェクト構造」「国際化」などのパスは、`apps/website/` からの相対パスです。
 
 ## 開発の始め方
 
 1. リポジトリをクローンします。
-2. 依存関係をインストールします。パッケージマネージャーはPNPMです。
+2. サイトのディレクトリで依存関係をインストールします。パッケージマネージャーはPNPMです（Git のフックもここで設定されます）。
 
     ```bash
+    cd apps/website
     pnpm install
     ```
 

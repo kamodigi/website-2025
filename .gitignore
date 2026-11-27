@@ -1,12 +1,5 @@
+# サイト固有のものは apps/website/.gitignore に書く
 node_modules
-
-# Output
-.output
-.vercel
-.netlify
-.wrangler
-/.svelte-kit
-/build
 
 # OS
 .DS_Store
@@ -20,15 +13,6 @@ Thumbs.db
 
 # Direnv
 .direnv
-
-# Vite
-vite.config.js.timestamp-*
-vite.config.ts.timestamp-*
-
-# Paraglide
-src/lib/paraglide
-project.inlang/cache
-project.inlang/project_id
 
 # Beads / Dolt files (added by bd init)
 .dolt/
