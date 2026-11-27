@@ -1,13 +1,11 @@
 <script lang="ts">
-	import { asset } from "$app/paths";
 	import { localeHref } from "$lib/i18n";
 	import ThumbnailCard from "$lib/components/ui/ThumbnailCard.svelte";
-	import { getWorksRemote } from "$lib/data/works/data.remote";
 	import { m } from "$lib/paraglide/messages";
 	import { getLocale } from "$lib/paraglide/runtime";
 	import { pickLocalized } from '$lib/i18n';
 
-	const query = getWorksRemote();
+	const { data } = $props();
 	const lang = getLocale();
 </script>
 
@@ -19,35 +17,26 @@
 <section class="works-page">
 	<div class="container">
 		<h1 class="page-title">{m.sections_works()}</h1>
-		{#if query.error}
-			<p class="error-message">{m.works_error({ message: query.error.message })}</p>
-		{:else if query.loading}
-			<p class="loading-message">{m.works_loading()}</p>
-		{:else if query.current}
-			{#if query.current.length === 0}
-				<p class="no-works-message">{m.works_empty()}</p>
-			{:else}
-				<div class="works-grid">
-					{#each query.current as work (work.metadata.id)}
-						{@const { images, id } = work.metadata}
-						{@const title = pickLocalized(work.metadata.title, lang)}
-						{@const shortDescription = pickLocalized(work.metadata.shortDescription, lang)}
-						{@const thumbnailUrl = images.thumbnail
-							? asset(`/works/${images.thumbnail}`)
-							: undefined}
-						<ThumbnailCard
-							variant="bordered"
-							hover
-							{thumbnailUrl}
-							thumbnailAlt={title.value}
-							href={localeHref(`/works/${id}`)}
-						>
-							<h3 class="work-title" lang={title.locale}>{title.value}</h3>
-							<p class="work-description" lang={shortDescription.locale}>{shortDescription.value}</p>
-						</ThumbnailCard>
-					{/each}
-				</div>
-			{/if}
+		{#if data.works.length === 0}
+			<p class="no-works-message">{m.works_empty()}</p>
+		{:else}
+			<div class="works-grid">
+				{#each data.works as work (work.slug)}
+					{@const title = pickLocalized(work.title, lang)}
+					{@const summary = pickLocalized(work.summary, lang)}
+					<ThumbnailCard
+						variant="bordered"
+						hover
+						thumbnailUrl={work.thumbnail?.src}
+						thumbnailDarkUrl={work.thumbnail?.darkSrc}
+						thumbnailAlt={title.value}
+						href={localeHref(`/works/${work.slug}`)}
+					>
+						<h3 class="work-title" lang={title.locale}>{title.value}</h3>
+						<p class="work-description" lang={summary.locale}>{summary.value}</p>
+					</ThumbnailCard>
+				{/each}
+			</div>
 		{/if}
 	</div>
 

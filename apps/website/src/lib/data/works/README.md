@@ -1,5 +1,10 @@
 # プロジェクトデータの作成方法
 
+> **サイトはもうこの Markdown を読まない。** 制作実績は PocketBase（`apps/pocketbase/`、CMS は `https://cms.kamodigi.work/edit/`）で編集し、
+> サイトは表示のたびに PocketBase から読む（`src/lib/server/works.ts`、kamodigi-m5s.4）。
+> ここの Markdown と読み込みのコード（`index.ts`）は、PocketBase への取り込み（kamodigi-m5s.5）が済むまで残し、
+> kamodigi-m5s.6 で消す。以下は取り込む前の書き方の記録。
+
 このディレクトリには、ポートフォリオサイトに表示するプロジェクトデータが含まれています。
 新しいプロジェクトを追加するには、以下の手順に従ってください。
 

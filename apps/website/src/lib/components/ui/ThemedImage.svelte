@@ -3,6 +3,7 @@
 	 * `...-light.<ext>` という名前の画像には、同じ場所の `...-dark.<ext>` が対になっているものとして扱い、
 	 * サイトのテーマに合わせて出し分ける（--display-light-only / --display-dark-only）。
 	 * それ以外の画像は、そのまま 1 枚だけ表示する。
+	 * 名前で対にできない画像（PocketBase の画像はファイル名の後ろにランダムな文字が付く）は、`darkSrc` でダークの画像を渡す。
 	 *
 	 * 表示しない側の画像は `display: none` になり、`loading="lazy"` が付いているので、ブラウザは読み込まない
 	 * （テーマは data-theme 属性でも切り替わるため、<picture> の media では出し分けられない）。
@@ -11,6 +12,8 @@
 	 */
 	type Props = {
 		src: string;
+		/** ダークの画像。渡さなければ、`-light` の名前から求める */
+		darkSrc?: string;
 		alt: string;
 		class?: string;
 		loading?: 'lazy' | 'eager';
@@ -18,9 +21,11 @@
 		height?: number;
 	};
 
-	const { src, alt, class: className = '', loading = 'lazy', width, height }: Props = $props();
+	const { src, darkSrc: darkSrcProp, alt, class: className = '', loading = 'lazy', width, height }: Props = $props();
 
-	const darkSrc = $derived(/-light\.[a-z0-9]+$/i.test(src) ? src.replace(/-light(\.[a-z0-9]+)$/i, '-dark$1') : undefined);
+	const darkSrc = $derived(
+		darkSrcProp ?? (/-light\.[a-z0-9]+$/i.test(src) ? src.replace(/-light(\.[a-z0-9]+)$/i, '-dark$1') : undefined)
+	);
 </script>
 
 <span class="themed-image">

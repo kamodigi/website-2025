@@ -6,6 +6,8 @@
 
 	type Props = {
 		thumbnailUrl?: string;
+		/** ダークのテーマで出すサムネイル（ThemedImage の darkSrc） */
+		thumbnailDarkUrl?: string;
 		thumbnailAlt?: string;
 		href?: string;
 		isExternal?: boolean;
@@ -21,6 +23,7 @@
 
 	const {
 		thumbnailUrl,
+		thumbnailDarkUrl,
 		thumbnailAlt = 'No Image',
 		href,
 		isExternal = false,
@@ -37,7 +40,7 @@
 		<a {href} class="card-link" target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noopener noreferrer' : undefined}>
 			<div class="thumbnail-wrapper">
 				{#if thumbnailUrl}
-					<ThemedImage src={thumbnailUrl} alt={thumbnailAlt} class="thumbnail-image" />
+					<ThemedImage src={thumbnailUrl} darkSrc={thumbnailDarkUrl} alt={thumbnailAlt} class="thumbnail-image" />
 				{:else if gradientTitle && gradientTags && gradientId}
 					<GradientThumbnail title={gradientTitle} tags={gradientTags} id={gradientId} />
 				{/if}
@@ -49,7 +52,7 @@
 	{:else}
 		<div class="thumbnail-wrapper">
 			{#if thumbnailUrl}
-				<ThemedImage src={thumbnailUrl} alt={thumbnailAlt} class="thumbnail-image" />
+				<ThemedImage src={thumbnailUrl} darkSrc={thumbnailDarkUrl} alt={thumbnailAlt} class="thumbnail-image" />
 			{:else if gradientTitle && gradientTags && gradientId}
 				<GradientThumbnail title={gradientTitle} tags={gradientTags} id={gradientId} />
 			{/if}

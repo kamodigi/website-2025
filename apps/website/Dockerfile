@@ -14,9 +14,10 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-l
 FROM base AS build
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
-# デプロイ後の確認用に build/version.json を出す（キャッシュを効かせるため build の後に置く）。GIT_SHA が無いときは unknown
+# デプロイ後の確認用に /version.json を出す（キャッシュを効かせるため build の後に置く）。GIT_SHA が無いときは unknown。
+# adapter-node は build/client/ の中身を静的ファイルとして配る
 ARG GIT_SHA=unknown
-RUN printf '{"sha":"%s","builtAt":"%s"}\n' "${GIT_SHA:-unknown}" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > build/version.json
+RUN printf '{"sha":"%s","builtAt":"%s"}\n' "${GIT_SHA:-unknown}" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > build/client/version.json
 
 FROM base
 
@@ -39,5 +40,10 @@ COPY --from=build --chown=sveltekit:nodejs /app/build ./build
 COPY --from=build --chown=sveltekit:nodejs /app/package.json ./package.json
 COPY --from=build --chown=sveltekit:nodejs /app/node_modules ./node_modules
 
+# adapter-node のサーバー。PORT の既定は 3000。
+# 制作実績のページは、実行時の環境変数 POCKETBASE_URL（PocketBase の公開 URL）から読む。
+# 未設定や PocketBase に届かないときは、制作実績のページだけが 503 になる（ほかのページはプリレンダー済み）
+ENV NODE_ENV=production
+ENV PORT=3000
 EXPOSE 3000
-CMD [ "pnpm", "start" ]
+CMD [ "node", "build" ]
