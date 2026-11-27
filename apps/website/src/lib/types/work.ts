@@ -96,3 +96,41 @@ export interface WorkFilterOptions {
  * Workソートオプション
  */
 export type WorkSortOption = 'newest' | 'oldest' | 'name-asc' | 'name-desc';
+/**
+ * 制作実績の画像（PocketBase の media のレコード）。`darkSrc` があれば、ダークのテーマではそちらを出す
+ */
+export interface WorkImage {
+  src: string;
+  darkSrc?: string;
+  /** 代替テキスト（media.alt） */
+  alt: string;
+  width?: number;
+  height?: number;
+  /**
+   * ウィンドウの形に切り抜いた画像（角の外側が透明）。角丸・縁・box-shadow を付けず、drop-shadow だけにする
+   */
+  windowShaped: boolean;
+}
+
+/**
+ * PocketBase の works コレクションから読んだ制作実績（src/lib/server/works.ts）。
+ * 上の WorkData（Markdown から読む形）は、取り込みのスクリプト（kamodigi-m5s.5）が使い終わるまで残す
+ */
+export interface Work {
+  /** URL のスラッグ */
+  slug: string;
+  title: Localized;
+  /** 一覧のカードに出す短い説明（short_description_*） */
+  summary: Localized;
+  /** 説明（description_*、プレーンテキスト）。meta description に使う */
+  description: Localized;
+  /** 本文の HTML（PocketBase のフックでサニタイズ済み） */
+  body: Localized;
+  thumbnail?: WorkImage;
+  gallery: WorkImage[];
+  links: {
+    demo?: string;
+    github?: string;
+    website?: string;
+  };
+}

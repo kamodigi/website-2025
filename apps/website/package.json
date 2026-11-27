@@ -25,12 +25,12 @@
 		"type-check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:all": "pnpm run lint && pnpm run type-check",
 		"compile:translations": "node scripts/resolve-messages.mjs && pnpm paraglide-js compile --project ./project.inlang --outdir ./src/lib/paraglide",
-		"start": "serve build"
+		"start": "node build"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",
 		"@eslint/js": "^9.18.0",
-		"@sveltejs/adapter-static": "^3.0.8",
+		"@sveltejs/adapter-node": "^5.5.8",
 		"@sveltejs/kit": "^2.22.0",
 		"@sveltejs/vite-plugin-svelte": "^6.0.0",
 		"@types/hast": "^3.0.4",
@@ -63,7 +63,6 @@
 		"remark-frontmatter": "^5.0.0",
 		"remark-parse": "^11.0.0",
 		"remark-rehype": "^11.1.2",
-		"serve": "^14.2.5",
 		"three": "^0.187.0",
 		"unified": "^11.0.5",
 		"valibot": "^1.1.0"
