@@ -75,6 +75,7 @@ pocketbase-cms の media プリセットと同じ形に、`file_dark` を足し�
 | `file_dark` | 任意。サイトがダークテーマのときに `file` の代わりに出す画像（スクリーンショットのライトとダークの対） |
 | `alt` | 代替テキスト（必須） |
 | `caption` | キャプション |
+| `window_shaped` | bool（既定 false）。ウィンドウの形に切り抜いた画像（角の外側が透明）。サイトは角丸・縁・box-shadow を付けず drop-shadow だけにする |
 | `width`・`height`・`mime` | CMS がアップロードのときに入れる |
 | `uploadedBy` | アップロードした users |
 

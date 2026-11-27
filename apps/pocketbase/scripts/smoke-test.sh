@@ -50,8 +50,10 @@ fields="$(curl -fsS -H "Authorization: $su_token" "$base/api/collections/works" 
 for field in slug title_ja title_en title_zh_hans title_zh_hant body_ja gallery thumbnail draft sort_order; do
 	[[ " $fields " == *" $field "* ]] || fail "works に $field がありません（$fields）"
 done
-curl -fsS -H "Authorization: $su_token" "$base/api/collections/media" | jq -e '[.fields[].name] | index("file_dark")' >/dev/null ||
-	fail "media に file_dark がありません"
+media_fields="$(curl -fsS -H "Authorization: $su_token" "$base/api/collections/media" | jq -r '[.fields[].name] | join(" ")')"
+for field in file file_dark alt window_shaped; do
+	[[ " $media_fields " == *" $field "* ]] || fail "media に $field がありません（$media_fields）"
+done
 echo "OK  コレクション works・media"
 
 # 誰でも works を読める（下書きは出ない）。書き込みはできない
